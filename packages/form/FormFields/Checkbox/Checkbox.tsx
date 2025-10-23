@@ -1,0 +1,58 @@
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  type CheckboxProps,
+} from '@mui/material';
+import {
+  Controller,
+  useFormContext,
+  type ControllerProps,
+} from 'react-hook-form';
+import { useExtractErrorInfo } from '../../useExtractErrorInfo';
+import ErrorMessage from '../../ErrorMessage';
+import { useTranslations } from 'next-intl';
+
+type FsCheckboxProps = CheckboxProps & {
+  i18nKey: string;
+  name: string;
+  defaultValue?: string | number | boolean;
+  rules?: ControllerProps['rules'];
+};
+
+const FsCheckbox = ({
+  name,
+  i18nKey,
+  defaultValue,
+  rules,
+  ...rest
+}: FsCheckboxProps) => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+  const t = useTranslations();
+  const { errorI18nKey } = useExtractErrorInfo(errors, name);
+  return (
+    <Controller
+      name={name}
+      control={control}
+      defaultValue={defaultValue || false}
+      rules={rules}
+      render={({ field }) => {
+        return (
+          <Box>
+            <FormControlLabel
+              control={<Checkbox checked={field.value} {...field} {...rest} />}
+              label={t(i18nKey)}
+              sx={{ display: 'block' }}
+            />
+            <ErrorMessage i18nKey={errorI18nKey} />
+          </Box>
+        );
+      }}
+    />
+  );
+};
+
+export default FsCheckbox;
