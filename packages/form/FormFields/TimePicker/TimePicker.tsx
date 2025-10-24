@@ -16,7 +16,10 @@ import { useExtractErrorInfo } from '../../useExtractErrorInfo';
 import ClearButton from '../../ClearButton';
 import { useTranslations } from 'next-intl';
 
-type FsTimePickerProps = Omit<TimePickerProps<Moment>, 'value' | 'onChange'> & {
+type FsTimePickerProps = Omit<
+  TimePickerProps<boolean>,
+  'value' | 'onChange'
+> & {
   i18nKey: string;
   rules?: ControllerProps['rules'];
   name: string;
@@ -66,7 +69,7 @@ const FsTimePicker = ({
                   field.value ? moment(field.value, 'HH:mm:ss') : undefined
                 }
                 onChange={(time) => {
-                  field.onChange(formattedTime(time));
+                  field.onChange(formattedTime(time ? moment(time) : null));
                 }}
                 format="HH:mm:ss"
               />
