@@ -1,6 +1,4 @@
-# React Native/Expo Project
-
-You are an expert in TypeScript, React JS, MUI, and Web UI development with MUI.
+You are an expert in TypeScript, React JS, Next JS MUI, and Web UI development with MUI.
 
 Every time you choose to apply a rule(s), explicitly state the rule(s) in the output. You can abbreviate the rule description to a single word or phrase.
 
@@ -18,64 +16,112 @@ Every time you choose to apply a rule(s), explicitly state the rule(s) in the ou
 - Structure repository files as follows:
 
 ```
-
-
-  ├── packages  ## shared components
-  │   ├── core  ## UI components following atomic design
-  │   │   ├── Atom  ## Basic UI elements (Button, Chip, Typography, IconButton, Tooltip, SolarIcon, Description)
-  │   │   └── Organ  ## Complex UI components (Alert, Modal, Table, Charts, NavigationMenu, Tree, Tabs, Stepper, Pagination, Editor, Player)
-  │   ├── form  ## form components and validation system
-  │   │   ├── FormFields  ## Input components (Input, Select, DatePicker, Checkbox, RadioGroup, UploadFile, etc.)
-  │   │   ├── FormProvider  ## Form context and provider
-  │   │   ├── validators  ## Validation functions (email, password, Persian validators)
-  │   │   └── useExtractErrorInfo  ## Error handling hook
-  │   └── utils  ## utility functions and helpers
-  │       ├── helper  ## Common utilities (LocalStorage, Scroll, TruncateText, etc.)
-  │       ├── http  ## HTTP client and React Query setup
-  │       ├── i18Next  ## Internationalization utilities
-  │       ├── PageProvider  ## Page context provider
-  │       └── theme  ## Theme management and templates
-  ├── src  ## main source of project
-  │   ├── main.tsx  ## Application entry point
-  │   ├── App.tsx  ## Root component
-  │   ├── App.css  ## Global styles
-  │   ├── assets  ## Static assets
-  │   │   ├── fonts  ## Font files (IranSans)
-  │   │   └── images  ## Image assets (SVG, PNG, JPG)
-  │   ├── common  ## Shared application logic
-  │   │   ├── components  ## Reusable components (Layout, Loading, Animations, etc.)
-  │   │   ├── consts  ## Constants (BPMN configurations)
-  │   │   ├── contexts  ## React contexts (BPMN, User, PageInfo, Permissions)
-  │   │   ├── helpers  ## Helper functions (BPMN utilities, i18n helpers)
-  │   │   └── hooks  ## Custom hooks (BPMN hooks, utility hooks)
-  │   ├── i18n  ## Internationalization files (en.json, fa.json)
-  │   ├── pages  ## Application pages
-  │   │   ├── Home  ## Main application with subpages (BPMN, Cartable, Dashboard, DataManagement, FormEngine, Settings, UserManagement, UiComponents)
-  │   │   ├── Login  ## Authentication pages
-  │   │   ├── Signup  ## User registration
-  │   │   └── error.tsx  ## Error page
-  │   ├── routes  ## Routing configuration
-  │   │   ├── AppRoutes.tsx  ## Main router setup
-  │   │   ├── routes.tsx  ## Route definitions
-  │   │   └── type.ts  ## Route type definitions
-  │   └── types  ## TypeScript type definitions
-  │       ├── apiResponse.ts  ## API response types
-  │       └── index.ts  ## Type exports
-  ├── public  ## Public static files
-  ├── configs  ## Configuration files (nginx.conf)
-  ├── dist  ## Build output directory
-  └── ...   ## root files (package.json, tsconfig.json, vite.config.ts, eslint.config.js, etc.)
-
+src
+ ┣ app
+ ┃ ┣ (self)
+ ┃ ┃ ┗ i18n
+ ┃ ┃ ┃ ┣ en.json
+ ┃ ┃ ┃ ┗ fa.json
+ ┃ ┣ dashboard
+ ┃ ┃ ┣ (self)
+ ┃ ┃ ┃ ┣ components
+ ┃ ┃ ┃ ┃ ┗ index.tsx
+ ┃ ┃ ┃ ┗ i18n
+ ┃ ┃ ┃ ┃ ┣ en.json
+ ┃ ┃ ┃ ┃ ┗ fa.json
+ ┃ ┃ ┣ layout.tsx
+ ┃ ┃ ┗ page.tsx
+ ┃ ┣ login
+ ┃ ┃ ┣ (self)
+ ┃ ┃ ┃ ┣ components
+ ┃ ┃ ┃ ┃ ┗ index.tsx
+ ┃ ┃ ┃ ┗ i18n
+ ┃ ┃ ┃ ┃ ┣ en.json
+ ┃ ┃ ┃ ┃ ┗ fa.json
+ ┃ ┃ ┣ layout.tsx
+ ┃ ┃ ┗ page.tsx
+ ┃ ┣ public
+ ┃ ┃ ┣ (self)
+ ┃ ┃ ┃ ┣ components
+ ┃ ┃ ┃ ┃ ┗ index.tsx
+ ┃ ┃ ┃ ┗ i18n
+ ┃ ┃ ┃ ┃ ┣ en.json
+ ┃ ┃ ┃ ┃ ┗ fa.json
+ ┃ ┃ ┣ layout.tsx
+ ┃ ┃ ┗ page.tsx
+ ┃ ┣ sign-up
+ ┃ ┃ ┣ (self)
+ ┃ ┃ ┃ ┣ components
+ ┃ ┃ ┃ ┃ ┗ index.tsx
+ ┃ ┃ ┃ ┗ i18n
+ ┃ ┃ ┃ ┃ ┣ en.json
+ ┃ ┃ ┃ ┃ ┗ fa.json
+ ┃ ┃ ┣ layout.tsx
+ ┃ ┃ ┗ page.tsx
+ ┃ ┣ ui-components
+ ┃ ┃ ┣ (self)
+ ┃ ┃ ┃ ┣ components
+ ┃ ┃ ┃ ┃ ┗ index.tsx
+ ┃ ┃ ┃ ┗ i18n
+ ┃ ┃ ┃ ┃ ┣ en.json
+ ┃ ┃ ┃ ┃ ┗ fa.json
+ ┃ ┃ ┣ layout.tsx
+ ┃ ┃ ┗ page.tsx
+ ┃ ┣ favicon.ico
+ ┃ ┣ globals.css
+ ┃ ┣ layout.tsx
+ ┃ ┣ page.module.css
+ ┃ ┗ page.tsx
+ ┣ assets
+ ┃ ┣ fonts
+ ┃ ┃ ┗ iranSans
+ ┃ ┃ ┃ ┣ webfont
+ ┃ ┃ ┃ ┃ ┣ staticfonts
+ ┃ ┃ ┃ ┃ ┃ ┣ IRANSansX-Bold.woff
+ ┃ ┃ ┃ ┃ ┃ ┗ IRANSansX-Regular.woff
+ ┃ ┃ ┃ ┃ ┣ IRANSansXV.woff
+ ┃ ┃ ┃ ┃ ┗ IRANSansXV.woff2
+ ┃ ┃ ┃ ┗ IRANSansXVF.ttf
+ ┃ ┗ images
+ ┃ ┃ ┗ files
+ ┃ ┃ ┃ ┣ excel.svg
+ ┃ ┃ ┃ ┣ gif.svg
+ ┃ ┃ ┃ ┣ html.svg
+ ┃ ┃ ┃ ┣ jpeg.svg
+ ┃ ┃ ┃ ┣ jpg.svg
+ ┃ ┃ ┃ ┣ json.svg
+ ┃ ┃ ┃ ┣ mov.svg
+ ┃ ┃ ┃ ┣ mp3.svg
+ ┃ ┃ ┃ ┣ pdf.svg
+ ┃ ┃ ┃ ┣ png.svg
+ ┃ ┃ ┃ ┣ rar.svg
+ ┃ ┃ ┃ ┣ svg.svg
+ ┃ ┃ ┃ ┣ txt.svg
+ ┃ ┃ ┃ ┣ uploadFileLoading.svg
+ ┃ ┃ ┃ ┣ word.svg
+ ┃ ┃ ┃ ┣ xls.svg
+ ┃ ┃ ┃ ┗ zip.svg
+ ┗ i18n
+ ┃ ┗ request.ts
+ 
 ```
 
 ## Tech Stack
 
 - React JS
+- Next JS
 - TypeScript
-- MUI
-- React Router Dom
+- MUI v7
 - React Query
 - Mui icons-material
+- Mui x-charts
+- Mui x-data-grid
+- Mui x-date-pickers
+- Mui x-tree-view
+- Mui x-charts
+- Mui x-data-grid
+- Mui x-date-pickers
+- Mui x-tree-view
 
 ## Naming Conventions
 
@@ -111,136 +157,194 @@ Every time you choose to apply a rule(s), explicitly state the rule(s) in the ou
 Here is a simple example of how a component should be written using :
 
 ```tsx
-import { useAlert } from '@fs/core';
-import { FsFormProvider } from '@fs/form';
-import { useService } from '@fs/utils';
-import { Box } from '@mui/material';
-import { useState } from 'react';
+'use client';
+import { FsButton, FsTypography } from '@fs/core';
+import { FsFormProvider, FsInput } from '@fs/form';
+import { Box, Grid, Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { Footer } from 'src/common/components/Layout';
-import type { LoginServiceActions } from '../loginService';
-import { useLoginBg } from './getLoginBackground';
-import SetPostStep from './Steps/SetPostStep';
-import LoginStep from './Steps/LoginStep';
-import './login.css';
+
+const GradientBackground = styled('div')(({ theme }) => ({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: `linear-gradient(-45deg, ${theme.palette.primary.light} 0%, ${theme.palette.secondary.light} 100%)`,
+  backgroundSize: '400% 400%',
+  animation: 'gradient 15s ease infinite',
+  zIndex: -1,
+  '@keyframes gradient': {
+    '0%': { backgroundPosition: '0% 50%' },
+    '50%': { backgroundPosition: '100% 50%' },
+    '100%': { backgroundPosition: '0% 50%' },
+  },
+}));
+
+const FloatingCircles = styled('div')(({ theme }) => ({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  overflow: 'hidden',
+  zIndex: -1,
+  '&::before, &::after': {
+    content: '""',
+    position: 'absolute',
+    borderRadius: '50%',
+    filter: 'blur(80px)',
+    opacity: 0.15,
+    animation: 'float 25s linear infinite',
+  },
+  '&::before': {
+    width: '40vmax',
+    height: '40vmax',
+    background: theme.palette.primary.main,
+    top: '10%',
+    left: '10%',
+  },
+  '&::after': {
+    width: '60vmax',
+    height: '60vmax',
+    background: theme.palette.secondary.main,
+    bottom: '10%',
+    right: '10%',
+    animationDelay: '10s',
+  },
+  '@keyframes float': {
+    '0%': { transform: 'translate(0, 0) rotate(0deg)' },
+    '25%': { transform: 'translate(5vw, 10vh) rotate(90deg)' },
+    '50%': { transform: 'translate(0, 20vh) rotate(180deg)' },
+    '75%': { transform: 'translate(-5vw, 10vh) rotate(270deg)' },
+    '100%': { transform: 'translate(0, 0) rotate(360deg)' },
+  },
+}));
 
 const Login = () => {
-  const [captchaGuid, setCaptchaGuid] = useState('');
-  const [isLogin, setIsLogin] = useState(false);
-
-  const { triggerAlert } = useAlert();
+  const [mounted, setMounted] = useState(false);
   const methods = useForm();
+  const router = useRouter();
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const navigate = useNavigate();
-  const { mutate: loginMutate, isLoading: loginLoading } = useService<
-    LoginServiceActions,
-    'login',
-    'login'
-  >('login', 'login');
-  const { mutate: setPostMutate, isLoading: setPostLoading } = useService<
-    LoginServiceActions,
-    'login',
-    'setPost'
-  >('login', 'setPost');
-  const {
-    mutate: getAllPostsMutate,
-    isLoading: getAllPostsIsLoading,
-    data: allPostsData,
-  } = useService<LoginServiceActions, 'login', 'getAllPosts'>(
-    'login',
-    'getAllPosts'
-  );
-
-  const onSubmit = (data: any) => {
-    if (isLogin) {
-      setPostMutate(
-        { postId: data?.postId },
-        {
-          onSuccess: () => {
-            navigate('/');
-            triggerAlert('ورود با موفقیت انجام شد');
-          },
-        }
-      );
-    } else {
-      loginMutate(
-        { ...data, captchaGuid },
-        {
-          onSuccess() {
-            getAllPostsMutate(undefined, {
-              onSuccess: (resp) => {
-                if (resp.length === 1) {
-                  setPostMutate(
-                    { postId: resp[0]?.id },
-                    {
-                      onSuccess: () => {
-                        navigate('/');
-                        triggerAlert('ورود با موفقیت انجام شد');
-                      },
-                    }
-                  );
-                } else {
-                  setIsLogin(true);
-                }
-              },
-            });
-          },
-        }
-      );
-    }
+  const navigateToSignup = () => {
+    router.push('/sign-up');
   };
-
-  const bg = useLoginBg();
 
   return (
     <Box
       sx={{
-        backgroundImage: `url(${bg})`,
-        backgroundSize: '100% 50vh',
-        backgroundPosition: 'top',
-        backgroundRepeat: 'no-repeat',
-        height: '100vh',
-        overflow: 'hidden',
+        minHeight: '100vh',
         display: 'flex',
-        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        overflow: 'hidden',
+        p: 2,
       }}
     >
-      <FsFormProvider
-        formProps={{ onSubmit: methods.handleSubmit(onSubmit) }}
-        methods={methods}
-        name={'logInForm'}
+      {mounted && (
+        <>
+          <GradientBackground />
+          <FloatingCircles />
+        </>
+      )}
+
+      <Paper
+        elevation={10}
+        sx={{
+          width: '100%',
+          maxWidth: 450,
+          p: 4,
+          borderRadius: 4,
+          backdropFilter: 'blur(8px)',
+          backgroundColor: 'rgba(255, 255, 255, 0.85)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+          transform: mounted ? 'translateY(0)' : 'translateY(20px)',
+          opacity: mounted ? 1 : 0,
+          transition: 'all 0.5s ease-out',
+        }}
       >
-        <Box
-          sx={{
-            height: '100vh',
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {!isLogin && (
-            <LoginStep
-              setCaptchaGuid={setCaptchaGuid}
-              loginLoading={loginLoading}
-              setPostLoading={setPostLoading}
+        <FsTypography
+          i18nKey={'Welcome Back'}
+          variant="h4"
+          component="h1"
+          align="center"
+          sx={{ mb: 3, fontWeight: 700 }}
+        />
+        <FsFormProvider name="login" methods={methods}>
+          <Grid
+            container
+            gap={3}
+            display={'flex'}
+            justifyContent={'center'}
+            flexDirection={'column'}
+          >
+            <Grid>
+              <FsInput
+                name="email"
+                fullWidth
+                i18nKey="Email Address"
+                variant="outlined"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 2,
+                  },
+                }}
+              />
+            </Grid>
+            <Grid>
+              <FsInput
+                name="password"
+                fullWidth
+                i18nKey="Password"
+                type="password"
+                variant="outlined"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 2,
+                  },
+                }}
+              />
+            </Grid>
+          </Grid>
+          <FsButton
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{
+              mt: 3,
+              mb: 2,
+              py: 1.5,
+              borderRadius: 2,
+              fontSize: '1rem',
+              fontWeight: 600,
+              background: 'linear-gradient(45deg, #1976d2 0%, #2196f3 100%)',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              '&:hover': {
+                boxShadow: '0 6px 8px rgba(0, 0, 0, 0.15)',
+              },
+            }}
+            i18nKey="Sign In"
+          />
+          <FsTypography variant="body2" align="center" sx={{ mt: 2 }}>
+            Don&apos;t have an account?
+            <FsButton
+              sx={{ mx: 1 }}
+              i18nKey="Create account"
+              onClick={navigateToSignup}
             />
-          )}
-          {isLogin && (
-            <SetPostStep
-              showAnimation={isLogin}
-              allPostsData={allPostsData}
-              getAllPostsIsLoading={getAllPostsIsLoading}
-              loginLoading={loginLoading}
-              setPostLoading={setPostLoading}
-            />
-          )}
-        </Box>
-      </FsFormProvider>
-      <Footer />
+          </FsTypography>
+        </FsFormProvider>
+      </Paper>
     </Box>
   );
 };
+
 export default Login;
 ```
 
@@ -251,7 +355,6 @@ export default Login;
 
 <!-- ## Testing
 
-- Write unit tests using Jest and React Native Testing Library.
 - Write unit tests for utilities and complex components
 - The test file should be named like the component file but with the .test.tsx extension (e.g., component-name.test.tsx)
 - Do not write unit tests for simple components that only show data -->

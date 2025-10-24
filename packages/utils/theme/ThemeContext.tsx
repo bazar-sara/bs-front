@@ -27,7 +27,7 @@ const FsThemeContextProvider: React.FC<FsThemeContextProviderProps> = ({
   const [fontWeight, setFontWeightState] = useState<number>(() => {
     return 2;
   });
-  const [language, setLanguageState] = useState<Language>('en');
+  const [language, setLanguageState] = useState<Language>('fa');
 
   const setThemeTemplate = (name: ThemeTemplate) => {
     setThemeTemplateState(name);
@@ -48,7 +48,7 @@ const FsThemeContextProvider: React.FC<FsThemeContextProviderProps> = ({
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
   };
-
+  console.log(language);
   const direction: Direction = language === 'fa' ? 'rtl' : 'ltr';
 
   const scaleTypography = (baseSize: number, weightLevel: number) => {

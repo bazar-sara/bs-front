@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 
 const messageCache: Record<string, Record<string, string>> = {};
 
-export default getRequestConfig(async ({ locale = 'en' }) => {
+export default getRequestConfig(async ({ locale = 'fa' }) => {
   if (process.env.NODE_ENV === 'production' && messageCache[locale]) {
     return {
       locale,
