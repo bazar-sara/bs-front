@@ -30,7 +30,19 @@ const Footer = ({ scrollToSection }: FooterProps) => {
   return (
     <Box
       sx={{
-        background: `linear-gradient(135deg, ${theme.palette.common.black} 0%, ${theme.palette.common.black}CC 100%)`,
+        background:
+          theme.palette.mode === 'dark'
+            ? `linear-gradient(135deg, 
+              ${theme.palette.primary[900]} 0%, 
+              ${theme.palette.primary[800]} 25%, 
+              ${theme.palette.common.black} 50%, 
+              ${theme.palette.primary[700]} 75%, 
+              ${theme.palette.primary[800]} 100%)`
+            : `linear-gradient(135deg, 
+              ${theme.palette.common.black} 0%, 
+              ${theme.palette.primary[800]} 30%, 
+              ${theme.palette.common.black} 70%, 
+              ${theme.palette.primary[700]} 100%)`,
         color: theme.palette.common.white,
         py: 8,
         position: 'relative',
@@ -44,9 +56,24 @@ const Footer = ({ scrollToSection }: FooterProps) => {
           height: '1px',
           background: `linear-gradient(90deg, transparent 0%, ${theme.palette.primary.main} 50%, transparent 100%)`,
         },
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background:
+            theme.palette.mode === 'dark'
+              ? `radial-gradient(circle at 30% 20%, ${theme.palette.customColor.main}15 0%, transparent 50%),
+               radial-gradient(circle at 70% 80%, ${theme.palette.primary[500]}10 0%, transparent 50%)`
+              : `radial-gradient(circle at 20% 30%, ${theme.palette.primary[500]}08 0%, transparent 50%),
+               radial-gradient(circle at 80% 70%, ${theme.palette.primary[400]}06 0%, transparent 50%)`,
+          zIndex: 1,
+        },
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
         <Grid container spacing={6}>
           {/* Company Info */}
           <Grid size={{ xs: 12, md: 4 }}>
@@ -58,7 +85,10 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   fontWeight: 800,
                   color: theme.palette.primary.main,
                   mb: 2,
-                  textShadow: `2px 2px 4px ${theme.palette.common.black}4D`,
+                  textShadow:
+                    theme.palette.mode === 'dark'
+                      ? `2px 2px 4px ${theme.palette.common.black}80, 0 0 8px ${theme.palette.primary.main}40`
+                      : `2px 2px 4px ${theme.palette.common.black}4D`,
                 }}
               >
                 بازارسرا
@@ -66,7 +96,14 @@ const Footer = ({ scrollToSection }: FooterProps) => {
               <FsTypography
                 variant="body1"
                 sx={{
-                  color: `${theme.palette.common.white}E6`,
+                  color:
+                    theme.palette.mode === 'dark'
+                      ? theme.palette.common.white
+                      : `${theme.palette.common.white}F5`,
+                  textShadow:
+                    theme.palette.mode === 'dark'
+                      ? `1px 1px 2px ${theme.palette.common.black}80`
+                      : 'none',
                   lineHeight: 1.8,
                   mb: 3,
                 }}
@@ -90,11 +127,29 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   <IconButton
                     sx={{
                       color: theme.palette.primary.main,
-                      backgroundColor: `${theme.palette.common.white}1A`,
+                      backgroundColor:
+                        theme.palette.mode === 'dark'
+                          ? `${theme.palette.primary[500]}20`
+                          : `${theme.palette.common.white}30`,
+                      border:
+                        theme.palette.mode === 'light'
+                          ? `1px solid ${theme.palette.primary.main}20`
+                          : 'none',
                       '&:hover': {
-                        backgroundColor: theme.palette.primary.main,
+                        backgroundColor:
+                          theme.palette.mode === 'dark'
+                            ? theme.palette.customColor.main
+                            : theme.palette.primary.main,
                         color: theme.palette.common.white,
-                        transform: 'translateY(-2px)',
+                        transform: 'translateY(-2px) scale(1.05)',
+                        boxShadow:
+                          theme.palette.mode === 'dark'
+                            ? `0 6px 16px ${theme.palette.customColor.main}50`
+                            : `0 6px 16px ${theme.palette.primary.main}40`,
+                        border:
+                          theme.palette.mode === 'light'
+                            ? `1px solid ${theme.palette.primary.main}`
+                            : 'none',
                       },
                       transition: 'all 0.3s ease',
                     }}
@@ -104,11 +159,29 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   <IconButton
                     sx={{
                       color: theme.palette.primary.main,
-                      backgroundColor: `${theme.palette.common.white}1A`,
+                      backgroundColor:
+                        theme.palette.mode === 'dark'
+                          ? `${theme.palette.primary[500]}20`
+                          : `${theme.palette.common.white}30`,
+                      border:
+                        theme.palette.mode === 'light'
+                          ? `1px solid ${theme.palette.primary.main}20`
+                          : 'none',
                       '&:hover': {
-                        backgroundColor: theme.palette.primary.main,
+                        backgroundColor:
+                          theme.palette.mode === 'dark'
+                            ? theme.palette.customColor.main
+                            : theme.palette.primary.main,
                         color: theme.palette.common.white,
-                        transform: 'translateY(-2px)',
+                        transform: 'translateY(-2px) scale(1.05)',
+                        boxShadow:
+                          theme.palette.mode === 'dark'
+                            ? `0 6px 16px ${theme.palette.customColor.main}50`
+                            : `0 6px 16px ${theme.palette.primary.main}40`,
+                        border:
+                          theme.palette.mode === 'light'
+                            ? `1px solid ${theme.palette.primary.main}`
+                            : 'none',
                       },
                       transition: 'all 0.3s ease',
                     }}
@@ -118,11 +191,29 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   <IconButton
                     sx={{
                       color: theme.palette.primary.main,
-                      backgroundColor: `${theme.palette.common.white}1A`,
+                      backgroundColor:
+                        theme.palette.mode === 'dark'
+                          ? `${theme.palette.primary[500]}20`
+                          : `${theme.palette.common.white}30`,
+                      border:
+                        theme.palette.mode === 'light'
+                          ? `1px solid ${theme.palette.primary.main}20`
+                          : 'none',
                       '&:hover': {
-                        backgroundColor: theme.palette.primary.main,
+                        backgroundColor:
+                          theme.palette.mode === 'dark'
+                            ? theme.palette.customColor.main
+                            : theme.palette.primary.main,
                         color: theme.palette.common.white,
-                        transform: 'translateY(-2px)',
+                        transform: 'translateY(-2px) scale(1.05)',
+                        boxShadow:
+                          theme.palette.mode === 'dark'
+                            ? `0 6px 16px ${theme.palette.customColor.main}50`
+                            : `0 6px 16px ${theme.palette.primary.main}40`,
+                        border:
+                          theme.palette.mode === 'light'
+                            ? `1px solid ${theme.palette.primary.main}`
+                            : 'none',
                       },
                       transition: 'all 0.3s ease',
                     }}
@@ -132,11 +223,29 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   <IconButton
                     sx={{
                       color: theme.palette.primary.main,
-                      backgroundColor: `${theme.palette.common.white}1A`,
+                      backgroundColor:
+                        theme.palette.mode === 'dark'
+                          ? `${theme.palette.primary[500]}20`
+                          : `${theme.palette.common.white}30`,
+                      border:
+                        theme.palette.mode === 'light'
+                          ? `1px solid ${theme.palette.primary.main}20`
+                          : 'none',
                       '&:hover': {
-                        backgroundColor: theme.palette.primary.main,
+                        backgroundColor:
+                          theme.palette.mode === 'dark'
+                            ? theme.palette.customColor.main
+                            : theme.palette.primary.main,
                         color: theme.palette.common.white,
-                        transform: 'translateY(-2px)',
+                        transform: 'translateY(-2px) scale(1.05)',
+                        boxShadow:
+                          theme.palette.mode === 'dark'
+                            ? `0 6px 16px ${theme.palette.customColor.main}50`
+                            : `0 6px 16px ${theme.palette.primary.main}40`,
+                        border:
+                          theme.palette.mode === 'light'
+                            ? `1px solid ${theme.palette.primary.main}`
+                            : 'none',
                       },
                       transition: 'all 0.3s ease',
                     }}
@@ -159,6 +268,10 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   color: theme.palette.common.white,
                   mb: 3,
                   position: 'relative',
+                  textShadow:
+                    theme.palette.mode === 'dark'
+                      ? `1px 1px 3px ${theme.palette.common.black}80`
+                      : 'none',
                   '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -178,7 +291,14 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   component="button"
                   onClick={() => scrollToSection('home')}
                   sx={{
-                    color: `${theme.palette.common.white}CC`,
+                    color:
+                      theme.palette.mode === 'dark'
+                        ? theme.palette.common.white
+                        : `${theme.palette.common.white}E6`,
+                    textShadow:
+                      theme.palette.mode === 'dark'
+                        ? `1px 1px 2px ${theme.palette.common.black}60`
+                        : 'none',
                     textDecoration: 'none',
                     fontSize: '0.95rem',
                     transition: 'all 0.3s ease',
@@ -186,6 +306,10 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                     '&:hover': {
                       color: theme.palette.primary.main,
                       transform: 'translateX(5px)',
+                      textShadow:
+                        theme.palette.mode === 'dark'
+                          ? `1px 1px 2px ${theme.palette.primary.main}80`
+                          : 'none',
                     },
                   }}
                 >
@@ -195,7 +319,14 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   component="button"
                   onClick={() => scrollToSection('about')}
                   sx={{
-                    color: `${theme.palette.common.white}CC`,
+                    color:
+                      theme.palette.mode === 'dark'
+                        ? theme.palette.common.white
+                        : `${theme.palette.common.white}E6`,
+                    textShadow:
+                      theme.palette.mode === 'dark'
+                        ? `1px 1px 2px ${theme.palette.common.black}60`
+                        : 'none',
                     textDecoration: 'none',
                     fontSize: '0.95rem',
                     transition: 'all 0.3s ease',
@@ -203,6 +334,10 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                     '&:hover': {
                       color: theme.palette.primary.main,
                       transform: 'translateX(5px)',
+                      textShadow:
+                        theme.palette.mode === 'dark'
+                          ? `1px 1px 2px ${theme.palette.primary.main}80`
+                          : 'none',
                     },
                   }}
                 >
@@ -212,7 +347,14 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   component="button"
                   onClick={() => scrollToSection('products')}
                   sx={{
-                    color: `${theme.palette.common.white}CC`,
+                    color:
+                      theme.palette.mode === 'dark'
+                        ? theme.palette.common.white
+                        : `${theme.palette.common.white}E6`,
+                    textShadow:
+                      theme.palette.mode === 'dark'
+                        ? `1px 1px 2px ${theme.palette.common.black}60`
+                        : 'none',
                     textDecoration: 'none',
                     fontSize: '0.95rem',
                     transition: 'all 0.3s ease',
@@ -220,6 +362,10 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                     '&:hover': {
                       color: theme.palette.primary.main,
                       transform: 'translateX(5px)',
+                      textShadow:
+                        theme.palette.mode === 'dark'
+                          ? `1px 1px 2px ${theme.palette.primary.main}80`
+                          : 'none',
                     },
                   }}
                 >
@@ -229,7 +375,14 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   component="button"
                   onClick={() => scrollToSection('contact')}
                   sx={{
-                    color: `${theme.palette.common.white}CC`,
+                    color:
+                      theme.palette.mode === 'dark'
+                        ? theme.palette.common.white
+                        : `${theme.palette.common.white}E6`,
+                    textShadow:
+                      theme.palette.mode === 'dark'
+                        ? `1px 1px 2px ${theme.palette.common.black}60`
+                        : 'none',
                     textDecoration: 'none',
                     fontSize: '0.95rem',
                     transition: 'all 0.3s ease',
@@ -237,6 +390,10 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                     '&:hover': {
                       color: theme.palette.primary.main,
                       transform: 'translateX(5px)',
+                      textShadow:
+                        theme.palette.mode === 'dark'
+                          ? `1px 1px 2px ${theme.palette.primary.main}80`
+                          : 'none',
                     },
                   }}
                 >
@@ -257,6 +414,10 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   color: theme.palette.common.white,
                   mb: 3,
                   position: 'relative',
+                  textShadow:
+                    theme.palette.mode === 'dark'
+                      ? `1px 1px 3px ${theme.palette.common.black}80`
+                      : 'none',
                   '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -278,7 +439,16 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   />
                   <FsTypography
                     variant="body2"
-                    sx={{ color: `${theme.palette.common.white}CC` }}
+                    sx={{
+                      color:
+                        theme.palette.mode === 'dark'
+                          ? theme.palette.common.white
+                          : `${theme.palette.common.white}CC`,
+                      textShadow:
+                        theme.palette.mode === 'dark'
+                          ? `1px 1px 2px ${theme.palette.common.black}60`
+                          : 'none',
+                    }}
                   >
                     تهران، خیابان ولیعصر، پلاک ۱۲۳
                   </FsTypography>
@@ -289,7 +459,16 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   />
                   <FsTypography
                     variant="body2"
-                    sx={{ color: `${theme.palette.common.white}CC` }}
+                    sx={{
+                      color:
+                        theme.palette.mode === 'dark'
+                          ? theme.palette.common.white
+                          : `${theme.palette.common.white}CC`,
+                      textShadow:
+                        theme.palette.mode === 'dark'
+                          ? `1px 1px 2px ${theme.palette.common.black}60`
+                          : 'none',
+                    }}
                   >
                     ۰۲۱-۱۲۳۴۵۶۷۸
                   </FsTypography>
@@ -300,7 +479,16 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   />
                   <FsTypography
                     variant="body2"
-                    sx={{ color: `${theme.palette.common.white}CC` }}
+                    sx={{
+                      color:
+                        theme.palette.mode === 'dark'
+                          ? theme.palette.common.white
+                          : `${theme.palette.common.white}CC`,
+                      textShadow:
+                        theme.palette.mode === 'dark'
+                          ? `1px 1px 2px ${theme.palette.common.black}60`
+                          : 'none',
+                    }}
                   >
                     info@bazaarsara.com
                   </FsTypography>
@@ -311,7 +499,16 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   />
                   <FsTypography
                     variant="body2"
-                    sx={{ color: `${theme.palette.common.white}CC` }}
+                    sx={{
+                      color:
+                        theme.palette.mode === 'dark'
+                          ? theme.palette.common.white
+                          : `${theme.palette.common.white}CC`,
+                      textShadow:
+                        theme.palette.mode === 'dark'
+                          ? `1px 1px 2px ${theme.palette.common.black}60`
+                          : 'none',
+                    }}
                   >
                     ۸ صبح تا ۱۰ شب
                   </FsTypography>
@@ -334,7 +531,14 @@ const Footer = ({ scrollToSection }: FooterProps) => {
               <FsTypography
                 variant="body2"
                 sx={{
-                  color: `${theme.palette.common.white}99`,
+                  color:
+                    theme.palette.mode === 'dark'
+                      ? `${theme.palette.common.white}E6`
+                      : `${theme.palette.common.white}99`,
+                  textShadow:
+                    theme.palette.mode === 'dark'
+                      ? `1px 1px 2px ${theme.palette.common.black}40`
+                      : 'none',
                   textAlign: { xs: 'center', md: 'left' },
                 }}
               >
@@ -352,7 +556,14 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                 <MuiLink
                   href="#"
                   sx={{
-                    color: `${theme.palette.common.white}99`,
+                    color:
+                      theme.palette.mode === 'dark'
+                        ? `${theme.palette.common.white}E6`
+                        : `${theme.palette.common.white}99`,
+                    textShadow:
+                      theme.palette.mode === 'dark'
+                        ? `1px 1px 2px ${theme.palette.common.black}40`
+                        : 'none',
                     textDecoration: 'none',
                     fontSize: '0.85rem',
                     transition: 'all 0.3s ease',
@@ -366,7 +577,14 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                 <MuiLink
                   href="#"
                   sx={{
-                    color: `${theme.palette.common.white}99`,
+                    color:
+                      theme.palette.mode === 'dark'
+                        ? `${theme.palette.common.white}E6`
+                        : `${theme.palette.common.white}99`,
+                    textShadow:
+                      theme.palette.mode === 'dark'
+                        ? `1px 1px 2px ${theme.palette.common.black}40`
+                        : 'none',
                     textDecoration: 'none',
                     fontSize: '0.85rem',
                     transition: 'all 0.3s ease',
@@ -380,7 +598,14 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                 <MuiLink
                   href="#"
                   sx={{
-                    color: `${theme.palette.common.white}99`,
+                    color:
+                      theme.palette.mode === 'dark'
+                        ? `${theme.palette.common.white}E6`
+                        : `${theme.palette.common.white}99`,
+                    textShadow:
+                      theme.palette.mode === 'dark'
+                        ? `1px 1px 2px ${theme.palette.common.black}40`
+                        : 'none',
                     textDecoration: 'none',
                     fontSize: '0.85rem',
                     transition: 'all 0.3s ease',
