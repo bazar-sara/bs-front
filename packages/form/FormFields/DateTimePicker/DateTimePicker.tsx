@@ -17,7 +17,7 @@ import ClearButton from '../../ClearButton';
 import { useTranslations } from 'next-intl';
 
 type FsTimePickerProps = Omit<
-  DateTimePickerProps<Moment>,
+  DateTimePickerProps<true>,
   'value' | 'onChange'
 > & {
   i18nKey: string;
@@ -66,7 +66,7 @@ const FsTimePicker = ({
                 {...field}
                 value={field.value ? moment(field.value) : undefined}
                 onChange={(date) => {
-                  field.onChange(formattedDate(date));
+                  field.onChange(formattedDate(date ? moment(date) : null));
                 }}
                 ampm={false}
               />
