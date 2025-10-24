@@ -14,8 +14,6 @@ import {
 import {
   FsAutoComplete,
   FsCheckbox,
-  FsDatePicker,
-  FsDateTimePicker,
   FsFormProvider,
   FsInput,
   FsRadioGroup,
@@ -23,7 +21,6 @@ import {
   FsSelect,
   FsSmsVerification,
   FsSwitch,
-  FsTimePicker,
   FsUploadFile,
 } from '@fs/form';
 import { Box, Paper } from '@mui/material';
@@ -599,7 +596,7 @@ const UiComponents = () => {
                   }}
                 />
               </Grid>
-              <Grid size={{ xs: 12, sm: 6 }}>
+              {/* <Grid size={{ xs: 12, sm: 6 }}>
                 <FsDatePicker
                   name="datePicker"
                   i18nKey="تقویم"
@@ -625,7 +622,7 @@ const UiComponents = () => {
                     required: 'پر کردن فیلد اجباری است.',
                   }}
                 />
-              </Grid>
+              </Grid> */}
               <Grid size={{ xs: 12, sm: 6 }}>
                 <FsSwitch name="ssss" i18nKey="lable" />
               </Grid>

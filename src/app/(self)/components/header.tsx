@@ -1,17 +1,14 @@
 'use client';
 import { FsButton, FsTypography } from '@fs/core';
 import {
-  AppBar,
   Box,
   Container,
   IconButton,
   useTheme,
-  useMediaQuery,
   Drawer,
   List,
   ListItem,
   ListItemText,
-  Divider,
   Link as MuiLink,
 } from '@mui/material';
 import {
@@ -22,7 +19,7 @@ import {
   ShoppingBag as ShoppingBagIcon,
   ContactMail as ContactIcon,
 } from '@mui/icons-material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './styled-components';
 import ThemeToggle from './theme-toggle';
 
@@ -32,8 +29,23 @@ type HeaderComponentProps = {
 
 const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 899);
+    };
+
+    // Check on mount
+    checkIsMobile();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIsMobile);
+
+    // Cleanup event listener on unmount
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   const handleMobileMenuToggle = () => {
     setMobileMenuOpen(!mobileMenuOpen);

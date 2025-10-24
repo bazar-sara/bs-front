@@ -1,11 +1,27 @@
 'use client';
 import { FsButton, FsTypography } from '@fs/core';
-import { Box, Container, Grid, useTheme, useMediaQuery } from '@mui/material';
+import { Box, Container, Grid, useTheme } from '@mui/material';
 import { Storefront as StorefrontIcon } from '@mui/icons-material';
+import { useState, useEffect } from 'react';
 
 const HeroSection = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 899);
+    };
+
+    // Check on mount
+    checkIsMobile();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIsMobile);
+
+    // Cleanup event listener on unmount
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   return (
     <Box id="home" sx={{ pt: 12, pb: 8 }}>
