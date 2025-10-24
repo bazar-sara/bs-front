@@ -1,14 +1,15 @@
-import { UseFormSetValue, UseFormGetValues } from 'react-hook-form';
+import { type UseFormSetValue, type UseFormGetValues } from 'react-hook-form';
 
 export const handleChange =
-  (
-    index: number,
-    setValue: UseFormSetValue<any>,
-    numInputs: number,
-    refs: React.MutableRefObject<(HTMLInputElement | null)[]>,
-    name: string
-  ) =>
+  (options: {
+    index: number;
+    setValue: UseFormSetValue<any>;
+    numInputs: number;
+    refs: React.MutableRefObject<(HTMLInputElement | null)[]>;
+    name: string;
+  }) =>
   (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { index, setValue, numInputs, refs, name } = options;
     const value = event.target.value.replace(/\D/g, '');
     setValue(`${name}[${index}]`, value);
 
@@ -18,14 +19,15 @@ export const handleChange =
   };
 
 export const handleKeyDown =
-  (
-    index: number,
-    getValues: UseFormGetValues<any>,
-    setValue: UseFormSetValue<any>,
-    refs: React.MutableRefObject<(HTMLInputElement | null)[]>,
-    name: string
-  ) =>
+  (options: {
+    index: number;
+    getValues: UseFormGetValues<any>;
+    setValue: UseFormSetValue<any>;
+    refs: React.MutableRefObject<(HTMLInputElement | null)[]>;
+    name: string;
+  }) =>
   (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const { index, getValues, setValue, refs, name } = options;
     if (event.key === 'Backspace' && !getValues(`${name}[${index}]`)) {
       if (index > 0) {
         setValue(`${name}[${index - 1}]`, '');
@@ -35,13 +37,14 @@ export const handleKeyDown =
   };
 
 export const handlePaste =
-  (
-    numInputs: number,
-    setValue: UseFormSetValue<any>,
-    refs: React.MutableRefObject<(HTMLInputElement | null)[]>,
-    name: string
-  ) =>
+  (options: {
+    numInputs: number;
+    setValue: UseFormSetValue<any>;
+    refs: React.MutableRefObject<(HTMLInputElement | null)[]>;
+    name: string;
+  }) =>
   (event: React.ClipboardEvent<HTMLInputElement>) => {
+    const { numInputs, setValue, refs, name } = options;
     event.preventDefault();
     const pasteData = event.clipboardData
       .getData('text')

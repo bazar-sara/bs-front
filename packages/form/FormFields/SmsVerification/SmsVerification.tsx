@@ -1,4 +1,3 @@
-'use client';
 import { Box, TextField } from '@mui/material';
 import { useMemo, useRef } from 'react';
 import {
@@ -31,12 +30,18 @@ const FsSmsVerification = ({
   } = useFormContext();
   const refs = useRef<(HTMLInputElement | null)[]>(Array(numInputs).fill(null));
 
-  const value: string[] = useWatch({ name });
+  const fieldNames = useMemo(
+    () => Array.from({ length: numInputs }, (_, index) => `${name}[${index}]`),
+    [numInputs, name]
+  );
+
+  // 2. Pass the array of names to useWatch to get an array of all values.
+  const value = useWatch({ name: fieldNames }) as string[];
   const hasError = useMemo(() => {
     const isNotValid =
       (isSubmitted && !value) || (value && value?.some((i) => i === ''));
     return isNotValid;
-  }, [value]);
+  }, [isSubmitted, value]);
 
   return (
     <>
@@ -70,21 +75,21 @@ const FsSmsVerification = ({
                       textAlign: 'center',
                     },
                   }}
-                  onChange={handleChange(
+                  onChange={handleChange({
                     index,
                     setValue,
                     numInputs,
                     refs,
-                    name
-                  )}
-                  onKeyDown={handleKeyDown(
+                    name,
+                  })}
+                  onKeyDown={handleKeyDown({
                     index,
                     getValues,
                     setValue,
                     refs,
-                    name
-                  )}
-                  onPaste={handlePaste(numInputs, setValue, refs, name)}
+                    name,
+                  })}
+                  onPaste={handlePaste({ numInputs, setValue, refs, name })}
                 />
               )}
             />
