@@ -9,20 +9,23 @@ import {
   useFormContext,
   type ControllerProps,
 } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useExtractErrorInfo } from '../../useExtractErrorInfo';
 import { Box } from '@mui/material';
 import ErrorMessage from '../../ErrorMessage';
 import ClearButton from '../../ClearButton';
 import moment from 'moment-jalaali';
 import { isValid } from 'date-fns-jalali';
-import { useTranslations } from 'next-intl';
+import type { PickerChangeHandlerContext } from '@mui/x-date-pickers/models';
+import type { DateValidationError } from '@mui/x-date-pickers/models';
 
-type FsDatePickerProps = Omit<DatePickerProps<Date>, 'value' | 'onChange'> & {
+export type FsDatePickerProps = DatePickerProps<boolean> & {
   i18nKey: string;
   rules?: ControllerProps['rules'];
   name: string;
-  defaultValue?: string;
+  defaultValue?: string | any;
   clearButton?: boolean;
+  showingFormErrors?: boolean;
 };
 
 const FsDatePicker = ({
@@ -31,15 +34,17 @@ const FsDatePicker = ({
   i18nKey,
   defaultValue,
   clearButton = true,
+  showingFormErrors = true,
   minDate = new Date('1921-03-21'),
   maxDate = new Date('2082-03-19'),
+  onChange,
   ...rest
 }: FsDatePickerProps) => {
   const {
     control,
     formState: { errors },
   } = useFormContext();
-  const t = useTranslations();
+  const { t } = useTranslation();
   const { errorI18nKey } = useExtractErrorInfo(errors, name);
 
   const formattedDate = (date: Date | null) => {
@@ -100,12 +105,12 @@ const FsDatePicker = ({
                 slotProps={{
                   calendarHeader: {
                     sx: {
-                      '.MuiIconButton-edgeStart,.MuiIconButton-edgeEnd': {
-                        rotate:
-                          process.env.NODE_ENV !== 'development'
-                            ? '180deg'
-                            : undefined,
-                      },
+                      // '.MuiIconButton-edgeStart,.MuiIconButton-edgeEnd': {
+                      //   rotate:
+                      //     import.meta.env.MODE !== 'development'
+                      //       ? '180deg'
+                      //       : undefined,
+                      // },
                     },
                   },
                 }}
@@ -115,11 +120,18 @@ const FsDatePicker = ({
                 {...rest}
                 {...field}
                 value={field.value ? new Date(field.value) : null}
-                onChange={(date) => {
-                  field.onChange(formattedDate(date));
+                onChange={(
+                  date: any,
+                  context: PickerChangeHandlerContext<DateValidationError>
+                ) => {
+                  const dateValue = date ? new Date(date.toString()) : null;
+                  if (onChange) {
+                    onChange(formattedDate(dateValue) as any, context);
+                  }
+                  field.onChange(formattedDate(dateValue));
                 }}
               />
-              <ErrorMessage i18nKey={errorI18nKey} />
+              {showingFormErrors && <ErrorMessage i18nKey={errorI18nKey} />}
             </Box>
           </LocalizationProvider>
         );
