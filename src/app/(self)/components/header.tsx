@@ -17,6 +17,7 @@ import {
 import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material';
 import { useState } from 'react';
 import { Header } from './styled-components';
+import ThemeToggle from './theme-toggle';
 
 type HeaderComponentProps = {
   scrollToSection: (sectionId: string) => void;
@@ -61,13 +62,16 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
             </FsTypography>
 
             {isMobile ? (
-              <IconButton
-                color="inherit"
-                onClick={handleMobileMenuToggle}
-                sx={{ color: '#fff' }}
-              >
-                <MenuIcon />
-              </IconButton>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <ThemeToggle />
+                <IconButton
+                  color="inherit"
+                  onClick={handleMobileMenuToggle}
+                  sx={{ color: theme.palette.common.white }}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Box>
             ) : (
               <Box sx={{ display: 'flex', gap: 4, alignItems: 'center' }}>
                 <MuiLink
@@ -114,6 +118,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 >
                   تماس با ما
                 </MuiLink>
+                <ThemeToggle />
                 <FsButton
                   variant="outlined"
                   sx={{
@@ -141,7 +146,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
         sx={{
           '& .MuiDrawer-paper': {
             width: 280,
-            background: 'rgba(64, 224, 208, 0.95)',
+            background: `${theme.palette.primary.main}F2`,
             backdropFilter: 'blur(10px)',
           },
         }}
@@ -154,38 +159,56 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
             alignItems: 'center',
           }}
         >
-          <FsTypography variant="h6" sx={{ color: '#fff', fontWeight: 700 }}>
+          <FsTypography
+            variant="h6"
+            sx={{ color: theme.palette.common.white, fontWeight: 700 }}
+          >
             بازارسرا
           </FsTypography>
-          <IconButton onClick={handleMobileMenuToggle} sx={{ color: '#fff' }}>
+          <IconButton
+            onClick={handleMobileMenuToggle}
+            sx={{ color: theme.palette.common.white }}
+          >
             <CloseIcon />
           </IconButton>
         </Box>
-        <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+        <Divider sx={{ borderColor: `${theme.palette.common.white}4D` }} />
         <List>
           <ListItem
             component="button"
             onClick={() => handleScrollToSection('home')}
           >
-            <ListItemText primary="خانه" sx={{ color: '#fff' }} />
+            <ListItemText
+              primary="خانه"
+              sx={{ color: theme.palette.common.white }}
+            />
           </ListItem>
           <ListItem
             component="button"
             onClick={() => handleScrollToSection('about')}
           >
-            <ListItemText primary="درباره ما" sx={{ color: '#fff' }} />
+            <ListItemText
+              primary="درباره ما"
+              sx={{ color: theme.palette.common.white }}
+            />
           </ListItem>
           <ListItem
             component="button"
             onClick={() => handleScrollToSection('products')}
           >
-            <ListItemText primary="محصولات" sx={{ color: '#fff' }} />
+            <ListItemText
+              primary="محصولات"
+              sx={{ color: theme.palette.common.white }}
+            />
           </ListItem>
           <ListItem
             component="button"
             onClick={() => handleScrollToSection('contact')}
           >
-            <ListItemText primary="تماس با ما" sx={{ color: '#fff' }} />
+            <ListItemText
+              primary="تماس با ما"
+              sx={{ color: theme.palette.common.white }}
+            />
           </ListItem>
         </List>
         <Box sx={{ p: 2 }}>
@@ -193,11 +216,11 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
             variant="outlined"
             fullWidth
             sx={{
-              borderColor: '#fff',
-              color: '#fff',
+              borderColor: theme.palette.common.white,
+              color: theme.palette.common.white,
               '&:hover': {
-                borderColor: '#fff',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderColor: theme.palette.common.white,
+                backgroundColor: `${theme.palette.common.white}1A`,
               },
             }}
           >

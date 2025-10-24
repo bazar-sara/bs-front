@@ -83,7 +83,7 @@ const ContactSection = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         borderRadius: 2,
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        backgroundColor: `${theme.palette.background.paper}E6`,
                       },
                     }}
                   />
@@ -96,7 +96,7 @@ const ContactSection = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         borderRadius: 2,
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        backgroundColor: `${theme.palette.background.paper}E6`,
                       },
                     }}
                   />
@@ -108,7 +108,7 @@ const ContactSection = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         borderRadius: 2,
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        backgroundColor: `${theme.palette.background.paper}E6`,
                       },
                     }}
                   />
@@ -122,7 +122,7 @@ const ContactSection = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         borderRadius: 2,
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        backgroundColor: `${theme.palette.background.paper}E6`,
                       },
                     }}
                   />
@@ -177,10 +177,10 @@ const ContactSection = () => {
                     gap: 2,
                     p: 2,
                     borderRadius: 2,
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: `${theme.palette.common.white}1A`,
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                      backgroundColor: `${theme.palette.common.white}33`,
                       transform: 'translateX(5px)',
                     },
                   }}
@@ -225,10 +225,10 @@ const ContactSection = () => {
                     gap: 2,
                     p: 2,
                     borderRadius: 2,
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: `${theme.palette.common.white}1A`,
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                      backgroundColor: `${theme.palette.common.white}33`,
                       transform: 'translateX(5px)',
                     },
                   }}
@@ -273,10 +273,10 @@ const ContactSection = () => {
                     gap: 2,
                     p: 2,
                     borderRadius: 2,
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: `${theme.palette.common.white}1A`,
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                      backgroundColor: `${theme.palette.common.white}33`,
                       transform: 'translateX(5px)',
                     },
                   }}
@@ -321,10 +321,10 @@ const ContactSection = () => {
                     gap: 2,
                     p: 2,
                     borderRadius: 2,
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: `${theme.palette.common.white}1A`,
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                      backgroundColor: `${theme.palette.common.white}33`,
                       transform: 'translateX(5px)',
                     },
                   }}

@@ -48,7 +48,7 @@ const DiscountProductsSection = () => {
         </Box>
 
         <Grid container spacing={3} justifyContent="center">
-          {discountProducts.map((product) => (
+          {discountProducts.map((product, index) => (
             <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={product.id}>
               <DiscountCard>
                 <DiscountBadge
@@ -62,6 +62,7 @@ const DiscountProductsSection = () => {
                     fill
                     style={{ objectFit: 'cover' }}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    priority={index < 4}
                   />
                 </Box>
                 <CardContent sx={{ p: 2 }}>

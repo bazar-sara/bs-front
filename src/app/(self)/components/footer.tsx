@@ -90,7 +90,7 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   <IconButton
                     sx={{
                       color: theme.palette.primary.main,
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      backgroundColor: `${theme.palette.common.white}1A`,
                       '&:hover': {
                         backgroundColor: theme.palette.primary.main,
                         color: theme.palette.common.white,
@@ -104,7 +104,7 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   <IconButton
                     sx={{
                       color: theme.palette.primary.main,
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      backgroundColor: `${theme.palette.common.white}1A`,
                       '&:hover': {
                         backgroundColor: theme.palette.primary.main,
                         color: theme.palette.common.white,
@@ -118,7 +118,7 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   <IconButton
                     sx={{
                       color: theme.palette.primary.main,
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      backgroundColor: `${theme.palette.common.white}1A`,
                       '&:hover': {
                         backgroundColor: theme.palette.primary.main,
                         color: theme.palette.common.white,
@@ -132,7 +132,7 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   <IconButton
                     sx={{
                       color: theme.palette.primary.main,
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      backgroundColor: `${theme.palette.common.white}1A`,
                       '&:hover': {
                         backgroundColor: theme.palette.primary.main,
                         color: theme.palette.common.white,

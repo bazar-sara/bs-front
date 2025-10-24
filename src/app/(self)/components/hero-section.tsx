@@ -78,7 +78,7 @@ const HeroSection = () => {
               <StorefrontIcon
                 sx={{
                   fontSize: { xs: 200, md: 300 },
-                  color: 'rgba(255, 255, 255, 0.3)',
+                  color: `${theme.palette.common.white}4D`,
                   animation: 'pulse 3s ease-in-out infinite',
                 }}
               />

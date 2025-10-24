@@ -1,5 +1,6 @@
 'use client';
 import { TurquoiseGradient, FloatingShapes } from './styled-components';
+import { AnimatedBackground, ParticleField } from './animated-background';
 import HeaderComponent from './header';
 import HeroSection from './hero-section';
 import DiscountProductsSection from './discount-products-section';
@@ -18,7 +19,13 @@ const Landing = () => {
 
   return (
     <TurquoiseGradient>
+      <AnimatedBackground />
       <FloatingShapes />
+      <ParticleField>
+        <div />
+        <div />
+        <div />
+      </ParticleField>
       <HeaderComponent scrollToSection={scrollToSection} />
       <HeroSection />
       <DiscountProductsSection />
