@@ -48,7 +48,6 @@ const FsThemeContextProvider: React.FC<FsThemeContextProviderProps> = ({
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
   };
-  console.log(language);
   const direction: Direction = language === 'fa' ? 'rtl' : 'ltr';
 
   const scaleTypography = (baseSize: number, weightLevel: number) => {
@@ -99,7 +98,6 @@ const FsThemeContextProvider: React.FC<FsThemeContextProviderProps> = ({
     () => (direction === 'rtl' ? cacheRtl : cacheLtr),
     [direction]
   );
-
   const contextValue = useMemo(
     () => ({
       themeTemplate,
