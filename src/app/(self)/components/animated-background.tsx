@@ -9,6 +9,7 @@ export const AnimatedBackground = styled('div')(({ theme }) => ({
   height: '100%',
   overflow: 'hidden',
   zIndex: 1,
+  pointerEvents: 'none',
   '&::before, &::after': {
     content: '""',
     position: 'absolute',
@@ -49,6 +50,7 @@ export const ParticleField = styled('div')(({ theme }) => ({
   height: '100%',
   overflow: 'hidden',
   zIndex: 1,
+  pointerEvents: 'none',
   '&::before, &::after, & > div': {
     content: '""',
     position: 'absolute',

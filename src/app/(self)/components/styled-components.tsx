@@ -33,6 +33,7 @@ export const TurquoiseGradient = styled('div')(({ theme }) => ({
         : `radial-gradient(circle at 20% 80%, ${theme.palette.primary[200]}40 0%, transparent 50%),
          radial-gradient(circle at 80% 20%, ${theme.palette.primary[300]}40 0%, transparent 50%)`,
     zIndex: 1,
+    pointerEvents: 'none',
     animation: 'backgroundShift 20s ease-in-out infinite',
   },
   '@keyframes backgroundShift': {
@@ -49,6 +50,7 @@ export const FloatingShapes = styled('div')(({ theme }) => ({
   height: '100%',
   overflow: 'hidden',
   zIndex: 2,
+  pointerEvents: 'none',
   '&::before, &::after': {
     content: '""',
     position: 'absolute',
