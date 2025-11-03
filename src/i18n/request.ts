@@ -4,17 +4,18 @@ import fs from 'fs/promises';
 
 const messageCache: Record<string, Record<string, string>> = {};
 
-export default getRequestConfig(async ({ locale = 'fa' }) => {
-  if (process.env.NODE_ENV === 'production' && messageCache[locale]) {
+export default getRequestConfig(async ({ locale }) => {
+  const resolvedLocale = locale || 'fa';
+  if (process.env.NODE_ENV === 'production' && messageCache[resolvedLocale]) {
     return {
-      locale,
-      messages: messageCache[locale],
+      locale: resolvedLocale,
+      messages: messageCache[resolvedLocale],
     };
   }
 
   const messages: Record<string, string> = {};
 
-  const files = await glob(`src/app/**/i18n/${locale}.json`, {
+  const files = await glob(`src/app/**/i18n/${resolvedLocale}.json`, {
     cwd: process.cwd(),
     absolute: true,
     nodir: true,
@@ -33,11 +34,11 @@ export default getRequestConfig(async ({ locale = 'fa' }) => {
   }
 
   if (process.env.NODE_ENV === 'production') {
-    messageCache[locale] = messages;
+    messageCache[resolvedLocale] = messages;
   }
 
   return {
-    locale,
+    locale: resolvedLocale,
     messages,
     onError(error) {
       console.log('Error in i18n request:', error);

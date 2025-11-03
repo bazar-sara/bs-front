@@ -10,6 +10,10 @@ import {
   ListItem,
   ListItemText,
   Link as MuiLink,
+  Avatar,
+  Menu,
+  MenuItem,
+  Divider,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -18,8 +22,13 @@ import {
   Info as InfoIcon,
   ShoppingBag as ShoppingBagIcon,
   ContactMail as ContactIcon,
+  Store as StoreIcon,
+  Logout as LogoutIcon,
+  ShoppingCart as ShoppingCartIcon,
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/auth-context';
 import { Header } from './styled-components';
 import ThemeToggle from './theme-toggle';
 
@@ -29,8 +38,11 @@ type HeaderComponentProps = {
 
 const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
   const theme = useTheme();
+  const router = useRouter();
+  const { user, logout } = useAuth();
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -54,6 +66,34 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
   const handleScrollToSection = (sectionId: string) => {
     scrollToSection(sectionId);
     setMobileMenuOpen(false);
+  };
+
+  const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMyShop = () => {
+    handleMenuClose();
+    router.push('/my-shop');
+  };
+
+  const handleShoppingCart = () => {
+    handleMenuClose();
+    router.push('/cart');
+  };
+
+  const handleLogout = () => {
+    handleMenuClose();
+    logout();
+    router.push('/');
+  };
+
+  const handleLoginClick = () => {
+    router.push('/login');
   };
 
   return (
@@ -180,19 +220,46 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                     تماس با ما
                   </MuiLink>
                   <ThemeToggle />
-                  <FsButton
-                    variant="outlined"
-                    sx={{
-                      borderColor: theme.palette.common.white,
-                      color: theme.palette.common.white,
-                      '&:hover': {
+                  {user ? (
+                    <IconButton
+                      onClick={handleAvatarClick}
+                      sx={{
+                        p: 0,
+                        ml: 2,
+                        border: `2px solid ${theme.palette.common.white}`,
+                        '&:hover': {
+                          transform: 'scale(1.1)',
+                        },
+                        transition: 'all 0.3s ease',
+                      }}
+                    >
+                      <Avatar
+                        src={user.avatar}
+                        alt={user.name}
+                        sx={{
+                          width: 40,
+                          height: 40,
+                        }}
+                      >
+                        {user.name.charAt(0).toUpperCase()}
+                      </Avatar>
+                    </IconButton>
+                  ) : (
+                    <FsButton
+                      variant="outlined"
+                      onClick={handleLoginClick}
+                      sx={{
                         borderColor: theme.palette.common.white,
-                        backgroundColor: `${theme.palette.common.white}1A`,
-                      },
-                    }}
-                  >
-                    ورود/ثبت نام
-                  </FsButton>
+                        color: theme.palette.common.white,
+                        '&:hover': {
+                          borderColor: theme.palette.common.white,
+                          backgroundColor: `${theme.palette.common.white}1A`,
+                        },
+                      }}
+                    >
+                      ورود/ثبت نام
+                    </FsButton>
+                  )}
                 </Box>
               )}
             </Box>
@@ -477,33 +544,171 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
             background: `linear-gradient(90deg, transparent, ${theme.palette.primary.main}10)`,
           }}
         >
-          <FsButton
-            variant="outlined"
-            fullWidth
-            sx={{
-              borderColor: theme.palette.common.white,
-              color: theme.palette.common.white,
-              py: 1.5,
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              borderRadius: 2,
-              textShadow:
-                theme.palette.mode === 'dark'
-                  ? `1px 1px 2px ${theme.palette.common.black}60`
-                  : 'none',
-              '&:hover': {
-                borderColor: theme.palette.primary.main,
-                backgroundColor: `${theme.palette.primary.main}20`,
-                transform: 'translateY(-2px)',
-                boxShadow: `0 4px 12px ${theme.palette.primary.main}40`,
-              },
-              transition: 'all 0.3s ease',
-            }}
-          >
-            ورود/ثبت نام
-          </FsButton>
+          {user ? (
+            <Box>
+              <Box sx={{ px: 2, py: 1.5, mb: 1 }}>
+                <FsTypography
+                  variant="body2"
+                  sx={{ color: theme.palette.common.white, fontWeight: 600 }}
+                >
+                  {user.name}
+                </FsTypography>
+                <FsTypography
+                  variant="caption"
+                  sx={{ color: theme.palette.common.white, opacity: 0.8 }}
+                >
+                  {user.email}
+                </FsTypography>
+              </Box>
+              <Divider sx={{ borderColor: `${theme.palette.common.white}20`, mb: 1 }} />
+              {user.type === 'colleague' ? (
+                <FsButton
+                  variant="outlined"
+                  fullWidth
+                  onClick={handleMyShop}
+                  sx={{
+                    borderColor: theme.palette.common.white,
+                    color: theme.palette.common.white,
+                    py: 1.5,
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    borderRadius: 2,
+                    mb: 1,
+                    '&:hover': {
+                      borderColor: theme.palette.primary.main,
+                      backgroundColor: `${theme.palette.primary.main}20`,
+                    },
+                    transition: 'all 0.3s ease',
+                  }}
+                >
+                  <StoreIcon sx={{ ml: 1, fontSize: 20 }} />
+                  <FsTypography variant="body2" i18nKey="My Shop" />
+                </FsButton>
+              ) : (
+                <FsButton
+                  variant="outlined"
+                  fullWidth
+                  onClick={handleShoppingCart}
+                  sx={{
+                    borderColor: theme.palette.common.white,
+                    color: theme.palette.common.white,
+                    py: 1.5,
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    borderRadius: 2,
+                    mb: 1,
+                    '&:hover': {
+                      borderColor: theme.palette.primary.main,
+                      backgroundColor: `${theme.palette.primary.main}20`,
+                    },
+                    transition: 'all 0.3s ease',
+                  }}
+                >
+                  <ShoppingCartIcon sx={{ ml: 1, fontSize: 20 }} />
+                  <FsTypography variant="body2" i18nKey="Shopping Cart" />
+                </FsButton>
+              )}
+              <FsButton
+                variant="outlined"
+                fullWidth
+                onClick={handleLogout}
+                sx={{
+                  borderColor: theme.palette.common.white,
+                  color: theme.palette.common.white,
+                  py: 1.5,
+                  fontSize: '1rem',
+                  fontWeight: 600,
+                  borderRadius: 2,
+                  '&:hover': {
+                    borderColor: theme.palette.error.main,
+                    backgroundColor: `${theme.palette.error.main}20`,
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                <LogoutIcon sx={{ ml: 1, fontSize: 20 }} />
+                <FsTypography variant="body2" i18nKey="Logout" />
+              </FsButton>
+            </Box>
+          ) : (
+            <FsButton
+              variant="outlined"
+              fullWidth
+              onClick={handleLoginClick}
+              sx={{
+                borderColor: theme.palette.common.white,
+                color: theme.palette.common.white,
+                py: 1.5,
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                borderRadius: 2,
+                textShadow:
+                  theme.palette.mode === 'dark'
+                    ? `1px 1px 2px ${theme.palette.common.black}60`
+                    : 'none',
+                '&:hover': {
+                  borderColor: theme.palette.primary.main,
+                  backgroundColor: `${theme.palette.primary.main}20`,
+                  transform: 'translateY(-2px)',
+                  boxShadow: `0 4px 12px ${theme.palette.primary.main}40`,
+                },
+                transition: 'all 0.3s ease',
+              }}
+            >
+              ورود/ثبت نام
+            </FsButton>
+          )}
         </Box>
       </Drawer>
+
+      {/* Avatar Menu for Colleagues */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        sx={{
+          mt: 1.5,
+          '& .MuiPaper-root': {
+            minWidth: 200,
+            borderRadius: 2,
+            boxShadow: `0 4px 20px ${theme.palette.common.black}20`,
+          },
+        }}
+      >
+        <Box sx={{ px: 2, py: 1.5 }}>
+          <FsTypography variant="body2" sx={{ fontWeight: 600 }}>
+            {user?.name}
+          </FsTypography>
+          <FsTypography variant="caption" color="text.secondary">
+            {user?.email}
+          </FsTypography>
+        </Box>
+        <Divider />
+        {user?.type === 'colleague' ? (
+          <MenuItem onClick={handleMyShop} sx={{ py: 1.5 }}>
+            <StoreIcon sx={{ ml: 1.5, fontSize: 20 }} />
+            <FsTypography variant="body2" i18nKey="My Shop" />
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={handleShoppingCart} sx={{ py: 1.5 }}>
+            <ShoppingCartIcon sx={{ ml: 1.5, fontSize: 20 }} />
+            <FsTypography variant="body2" i18nKey="Shopping Cart" />
+          </MenuItem>
+        )}
+        <Divider />
+        <MenuItem onClick={handleLogout} sx={{ py: 1.5 }}>
+          <LogoutIcon sx={{ ml: 1.5, fontSize: 20 }} />
+          <FsTypography variant="body2" i18nKey="Logout" />
+        </MenuItem>
+      </Menu>
     </>
   );
 };

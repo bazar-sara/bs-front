@@ -1,11 +1,17 @@
 'use client';
 import { FsButton, FsTypography } from '@fs/core';
 import { FsFormProvider, FsInput } from '@fs/form';
-import { Box, Grid, Paper } from '@mui/material';
+import { Box, Paper, Card, CardContent, useTheme } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import {
+  Person as PersonIcon,
+  Business as BusinessIcon,
+} from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useAuth, type UserType } from '@/contexts/auth-context';
 
 const GradientBackground = styled('div')(({ theme }) => ({
   position: 'fixed',
@@ -64,17 +70,46 @@ const FloatingCircles = styled('div')(({ theme }) => ({
   },
 }));
 
+type SignUpFormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+
 const SignUp = () => {
+  const theme = useTheme();
   const [mounted, setMounted] = useState(false);
-  const methods = useForm();
+  const [userType, setUserType] = useState<UserType>('regular');
+  const [isLoading, setIsLoading] = useState(false);
+  const methods = useForm<SignUpFormData>();
+  const router = useRouter();
+  const { login: loginUser } = useAuth();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const router = useRouter();
   const navigateToLogin = () => {
     router.push('/login');
+  };
+
+  const handleUserTypeChange = (newType: UserType) => {
+    setUserType(newType);
+  };
+
+  const onSubmit = async (data: SignUpFormData) => {
+    if (!userType) return;
+    setIsLoading(true);
+    try {
+      await loginUser(data.email, data.password, userType);
+      router.push('/');
+    } catch (error) {
+      console.error('Sign up error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -119,7 +154,171 @@ const SignUp = () => {
           sx={{ mb: 3, fontWeight: 700 }}
         />
 
-        <FsFormProvider name="signup" methods={methods}>
+        <Box sx={{ mb: 3 }}>
+          <Grid container spacing={1.5}>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Card
+                onClick={() => handleUserTypeChange('regular')}
+                sx={{
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  border: 2,
+                  borderColor:
+                    userType === 'regular'
+                      ? theme.palette.success.main
+                      : 'divider',
+                  backgroundColor:
+                    userType === 'regular'
+                      ? `${theme.palette.success.main}15`
+                      : 'background.paper',
+                  boxShadow:
+                    userType === 'regular'
+                      ? `0 4px 12px ${theme.palette.success.main}40`
+                      : 1,
+                  '&:hover': {
+                    borderColor: userType === 'regular' ? theme.palette.success.dark : theme.palette.success.main,
+                    boxShadow: userType === 'regular' 
+                      ? `0 4px 16px ${theme.palette.success.main}50`
+                      : `0 2px 8px ${theme.palette.success.main}30`,
+                  },
+                }}
+              >
+                <CardContent
+                  sx={{
+                    p: 2,
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 1.5,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor:
+                        userType === 'regular'
+                          ? `${theme.palette.success.main}20`
+                          : `${theme.palette.success.main}08`,
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    <PersonIcon
+                      sx={{
+                        fontSize: 24,
+                        color:
+                          userType === 'regular'
+                            ? theme.palette.success.dark
+                            : theme.palette.text.secondary,
+                      }}
+                    />
+                  </Box>
+                  <FsTypography
+                    variant="body1"
+                    sx={{
+                      fontWeight: userType === 'regular' ? 700 : 600,
+                      fontSize: '0.95rem',
+                      color:
+                        userType === 'regular'
+                          ? theme.palette.success.dark
+                          : theme.palette.text.primary,
+                    }}
+                    i18nKey="Customer"
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Card
+                onClick={() => handleUserTypeChange('colleague')}
+                sx={{
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  border: 2,
+                  borderColor:
+                    userType === 'colleague'
+                      ? theme.palette.info.main
+                      : 'divider',
+                  backgroundColor:
+                    userType === 'colleague'
+                      ? `${theme.palette.info.main}15`
+                      : 'background.paper',
+                  boxShadow:
+                    userType === 'colleague'
+                      ? `0 4px 12px ${theme.palette.info.main}40`
+                      : 1,
+                  '&:hover': {
+                    borderColor: userType === 'colleague' ? theme.palette.info.dark : theme.palette.info.main,
+                    boxShadow: userType === 'colleague' 
+                      ? `0 4px 16px ${theme.palette.info.main}50`
+                      : `0 2px 8px ${theme.palette.info.main}30`,
+                  },
+                }}
+              >
+                <CardContent
+                  sx={{
+                    p: 2,
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 1.5,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor:
+                        userType === 'colleague'
+                          ? `${theme.palette.info.main}20`
+                          : `${theme.palette.info.main}08`,
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    <BusinessIcon
+                      sx={{
+                        fontSize: 24,
+                        color:
+                          userType === 'colleague'
+                            ? theme.palette.info.dark
+                            : theme.palette.text.secondary,
+                      }}
+                    />
+                  </Box>
+                  <FsTypography
+                    variant="body1"
+                    sx={{
+                      fontWeight: userType === 'colleague' ? 700 : 600,
+                      fontSize: '0.95rem',
+                      color:
+                        userType === 'colleague'
+                          ? theme.palette.info.dark
+                          : theme.palette.text.primary,
+                    }}
+                    i18nKey="Seller"
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
+
+        <FsFormProvider
+          name="signup"
+          // @ts-expect-error - FsFormProvider expects FieldValues but we're using typed form
+          methods={methods}
+          formProps={{ onSubmit: methods.handleSubmit(onSubmit) }}
+        >
           <Grid
             container
             gap={3}
@@ -204,6 +403,7 @@ const SignUp = () => {
             type="submit"
             fullWidth
             variant="contained"
+            disabled={isLoading}
             sx={{
               mt: 3,
               mb: 2,
@@ -217,17 +417,17 @@ const SignUp = () => {
                 boxShadow: '0 6px 8px rgba(0, 0, 0, 0.15)',
               },
             }}
-            i18nKey="Sign Up"
+            i18nKey={isLoading ? 'Signing Up...' : 'Sign Up'}
           />
 
-          <FsTypography variant="body2" align="center" sx={{ mt: 2 }}>
-            Already have an account?
+          <Box sx={{ mt: 2, textAlign: 'center' }}>
+            <FsTypography component="span" i18nKey="Already have an account?" variant="body2" />
             <FsButton
               sx={{ mx: 1 }}
               i18nKey="Sign in"
               onClick={navigateToLogin}
             />
-          </FsTypography>
+          </Box>
         </FsFormProvider>
       </Paper>
     </Box>

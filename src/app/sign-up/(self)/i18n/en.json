@@ -1,5 +1,14 @@
 {
-  "SIGN_UP": {
-    "TITLE": "Hello world!"
-  }
+  "Create Account": "Create Account",
+  "Customer": "Customer",
+  "Seller": "Seller",
+  "First Name": "First Name",
+  "Last Name": "Last Name",
+  "Email Address": "Email Address",
+  "Password": "Password",
+  "Confirm Password": "Confirm Password",
+  "Sign Up": "Sign Up",
+  "Signing Up...": "Signing Up...",
+  "Already have an account?": "Already have an account?",
+  "Sign in": "Sign in"
 }
