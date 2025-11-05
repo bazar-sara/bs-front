@@ -1,5 +1,13 @@
 {
-  "LOGIN": {
-    "TITLE": "Hello world!"
-  }
+  "Regular Login": "Regular Login",
+  "Colleague Login": "Colleague Login",
+  "Customer": "Customer",
+  "Seller": "Seller",
+  "Welcome Back": "Welcome Back",
+  "Email Address": "Email Address",
+  "Password": "Password",
+  "Sign In": "Sign In",
+  "Signing In...": "Signing In...",
+  "Don't have an account?": "Don't have an account?",
+  "Create account": "Create account"
 }

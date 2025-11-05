@@ -1,0 +1,21 @@
+{
+  "My Shop": "مغازه من",
+  "Shop Management": "مدیریت مغازه",
+  "Manage your products and shop settings": "محصولات و تنظیمات مغازه خود را مدیریت کنید",
+  "Products": "محصولات",
+  "Add Product": "افزودن محصول جدید",
+  "Edit Product": "ویرایش محصول",
+  "Product Name": "نام محصول",
+  "Category": "دسته‌بندی",
+  "Price": "قیمت (تومان)",
+  "Description": "توضیحات",
+  "Has Discount": "تخفیف دارد",
+  "Discount Percentage": "درصد تخفیف",
+  "Image URL": "آدرس تصویر",
+  "Cancel": "لغو",
+  "Save": "ذخیره",
+  "Logout": "خروج",
+  "No products added yet": "هنوز محصولی اضافه نشده است",
+  "Go to Add Product tab to add new products": "برای افزودن محصول جدید، به تب \"افزودن محصول جدید\" بروید"
+}
+

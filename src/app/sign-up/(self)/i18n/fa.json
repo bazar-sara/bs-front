@@ -1,5 +1,14 @@
 {
-  "SIGN_UP": {
-    "TITLE": "سلام دنیا!"
-  }
+  "Create Account": "ایجاد حساب کاربری",
+  "Customer": "مشتری",
+  "Seller": "فروشنده",
+  "First Name": "نام",
+  "Last Name": "نام خانوادگی",
+  "Email Address": "آدرس ایمیل",
+  "Password": "رمز عبور",
+  "Confirm Password": "تکرار رمز عبور",
+  "Sign Up": "ثبت نام",
+  "Signing Up...": "در حال ثبت نام...",
+  "Already have an account?": "قبلاً حساب کاربری دارید؟",
+  "Sign in": "ورود"
 }

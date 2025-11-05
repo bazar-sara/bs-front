@@ -1,5 +1,13 @@
 {
-  "LOGIN": {
-    "TITLE": "سلام دنیا!"
-  }
+  "Regular Login": "ورود معمولی",
+  "Colleague Login": "ورود همکاران",
+  "Customer": "مشتری",
+  "Seller": "فروشنده",
+  "Welcome Back": "خوش آمدید",
+  "Email Address": "آدرس ایمیل",
+  "Password": "رمز عبور",
+  "Sign In": "ورود",
+  "Signing In...": "در حال ورود...",
+  "Don't have an account?": "حساب کاربری ندارید؟",
+  "Create account": "ایجاد حساب"
 }
