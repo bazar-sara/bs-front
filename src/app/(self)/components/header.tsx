@@ -25,6 +25,7 @@ import {
   Store as StoreIcon,
   Logout as LogoutIcon,
   ShoppingCart as ShoppingCartIcon,
+  AccountBalanceWallet as WalletIcon,
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -84,6 +85,11 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
   const handleShoppingCart = () => {
     handleMenuClose();
     router.push('/cart');
+  };
+
+  const handleWallet = () => {
+    handleMenuClose();
+    router.push('/wallet');
   };
 
   const handleLogout = () => {
@@ -561,7 +567,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 </FsTypography>
               </Box>
               <Divider sx={{ borderColor: `${theme.palette.common.white}20`, mb: 1 }} />
-              {user.type === 'colleague' ? (
+              {user.type === 'wholesale' ? (
                 <FsButton
                   variant="outlined"
                   fullWidth
@@ -585,28 +591,52 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                   <FsTypography variant="body2" i18nKey="My Shop" />
                 </FsButton>
               ) : (
-                <FsButton
-                  variant="outlined"
-                  fullWidth
-                  onClick={handleShoppingCart}
-                  sx={{
-                    borderColor: theme.palette.common.white,
-                    color: theme.palette.common.white,
-                    py: 1.5,
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    borderRadius: 2,
-                    mb: 1,
-                    '&:hover': {
-                      borderColor: theme.palette.primary.main,
-                      backgroundColor: `${theme.palette.primary.main}20`,
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                >
-                  <ShoppingCartIcon sx={{ ml: 1, fontSize: 20 }} />
-                  <FsTypography variant="body2" i18nKey="Shopping Cart" />
-                </FsButton>
+                <>
+                  <FsButton
+                    variant="outlined"
+                    fullWidth
+                    onClick={handleShoppingCart}
+                    sx={{
+                      borderColor: theme.palette.common.white,
+                      color: theme.palette.common.white,
+                      py: 1.5,
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      borderRadius: 2,
+                      mb: 1,
+                      '&:hover': {
+                        borderColor: theme.palette.primary.main,
+                        backgroundColor: `${theme.palette.primary.main}20`,
+                      },
+                      transition: 'all 0.3s ease',
+                    }}
+                  >
+                    <ShoppingCartIcon sx={{ ml: 1, fontSize: 20 }} />
+                    <FsTypography variant="body2" i18nKey="Shopping Cart" />
+                  </FsButton>
+                  <FsButton
+                    variant="outlined"
+                    fullWidth
+                    onClick={handleWallet}
+                    sx={{
+                      borderColor: theme.palette.common.white,
+                      color: theme.palette.common.white,
+                      py: 1.5,
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      borderRadius: 2,
+                      mb: 1,
+                      '&:hover': {
+                        borderColor: theme.palette.primary.main,
+                        backgroundColor: `${theme.palette.primary.main}20`,
+                      },
+                      transition: 'all 0.3s ease',
+                    }}
+                  >
+                    <WalletIcon sx={{ ml: 1, fontSize: 20 }} />
+                    <FsTypography variant="body2" i18nKey="Wallet" />
+                  </FsButton>
+                </>
               )}
               <FsButton
                 variant="outlined"
@@ -692,16 +722,22 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
           </FsTypography>
         </Box>
         <Divider />
-        {user?.type === 'colleague' ? (
+        {user?.type === 'wholesale' ? (
           <MenuItem onClick={handleMyShop} sx={{ py: 1.5 }}>
             <StoreIcon sx={{ ml: 1.5, fontSize: 20 }} />
             <FsTypography variant="body2" i18nKey="My Shop" />
           </MenuItem>
         ) : (
-          <MenuItem onClick={handleShoppingCart} sx={{ py: 1.5 }}>
-            <ShoppingCartIcon sx={{ ml: 1.5, fontSize: 20 }} />
-            <FsTypography variant="body2" i18nKey="Shopping Cart" />
-          </MenuItem>
+          <>
+            <MenuItem onClick={handleShoppingCart} sx={{ py: 1.5 }}>
+              <ShoppingCartIcon sx={{ ml: 1.5, fontSize: 20 }} />
+              <FsTypography variant="body2" i18nKey="Shopping Cart" />
+            </MenuItem>
+            <MenuItem onClick={handleWallet} sx={{ py: 1.5 }}>
+              <WalletIcon sx={{ ml: 1.5, fontSize: 20 }} />
+              <FsTypography variant="body2" i18nKey="Wallet" />
+            </MenuItem>
+          </>
         )}
         <Divider />
         <MenuItem onClick={handleLogout} sx={{ py: 1.5 }}>

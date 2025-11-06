@@ -4,8 +4,8 @@ import { FsFormProvider, FsInput } from '@fs/form';
 import { Box, Paper, Card, CardContent, useTheme } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import {
-  Person as PersonIcon,
-  Business as BusinessIcon,
+  ShoppingCart as ShoppingCartIcon,
+  Store as StoreIcon,
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
@@ -78,7 +78,7 @@ type LoginFormData = {
 const Login = () => {
   const theme = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [loginType, setLoginType] = useState<UserType>('regular');
+  const [loginType, setLoginType] = useState<UserType>('retail');
   const [isLoading, setIsLoading] = useState(false);
   const methods = useForm<LoginFormData>();
   const router = useRouter();
@@ -151,41 +151,43 @@ const Login = () => {
           sx={{ mb: 3, fontWeight: 700 }}
         />
         <Box sx={{ mb: 3 }}>
-          <Grid container spacing={1.5}>
+          <FsTypography
+            variant="body2"
+            align="center"
+            sx={{ mb: 2, color: 'text.secondary' }}
+            i18nKey="Select your account type"
+          />
+          <Grid container spacing={2}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Card
-                onClick={() => handleLoginTypeChange('regular')}
+                onClick={() => handleLoginTypeChange('retail')}
                 sx={{
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   border: 2,
                   borderColor:
-                    loginType === 'regular'
-                      ? theme.palette.success.main
+                    loginType === 'retail'
+                      ? theme.palette.primary.main
                       : 'divider',
                   backgroundColor:
-                    loginType === 'regular'
-                      ? `${theme.palette.success.main}15`
+                    loginType === 'retail'
+                      ? `${theme.palette.primary.main}08`
                       : 'background.paper',
                   boxShadow:
-                    loginType === 'regular'
-                      ? `0 4px 12px ${theme.palette.success.main}40`
+                    loginType === 'retail'
+                      ? `0 8px 24px ${theme.palette.primary.main}30`
                       : 1,
+                  transform: loginType === 'retail' ? 'scale(1.02)' : 'scale(1)',
                   '&:hover': {
-                    borderColor:
-                      loginType === 'regular'
-                        ? theme.palette.success.dark
-                        : theme.palette.success.main,
-                    boxShadow:
-                      loginType === 'regular'
-                        ? `0 4px 16px ${theme.palette.success.main}50`
-                        : `0 2px 8px ${theme.palette.success.main}30`,
+                    borderColor: theme.palette.primary.main,
+                    boxShadow: `0 4px 16px ${theme.palette.primary.main}40`,
+                    transform: 'scale(1.02)',
                   },
                 }}
               >
                 <CardContent
                   sx={{
-                    p: 2,
+                    p: 3,
                     textAlign: 'center',
                     display: 'flex',
                     flexDirection: 'column',
@@ -195,78 +197,83 @@ const Login = () => {
                 >
                   <Box
                     sx={{
-                      width: 48,
-                      height: 48,
+                      width: 64,
+                      height: 64,
                       borderRadius: '50%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       backgroundColor:
-                        loginType === 'regular'
-                          ? `${theme.palette.success.main}20`
-                          : `${theme.palette.success.main}08`,
-                      transition: 'all 0.2s ease',
+                        loginType === 'retail'
+                          ? `${theme.palette.primary.main}20`
+                          : `${theme.palette.primary.main}08`,
+                      transition: 'all 0.3s ease',
+                      transform: loginType === 'retail' ? 'scale(1.1)' : 'scale(1)',
                     }}
                   >
-                    <PersonIcon
+                    <ShoppingCartIcon
                       sx={{
-                        fontSize: 24,
+                        fontSize: 32,
                         color:
-                          loginType === 'regular'
-                            ? theme.palette.success.dark
+                          loginType === 'retail'
+                            ? theme.palette.primary.main
                             : theme.palette.text.secondary,
                       }}
                     />
                   </Box>
                   <FsTypography
-                    variant="body1"
+                    variant="h6"
                     sx={{
-                      fontWeight: loginType === 'regular' ? 700 : 600,
-                      fontSize: '0.95rem',
+                      fontWeight: loginType === 'retail' ? 700 : 600,
                       color:
-                        loginType === 'regular'
-                          ? theme.palette.success.dark
+                        loginType === 'retail'
+                          ? theme.palette.primary.main
                           : theme.palette.text.primary,
                     }}
-                    i18nKey="Customer"
+                    i18nKey="Retail Buyer"
+                  />
+                  <FsTypography
+                    variant="body2"
+                    sx={{
+                      color: 'text.secondary',
+                      fontSize: '0.75rem',
+                      lineHeight: 1.4,
+                    }}
+                    i18nKey="Retail buyer description"
                   />
                 </CardContent>
               </Card>
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Card
-                onClick={() => handleLoginTypeChange('colleague')}
+                onClick={() => handleLoginTypeChange('wholesale')}
                 sx={{
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   border: 2,
                   borderColor:
-                    loginType === 'colleague'
-                      ? theme.palette.info.main
+                    loginType === 'wholesale'
+                      ? theme.palette.secondary.main
                       : 'divider',
                   backgroundColor:
-                    loginType === 'colleague'
-                      ? `${theme.palette.info.main}15`
+                    loginType === 'wholesale'
+                      ? `${theme.palette.secondary.main}08`
                       : 'background.paper',
                   boxShadow:
-                    loginType === 'colleague'
-                      ? `0 4px 12px ${theme.palette.info.main}40`
+                    loginType === 'wholesale'
+                      ? `0 8px 24px ${theme.palette.secondary.main}30`
                       : 1,
+                  transform: loginType === 'wholesale' ? 'scale(1.02)' : 'scale(1)',
                   '&:hover': {
-                    borderColor:
-                      loginType === 'colleague'
-                        ? theme.palette.info.dark
-                        : theme.palette.info.main,
-                    boxShadow:
-                      loginType === 'colleague'
-                        ? `0 4px 16px ${theme.palette.info.main}50`
-                        : `0 2px 8px ${theme.palette.info.main}30`,
+                    borderColor: theme.palette.secondary.main,
+                    boxShadow: `0 4px 16px ${theme.palette.secondary.main}40`,
+                    transform: 'scale(1.02)',
                   },
                 }}
               >
                 <CardContent
                   sx={{
-                    p: 2,
+                    p: 3,
                     textAlign: 'center',
                     display: 'flex',
                     flexDirection: 'column',
@@ -276,40 +283,49 @@ const Login = () => {
                 >
                   <Box
                     sx={{
-                      width: 48,
-                      height: 48,
+                      width: 64,
+                      height: 64,
                       borderRadius: '50%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       backgroundColor:
-                        loginType === 'colleague'
-                          ? `${theme.palette.info.main}20`
-                          : `${theme.palette.info.main}08`,
-                      transition: 'all 0.2s ease',
+                        loginType === 'wholesale'
+                          ? `${theme.palette.secondary.main}20`
+                          : `${theme.palette.secondary.main}08`,
+                      transition: 'all 0.3s ease',
+                      transform: loginType === 'wholesale' ? 'scale(1.1)' : 'scale(1)',
                     }}
                   >
-                    <BusinessIcon
+                    <StoreIcon
                       sx={{
-                        fontSize: 24,
+                        fontSize: 32,
                         color:
-                          loginType === 'colleague'
-                            ? theme.palette.info.dark
+                          loginType === 'wholesale'
+                            ? theme.palette.secondary.main
                             : theme.palette.text.secondary,
                       }}
                     />
                   </Box>
                   <FsTypography
-                    variant="body1"
+                    variant="h6"
                     sx={{
-                      fontWeight: loginType === 'colleague' ? 700 : 600,
-                      fontSize: '0.95rem',
+                      fontWeight: loginType === 'wholesale' ? 700 : 600,
                       color:
-                        loginType === 'colleague'
-                          ? theme.palette.info.dark
+                        loginType === 'wholesale'
+                          ? theme.palette.secondary.main
                           : theme.palette.text.primary,
                     }}
-                    i18nKey="Seller"
+                    i18nKey="Producer & Wholesaler"
+                  />
+                  <FsTypography
+                    variant="body2"
+                    sx={{
+                      color: 'text.secondary',
+                      fontSize: '0.75rem',
+                      lineHeight: 1.4,
+                    }}
+                    i18nKey="Wholesale seller description"
                   />
                 </CardContent>
               </Card>

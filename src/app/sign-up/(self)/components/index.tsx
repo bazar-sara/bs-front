@@ -4,8 +4,8 @@ import { FsFormProvider, FsInput } from '@fs/form';
 import { Box, Paper, Card, CardContent, useTheme } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import {
-  Person as PersonIcon,
-  Business as BusinessIcon,
+  ShoppingCart as ShoppingCartIcon,
+  Store as StoreIcon,
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
@@ -81,7 +81,7 @@ type SignUpFormData = {
 const SignUp = () => {
   const theme = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [userType, setUserType] = useState<UserType>('regular');
+  const [userType, setUserType] = useState<UserType>('retail');
   const [isLoading, setIsLoading] = useState(false);
   const methods = useForm<SignUpFormData>();
   const router = useRouter();
@@ -155,29 +155,35 @@ const SignUp = () => {
         />
 
         <Box sx={{ mb: 3 }}>
+          <FsTypography
+            variant="body2"
+            align="center"
+            sx={{ mb: 2, color: 'text.secondary' }}
+            i18nKey="Select your account type"
+          />
           <Grid container spacing={1.5}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Card
-                onClick={() => handleUserTypeChange('regular')}
+                onClick={() => handleUserTypeChange('retail')}
                 sx={{
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   border: 2,
                   borderColor:
-                    userType === 'regular'
+                    userType === 'retail'
                       ? theme.palette.success.main
                       : 'divider',
                   backgroundColor:
-                    userType === 'regular'
+                    userType === 'retail'
                       ? `${theme.palette.success.main}15`
                       : 'background.paper',
                   boxShadow:
-                    userType === 'regular'
+                    userType === 'retail'
                       ? `0 4px 12px ${theme.palette.success.main}40`
                       : 1,
                   '&:hover': {
-                    borderColor: userType === 'regular' ? theme.palette.success.dark : theme.palette.success.main,
-                    boxShadow: userType === 'regular' 
+                    borderColor: userType === 'retail' ? theme.palette.success.dark : theme.palette.success.main,
+                    boxShadow: userType === 'retail' 
                       ? `0 4px 16px ${theme.palette.success.main}50`
                       : `0 2px 8px ${theme.palette.success.main}30`,
                   },
@@ -202,17 +208,17 @@ const SignUp = () => {
                       alignItems: 'center',
                       justifyContent: 'center',
                       backgroundColor:
-                        userType === 'regular'
+                        userType === 'retail'
                           ? `${theme.palette.success.main}20`
                           : `${theme.palette.success.main}08`,
                       transition: 'all 0.2s ease',
                     }}
                   >
-                    <PersonIcon
+                    <ShoppingCartIcon
                       sx={{
                         fontSize: 24,
                         color:
-                          userType === 'regular'
+                          userType === 'retail'
                             ? theme.palette.success.dark
                             : theme.palette.text.secondary,
                       }}
@@ -221,40 +227,49 @@ const SignUp = () => {
                   <FsTypography
                     variant="body1"
                     sx={{
-                      fontWeight: userType === 'regular' ? 700 : 600,
+                      fontWeight: userType === 'retail' ? 700 : 600,
                       fontSize: '0.95rem',
                       color:
-                        userType === 'regular'
+                        userType === 'retail'
                           ? theme.palette.success.dark
                           : theme.palette.text.primary,
                     }}
-                    i18nKey="Customer"
+                    i18nKey="Retail Buyer"
+                  />
+                  <FsTypography
+                    variant="body2"
+                    sx={{
+                      color: 'text.secondary',
+                      fontSize: '0.75rem',
+                      lineHeight: 1.4,
+                    }}
+                    i18nKey="Retail buyer description"
                   />
                 </CardContent>
               </Card>
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Card
-                onClick={() => handleUserTypeChange('colleague')}
+                onClick={() => handleUserTypeChange('wholesale')}
                 sx={{
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   border: 2,
                   borderColor:
-                    userType === 'colleague'
+                    userType === 'wholesale'
                       ? theme.palette.info.main
                       : 'divider',
                   backgroundColor:
-                    userType === 'colleague'
+                    userType === 'wholesale'
                       ? `${theme.palette.info.main}15`
                       : 'background.paper',
                   boxShadow:
-                    userType === 'colleague'
+                    userType === 'wholesale'
                       ? `0 4px 12px ${theme.palette.info.main}40`
                       : 1,
                   '&:hover': {
-                    borderColor: userType === 'colleague' ? theme.palette.info.dark : theme.palette.info.main,
-                    boxShadow: userType === 'colleague' 
+                    borderColor: userType === 'wholesale' ? theme.palette.info.dark : theme.palette.info.main,
+                    boxShadow: userType === 'wholesale' 
                       ? `0 4px 16px ${theme.palette.info.main}50`
                       : `0 2px 8px ${theme.palette.info.main}30`,
                   },
@@ -279,17 +294,17 @@ const SignUp = () => {
                       alignItems: 'center',
                       justifyContent: 'center',
                       backgroundColor:
-                        userType === 'colleague'
+                        userType === 'wholesale'
                           ? `${theme.palette.info.main}20`
                           : `${theme.palette.info.main}08`,
                       transition: 'all 0.2s ease',
                     }}
                   >
-                    <BusinessIcon
+                    <StoreIcon
                       sx={{
                         fontSize: 24,
                         color:
-                          userType === 'colleague'
+                          userType === 'wholesale'
                             ? theme.palette.info.dark
                             : theme.palette.text.secondary,
                       }}
@@ -298,14 +313,23 @@ const SignUp = () => {
                   <FsTypography
                     variant="body1"
                     sx={{
-                      fontWeight: userType === 'colleague' ? 700 : 600,
+                      fontWeight: userType === 'wholesale' ? 700 : 600,
                       fontSize: '0.95rem',
                       color:
-                        userType === 'colleague'
+                        userType === 'wholesale'
                           ? theme.palette.info.dark
                           : theme.palette.text.primary,
                     }}
-                    i18nKey="Seller"
+                    i18nKey="Producer & Wholesaler"
+                  />
+                  <FsTypography
+                    variant="body2"
+                    sx={{
+                      color: 'text.secondary',
+                      fontSize: '0.75rem',
+                      lineHeight: 1.4,
+                    }}
+                    i18nKey="Wholesale seller description"
                   />
                 </CardContent>
               </Card>

@@ -9,12 +9,12 @@ const Cart = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user || user.type !== 'regular') {
+    if (!user || user.type !== 'retail') {
       router.push('/login');
     }
   }, [user, router]);
 
-  if (!user || user.type !== 'regular') {
+  if (!user || user.type !== 'retail') {
     return null;
   }
 

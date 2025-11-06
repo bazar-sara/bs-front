@@ -9,12 +9,12 @@ const MyShop = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user || user.type !== 'colleague') {
+    if (!user || user.type !== 'wholesale') {
       router.push('/login');
     }
   }, [user, router]);
 
-  if (!user || user.type !== 'colleague') {
+  if (!user || user.type !== 'wholesale') {
     return null;
   }
 

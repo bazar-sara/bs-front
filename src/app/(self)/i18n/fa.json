@@ -2,5 +2,8 @@
   "GLOBAL": {
     "title": "سلام"
   },
-  "Shopping Cart": "سبد خرید"
+  "Shopping Cart": "سبد خرید",
+  "My Shop": "فروشگاه من",
+  "Logout": "خروج",
+  "Wallet": "کیف پول"
 }

@@ -8,7 +8,7 @@ import {
   ReactNode,
 } from 'react';
 
-export type UserType = 'regular' | 'colleague' | null;
+export type UserType = 'retail' | 'wholesale' | null;
 
 export type User = {
   id: string;
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         name: email.split('@')[0],
         type,
         avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(email.split('@')[0])}&background=random`,
-        ...(type === 'colleague' && { shopId: `shop_${Date.now()}` }),
+        ...(type === 'wholesale' && { shopId: `shop_${Date.now()}` }),
       };
 
       setUser(mockUser);

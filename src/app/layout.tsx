@@ -5,6 +5,7 @@ import './globals.css';
 import { FsNextIntlClientProvider, FsThemeContextProvider } from '@fs/utils';
 import { FsToaster } from '@fs/core';
 import { AuthProvider } from '@/contexts/auth-context';
+import { WalletProviderWrapper } from '@/contexts/wallet-provider-wrapper';
 import localFont from 'next/font/local';
 
 export const iransansxv = localFont({
@@ -70,7 +71,7 @@ export default async function RootLayout({
               messages={messages}
             >
               <AuthProvider>
-                {children}
+                <WalletProviderWrapper>{children}</WalletProviderWrapper>
                 <FsToaster />
               </AuthProvider>
             </FsNextIntlClientProvider>

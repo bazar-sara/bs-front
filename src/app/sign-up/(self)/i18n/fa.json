@@ -1,7 +1,10 @@
 {
   "Create Account": "ایجاد حساب کاربری",
-  "Customer": "مشتری",
-  "Seller": "فروشنده",
+  "Select your account type": "نوع حساب کاربری خود را انتخاب کنید",
+  "Retail Buyer": "خریدار خرده‌فروش",
+  "Retail buyer description": "خرید محصولات به صورت خرده‌فروشی",
+  "Producer & Wholesaler": "تولیدکننده و عمده‌فروش",
+  "Wholesale seller description": "فروش محصولات به صورت عمده فقط به فروشندگان",
   "First Name": "نام",
   "Last Name": "نام خانوادگی",
   "Email Address": "آدرس ایمیل",
