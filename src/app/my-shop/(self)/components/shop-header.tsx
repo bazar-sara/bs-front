@@ -29,8 +29,8 @@ export const ShopHeader = () => {
     router.push('/');
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     router.push('/');
   };
 

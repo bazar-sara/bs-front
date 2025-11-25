@@ -92,9 +92,9 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
     router.push('/wallet');
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     handleMenuClose();
-    logout();
+    await logout();
     router.push('/');
   };
 
@@ -559,12 +559,22 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 >
                   {user.name}
                 </FsTypography>
-                <FsTypography
-                  variant="caption"
-                  sx={{ color: theme.palette.common.white, opacity: 0.8 }}
-                >
-                  {user.email}
-                </FsTypography>
+                {user.email && (
+                  <FsTypography
+                    variant="caption"
+                    sx={{ color: theme.palette.common.white, opacity: 0.8 }}
+                  >
+                    {user.email}
+                  </FsTypography>
+                )}
+                {!user.email && user.phoneNumber && (
+                  <FsTypography
+                    variant="caption"
+                    sx={{ color: theme.palette.common.white, opacity: 0.8 }}
+                  >
+                    {user.phoneNumber}
+                  </FsTypography>
+                )}
               </Box>
               <Divider sx={{ borderColor: `${theme.palette.common.white}20`, mb: 1 }} />
               {user.type === 'wholesale' ? (
@@ -718,7 +728,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
             {user?.name}
           </FsTypography>
           <FsTypography variant="caption" color="text.secondary">
-            {user?.email}
+            {user?.email || user?.phoneNumber}
           </FsTypography>
         </Box>
         <Divider />
