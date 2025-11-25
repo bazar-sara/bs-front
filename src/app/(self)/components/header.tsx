@@ -576,7 +576,9 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                   </FsTypography>
                 )}
               </Box>
-              <Divider sx={{ borderColor: `${theme.palette.common.white}20`, mb: 1 }} />
+              <Divider
+                sx={{ borderColor: `${theme.palette.common.white}20`, mb: 1 }}
+              />
               {user.type === 'wholesale' ? (
                 <FsButton
                   variant="outlined"
@@ -738,7 +740,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
             <FsTypography variant="body2" i18nKey="My Shop" />
           </MenuItem>
         ) : (
-          <>
+          <Box>
             <MenuItem onClick={handleShoppingCart} sx={{ py: 1.5 }}>
               <ShoppingCartIcon sx={{ ml: 1.5, fontSize: 20 }} />
               <FsTypography variant="body2" i18nKey="Shopping Cart" />
@@ -747,7 +749,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
               <WalletIcon sx={{ ml: 1.5, fontSize: 20 }} />
               <FsTypography variant="body2" i18nKey="Wallet" />
             </MenuItem>
-          </>
+          </Box>
         )}
         <Divider />
         <MenuItem onClick={handleLogout} sx={{ py: 1.5 }}>
