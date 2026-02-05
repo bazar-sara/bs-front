@@ -1,9 +1,9 @@
 import { createTheme } from '@mui/material';
-import { defaultStyleComponents } from './defaultStyleComponents';
+import { getDefaultStyleComponents } from './defaultStyleComponents';
 import { defaultDarkColor, defaultLightColor } from './defaultColors';
 
 export const purpleLightTheme = createTheme({
-  components: { ...defaultStyleComponents },
+  components: getDefaultStyleComponents,
   spacing: (abs: number) => `${0.35 * abs}rem`,
   palette: {
     mode: 'light',
@@ -38,7 +38,7 @@ export const purpleLightTheme = createTheme({
 });
 
 export const purpleDarkTheme = createTheme({
-  components: { ...defaultStyleComponents },
+  components: getDefaultStyleComponents,
   spacing: (abs: number) => `${0.35 * abs}rem`,
   palette: {
     mode: 'dark',

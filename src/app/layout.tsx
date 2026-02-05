@@ -4,8 +4,9 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import './globals.css';
 import { FsNextIntlClientProvider, FsThemeContextProvider } from '@fs/utils';
 import { FsToaster } from '@fs/core';
-import { AuthProvider } from '@/contexts/auth-context';
-import { WalletProviderWrapper } from '@/contexts/wallet-provider-wrapper';
+import { AuthProvider } from '@/app/common/contexts/auth/auth-context';
+import { ThemeVarsInjector } from '@/app/common/components/ThemeVarsInjector';
+import { WalletProviderWrapper } from '@/app/common/contexts/wallet/wallet-provider-wrapper';
 import localFont from 'next/font/local';
 
 export const iransansxv = localFont({
@@ -65,6 +66,7 @@ export default async function RootLayout({
     >
       <body>
         <FsThemeContextProvider>
+          <ThemeVarsInjector />
           <AppRouterCacheProvider options={{ key: 'css' }}>
             <FsNextIntlClientProvider
               locale={locale as 'fa' | 'en'}
