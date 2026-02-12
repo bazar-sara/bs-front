@@ -67,7 +67,6 @@ export const ProductForm = ({
 
       <FsFormProvider
         name="product-form"
-        // @ts-expect-error - FsFormProvider expects FieldValues but we're using typed form
         methods={methods}
         formProps={{ onSubmit: methods.handleSubmit(onSubmit) }}
       >

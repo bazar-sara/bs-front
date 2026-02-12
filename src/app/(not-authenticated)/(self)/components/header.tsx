@@ -115,21 +115,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
             }}
           >
             <Box display={{ xs: 'flex', md: undefined }}>
-              {/* Logo/Title on the right for RTL */}
-              <FsTypography
-                variant="h4"
-                component="h1"
-                sx={{
-                  fontWeight: 700,
-                  textShadow: `2px 2px 4px ${theme.palette.common.black}4D`,
-                }}
-              >
-                بازارسرا
-              </FsTypography>
-            </Box>
-
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              {/* Menu Icon on the left for RTL */}
+              {/* Menu Icon on the right for RTL */}
               {isMobile && (
                 <IconButton
                   color="inherit"
@@ -151,6 +137,20 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 </IconButton>
               )}
 
+              {/* Logo/Title on the right for RTL */}
+              <FsTypography
+                variant="h4"
+                component="h1"
+                sx={{
+                  fontWeight: 700,
+                  textShadow: `2px 2px 4px ${theme.palette.common.black}4D`,
+                }}
+              >
+                بازارسرا
+              </FsTypography>
+            </Box>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               {isMobile ? (
                 <ThemeToggle />
               ) : (
@@ -274,9 +274,9 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
 
       {/* Mobile Menu Drawer */}
       <Drawer
-        anchor="right"
         open={mobileMenuOpen}
         onClose={handleMobileMenuToggle}
+        role="presentation"
         sx={{
           '& .MuiDrawer-paper': {
             width: '100vw',

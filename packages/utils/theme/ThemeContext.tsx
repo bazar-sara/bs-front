@@ -1,8 +1,9 @@
 'use client';
 import React, { useState, useMemo, useEffect } from 'react';
 import { ThemeProvider, type Direction } from '@mui/material/styles';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { themes } from './theme';
-import { CacheProvider } from '@emotion/react';
+import { getDefaultStyleComponents } from './templates/defaultStyleComponents';
 import type {
   FsThemeContextProviderProps,
   Language,
@@ -10,7 +11,7 @@ import type {
   ThemeTemplate,
 } from './model';
 import { FsThemeContext } from './hooks/useFsTheme';
-import { cacheLtr, cacheRtl } from './directionCache';
+import { getDirectionCacheOptions } from './directionCache';
 
 const FsThemeContextProvider: React.FC<FsThemeContextProviderProps> = ({
   children,
@@ -80,7 +81,7 @@ const FsThemeContextProvider: React.FC<FsThemeContextProviderProps> = ({
 
   const theme = useMemo(() => {
     const baseTheme = themes[themeTemplate][mode];
-    return {
+    const merged = {
       ...baseTheme,
       typography: {
         ...baseTheme?.typography,
@@ -88,16 +89,21 @@ const FsThemeContextProvider: React.FC<FsThemeContextProviderProps> = ({
       },
       direction,
     };
+    return {
+      ...merged,
+      components: getDefaultStyleComponents(merged),
+    };
   }, [themeTemplate, mode, direction, fontSize, fontWeight]);
 
   useEffect(() => {
     document.body.dir = direction;
   }, [direction]);
 
-  const cache = useMemo(
-    () => (direction === 'rtl' ? cacheRtl : cacheLtr),
+  const cacheOptions = useMemo(
+    () => getDirectionCacheOptions(direction),
     [direction]
   );
+
   const contextValue = useMemo(
     () => ({
       themeTemplate,
@@ -116,9 +122,9 @@ const FsThemeContextProvider: React.FC<FsThemeContextProviderProps> = ({
 
   return (
     <FsThemeContext.Provider value={contextValue}>
-      <CacheProvider value={cache}>
+      <AppRouterCacheProvider key={direction} options={cacheOptions}>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
-      </CacheProvider>
+      </AppRouterCacheProvider>
     </FsThemeContext.Provider>
   );
 };

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { getLocale, getMessages } from 'next-intl/server';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import './globals.css';
 import { FsNextIntlClientProvider, FsThemeContextProvider } from '@fs/utils';
 import { FsToaster } from '@fs/core';
@@ -67,17 +66,15 @@ export default async function RootLayout({
       <body>
         <FsThemeContextProvider>
           <ThemeVarsInjector />
-          <AppRouterCacheProvider options={{ key: 'css' }}>
-            <FsNextIntlClientProvider
-              locale={locale as 'fa' | 'en'}
-              messages={messages}
-            >
-              <AuthProvider>
-                <WalletProviderWrapper>{children}</WalletProviderWrapper>
-                <FsToaster />
-              </AuthProvider>
-            </FsNextIntlClientProvider>
-          </AppRouterCacheProvider>
+          <FsNextIntlClientProvider
+            locale={locale as 'fa' | 'en'}
+            messages={messages}
+          >
+            <AuthProvider>
+              <WalletProviderWrapper>{children}</WalletProviderWrapper>
+              <FsToaster />
+            </AuthProvider>
+          </FsNextIntlClientProvider>
         </FsThemeContextProvider>
       </body>
     </html>

@@ -1,15 +1,7 @@
 'use client';
 import { FsButton, FsTypography } from '@fs/core';
 import { FsFormProvider, FsInput } from '@fs/form';
-import {
-  Box,
-  Paper,
-  Card,
-  CardContent,
-  useTheme,
-  Divider,
-  Chip,
-} from '@mui/material';
+import { Box, Paper, Card, CardContent, useTheme, Chip } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import {
   AccountBalanceWallet as WalletIcon,

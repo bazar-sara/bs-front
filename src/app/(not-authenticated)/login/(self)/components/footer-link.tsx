@@ -9,12 +9,7 @@ type FooterLinkProps = {
   onClick: () => void;
 };
 
-export const FooterLink = ({
-  text,
-  linkText,
-  linkI18nKey,
-  onClick,
-}: FooterLinkProps) => {
+export const FooterLink = ({ text, linkI18nKey, onClick }: FooterLinkProps) => {
   const theme = useTheme();
 
   return (

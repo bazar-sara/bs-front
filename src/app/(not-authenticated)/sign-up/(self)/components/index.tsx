@@ -202,7 +202,6 @@ const SignUp = () => {
         {/* Form */}
         <FsFormProvider
           name="signup"
-          // @ts-expect-error - FsFormProvider expects FieldValues but we're using typed form
           methods={methods}
           formProps={{ onSubmit: methods.handleSubmit(onSubmit) }}
         >

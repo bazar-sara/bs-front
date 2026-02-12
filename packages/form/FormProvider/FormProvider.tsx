@@ -1,22 +1,22 @@
 import { type FormHTMLAttributes, type ReactNode } from 'react';
 import {
   FormProvider,
-  type FieldValues,
   type UseFormReturn,
 } from 'react-hook-form';
 
 type FsFormProviderProps = {
   children: ReactNode;
   formProps?: FormHTMLAttributes<HTMLFormElement>;
-  methods: UseFormReturn<FieldValues, any, FieldValues>;
+  methods: UseFormReturn<any, any, any>;
   name: string;
 };
-const FsFormProvider = ({
+
+function FsFormProvider({
   children,
   methods,
   name,
   formProps,
-}: FsFormProviderProps) => {
+}: FsFormProviderProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     formProps && formProps.onSubmit && formProps.onSubmit(event);
@@ -33,6 +33,6 @@ const FsFormProvider = ({
       </form>
     </FormProvider>
   );
-};
+}
 
 export default FsFormProvider;

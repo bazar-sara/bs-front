@@ -1,8 +1,6 @@
 import { createTheme } from '@mui/material';
-import { getDefaultStyleComponents } from './defaultStyleComponents';
 
 export const forestLightTheme = createTheme({
-  components: getDefaultStyleComponents,
   spacing: (abs: number) => `${0.35 * abs}rem`,
   palette: {
     mode: 'light',
@@ -110,7 +108,6 @@ export const forestLightTheme = createTheme({
 });
 
 export const forestDarkTheme = createTheme({
-  components: getDefaultStyleComponents,
   spacing: (abs: number) => `${0.35 * abs}rem`,
   palette: {
     mode: 'dark',

@@ -1,8 +1,6 @@
 import { createTheme } from '@mui/material';
-import { getDefaultStyleComponents } from './defaultStyleComponents';
 
 export const spaceLightTheme = createTheme({
-  components: getDefaultStyleComponents,
   spacing: (abs: number) => `${0.35 * abs}rem`,
   palette: {
     mode: 'light',
@@ -110,7 +108,6 @@ export const spaceLightTheme = createTheme({
 });
 
 export const spaceDarkTheme = createTheme({
-  components: getDefaultStyleComponents,
   spacing: (abs: number) => `${0.35 * abs}rem`,
   palette: {
     mode: 'dark',
