@@ -5,16 +5,16 @@ import { AppBar, Paper, Card, Chip } from '@mui/material';
 export const TurquoiseGradient = styled('div')(({ theme }) => ({
   background:
     theme.palette.mode === 'dark'
-      ? `linear-gradient(135deg, 
-        ${theme.palette.primary[900]} 0%, 
-        ${theme.palette.primary[800]} 25%, 
-        ${theme.palette.primary.main} 50%, 
-        ${theme.palette.customColor.main} 75%, 
-        ${theme.palette.primary[700]} 100%)`
-      : `linear-gradient(135deg, 
-        ${theme.palette.primary.main} 0%, 
-        ${theme.palette.primary[600]} 50%, 
-        ${theme.palette.primary[700]} 100%)`,
+      ? `linear-gradient(135deg,
+        ${theme.palette.common.black} 0%,
+        ${theme.palette.primary[900]} 25%,
+        ${theme.palette.primary[800]} 50%,
+        ${theme.palette.primary[900]} 75%,
+        ${theme.palette.common.black} 100%)`
+      : `linear-gradient(135deg,
+        ${theme.palette.background.paper} 0%,
+        ${theme.palette.background.default} 50%,
+        ${theme.palette.primary[50]} 100%)`,
   minHeight: '100vh',
   position: 'relative',
   overflow: 'hidden',
