@@ -1,19 +1,17 @@
 'use client';
 import { FsFormProvider, FsInput } from '@fs/form';
-import { FsTypography } from '@fs/core';
-import { Box, useTheme, alpha } from '@mui/material';
-import Grid from '@mui/material/Grid';
+// import { FsTypography } from '@fs/core';
+import { Box } from '@mui/material';
+// import Grid from '@mui/material/Grid';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth, type UserType } from '@/app/common/hooks/use-auth';
+import { getApiErrorMessage } from '@/app/common/services/auth/functions';
 import { toast } from 'sonner';
-import {
-  AnimatedBackground,
-  FloatingParticles,
-  AuthPaper,
-} from './styled-components';
-import { UserTypeCard } from './user-type-card';
+import { AuthPageShell } from '@/app/(not-authenticated)/common/components/auth-page-shell';
+import { AuthPaper } from './styled-components';
+// import { UserTypeCard } from './user-type-card';
 import { AuthHeader } from './auth-header';
 import { OtpSection } from './otp-section';
 import { SubmitButton } from './submit-button';
@@ -21,9 +19,7 @@ import { FooterLink } from './footer-link';
 import type { LoginFormData } from './types';
 
 const Login = () => {
-  const theme = useTheme();
-  const [mounted, setMounted] = useState(false);
-  const [loginType, setLoginType] = useState<UserType>('retail');
+  const [loginType] = useState<UserType>('retail');
   const [isLoading, setIsLoading] = useState(false);
   const [isRequestingOtp, setIsRequestingOtp] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
@@ -38,10 +34,6 @@ const Login = () => {
   const { requestOtp, verifyOtp } = useAuth();
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
@@ -52,10 +44,11 @@ const Login = () => {
     router.push('/sign-up');
   };
 
-  const handleLoginTypeChange = (newType: UserType) => {
-    setLoginType(newType);
-  };
+  // const handleLoginTypeChange = (newType: UserType) => {
+  //   setLoginType(newType);
+  // };
 
+  /** Step 1: `requestOtp` → panel `request-otp` API (via AuthProvider). */
   const handleRequestOtp = async () => {
     const phoneNumber = methods.getValues('phoneNumber');
     if (!phoneNumber) {
@@ -75,27 +68,18 @@ const Login = () => {
       setCountdown(response.resendAfter || 60);
       toast.success('کد تأیید با موفقیت ارسال شد');
     } catch (error: unknown) {
-      const message =
-        (
-          error as {
-            response?: { data?: { message?: string } };
-            message?: string;
-          }
-        )?.response?.data?.message ||
-        (error as { message?: string })?.message ||
-        'ارسال کد تأیید با خطا مواجه شد';
-      toast.error(message);
+      toast.error(getApiErrorMessage(error, 'ارسال کد تأیید با خطا مواجه شد'));
     } finally {
       setIsRequestingOtp(false);
     }
   };
 
+  /** Step 2: `verifyOtp` → panel `verify-otp` API, then redirect home. */
   const onSubmit = async (data: LoginFormData) => {
     if (!loginType) {
       toast.error('لطفاً نوع حساب کاربری را انتخاب کنید');
       return;
     }
-    console.log(data);
     const otp = data.otp.join('');
     if (otp.length !== 6) {
       toast.error('لطفاً کد تأیید ۶ رقمی را وارد کنید');
@@ -108,67 +92,35 @@ const Login = () => {
       toast.success('ورود با موفقیت انجام شد');
       router.push('/');
     } catch (error: unknown) {
-      const message =
-        (
-          error as {
-            response?: { data?: { message?: string } };
-            message?: string;
-          }
-        )?.response?.data?.message ||
-        (error as { message?: string })?.message ||
-        'ورود با خطا مواجه شد';
-      toast.error(message);
+      toast.error(getApiErrorMessage(error, 'ورود با خطا مواجه شد'));
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
-      {mounted && (
-        <>
-          <AnimatedBackground />
-          <FloatingParticles />
-        </>
-      )}
-
+    <AuthPageShell>
       <AuthPaper
         elevation={0}
         sx={{
-          transform: mounted ? 'translateY(0)' : 'translateY(30px)',
-          opacity: mounted ? 1 : 0,
-          p: { xs: 3, sm: 4, md: 5 },
-          py: { xs: 4, sm: 5, md: 6 },
+          p: { xs: 2.5, sm: 3.5 },
         }}
       >
-        <AuthHeader
-          title="Welcome Back"
-          subtitle="به بازارسرا خوش آمدید"
-          icon="login"
-        />
+        <AuthHeader title="Welcome Back" subtitle="به بازارسرا خوش آمدید" />
 
-        {/* Account Type Selection */}
-        <Box sx={{ mb: 4 }}>
+        {/* <Box sx={{ mb: 3 }}>
           <FsTypography
             variant="subtitle2"
             sx={{
-              mb: 2.5,
+              mb: 2,
               fontWeight: 600,
               fontSize: '0.875rem',
               textAlign: 'center',
+              color: 'text.secondary',
             }}
             i18nKey="Select your account type"
           />
-          <Grid container spacing={2}>
+           <Grid container spacing={1.5}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <UserTypeCard
                 type="retail"
@@ -183,36 +135,23 @@ const Login = () => {
                 onClick={() => handleLoginTypeChange('wholesale')}
               />
             </Grid>
-          </Grid>
-        </Box>
+          </Grid> 
+        </Box> */}
 
-        {/* Form */}
         <FsFormProvider
           name="login"
           methods={methods}
           formProps={{ onSubmit: methods.handleSubmit(onSubmit) }}
         >
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-            <Box>
-              <FsInput
-                name="phoneNumber"
-                fullWidth
-                i18nKey="Phone Number"
-                variant="outlined"
-                type="tel"
-                disabled={otpSent}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: 2,
-                    backgroundColor: alpha(theme.palette.background.paper, 0.8),
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      backgroundColor: alpha(theme.palette.background.paper, 1),
-                    },
-                  },
-                }}
-              />
-            </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <FsInput
+              name="phoneNumber"
+              fullWidth
+              i18nKey="Phone Number"
+              variant="outlined"
+              type="tel"
+              disabled={otpSent}
+            />
 
             <OtpSection
               otpSent={otpSent}
@@ -238,7 +177,7 @@ const Login = () => {
           />
         </FsFormProvider>
       </AuthPaper>
-    </Box>
+    </AuthPageShell>
   );
 };
 

@@ -1,8 +1,13 @@
 import axios, { type AxiosInstance, type AxiosError } from 'axios';
 
+/** Base URL for the marketplace backend (`NEXT_PUBLIC_API_URL` or dev default). */
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
+/**
+ * Central HTTP client: JSON API, Bearer access token on each request (browser),
+ * and automatic refresh when access token expires (401).
+ */
 class ApiClient {
   private client: AxiosInstance;
 
@@ -14,6 +19,7 @@ class ApiClient {
       },
     });
 
+    // Attach `Authorization: Bearer <access_token>` from localStorage when running in the browser.
     this.client.interceptors.request.use(
       (config) => {
         if (typeof window !== 'undefined') {
@@ -27,6 +33,7 @@ class ApiClient {
       (error) => Promise.reject(error)
     );
 
+    // On 401, try once to refresh tokens via panel auth refresh; on success retry the original request; on failure clear auth and send user to login.
     this.client.interceptors.response.use(
       (response) => response,
       async (error: AxiosError & { config?: { _retry?: boolean } }) => {
@@ -41,6 +48,7 @@ class ApiClient {
           try {
             const refreshToken = localStorage.getItem('refresh_token');
             if (refreshToken) {
+              // Refresh uses a standalone axios call to avoid interceptor recursion.
               const response = await axios.post(
                 `${API_BASE_URL}/api/panel/auth/refresh`,
                 { refreshToken }
@@ -77,8 +85,20 @@ class ApiClient {
     );
   }
 
+  get<T>(url: string) {
+    return this.client.get<T>(url);
+  }
+
   post<T>(url: string, data?: unknown) {
     return this.client.post<T>(url, data);
+  }
+
+  patch<T>(url: string, data?: unknown) {
+    return this.client.patch<T>(url, data);
+  }
+
+  delete<T = void>(url: string) {
+    return this.client.delete<T>(url);
   }
 }
 

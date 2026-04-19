@@ -26,18 +26,15 @@ export const UserTypeCard = ({
       onClick={onClick}
       sx={{
         cursor: 'pointer',
-        border: `2px solid ${isSelected ? theme.palette.primary.main : alpha(theme.palette.divider, 0.3)}`,
+        border: `2px solid ${isSelected ? theme.palette.primary.main : theme.palette.divider}`,
         backgroundColor: isSelected
-          ? alpha(theme.palette.primary.main, 0.08)
+          ? alpha(theme.palette.primary.main, 0.06)
           : 'transparent',
-        boxShadow: isSelected
-          ? `0 8px 24px ${alpha(theme.palette.primary.main, 0.25)}`
-          : 'none',
-        transform: isSelected ? 'translateY(-4px)' : 'translateY(0)',
+        boxShadow: isSelected ? theme.shadows[2] : 'none',
+        transform: 'none',
         '&:hover': {
           borderColor: theme.palette.primary.main,
-          transform: 'translateY(-4px)',
-          boxShadow: `0 12px 32px ${alpha(theme.palette.primary.main, 0.2)}`,
+          boxShadow: theme.shadows[2],
         },
       }}
     >
@@ -77,6 +74,7 @@ export const UserTypeCard = ({
             />
           )}
         </Box>
+        {/* خریدار خرده‌فروش / تولیدکننده و عمده‌فروش — titles hidden per product request
         <FsTypography
           variant="subtitle1"
           sx={{
@@ -86,6 +84,7 @@ export const UserTypeCard = ({
           }}
           i18nKey={isRetail ? 'Retail Buyer' : 'Producer & Wholesaler'}
         />
+        */}
         <FsTypography
           variant="caption"
           sx={{

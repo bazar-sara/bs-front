@@ -23,7 +23,7 @@ import {
   FsSwitch,
   FsUploadFile,
 } from '@fs/form';
-import { Box, Paper } from '@mui/material';
+import { Box, Container, Paper } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import type { GridColDef } from '@mui/x-data-grid';
 import { ClearIcon } from '@mui/x-date-pickers/icons';
@@ -85,13 +85,53 @@ const UiComponents = () => {
   return (
     <>
       <Box
-        p={4}
         sx={(theme) => ({
           minHeight: '100vh',
-          background: theme.palette.background.default,
-          borderRadius: 3,
+          background:
+            theme.palette.mode === 'dark'
+              ? theme.palette.background.default
+              : `linear-gradient(180deg, ${theme.palette.primary[50] ?? '#eef2ff'} 0%, ${theme.palette.background.default} 28%)`,
         })}
       >
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+          <Paper
+            elevation={0}
+            sx={(theme) => ({
+              p: { xs: 2, sm: 3 },
+              mb: 4,
+              borderRadius: 3,
+              border: `1px solid ${theme.palette.divider}`,
+              background:
+                theme.palette.mode === 'dark'
+                  ? theme.palette.background.paper
+                  : 'rgba(255,255,255,0.85)',
+              backdropFilter: 'blur(8px)',
+            })}
+          >
+            <FsTypography
+              variant="overline"
+              sx={{ letterSpacing: '0.12em', color: 'text.secondary' }}
+            >
+              Design system
+            </FsTypography>
+            <FsTypography
+              variant="h4"
+              sx={(theme) => ({
+                fontWeight: 800,
+                background: `linear-gradient(120deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              })}
+            >
+              UI components
+            </FsTypography>
+            <FsTypography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+              Local @fs/core & @fs/form primitives for QA and composition.
+            </FsTypography>
+          </Paper>
+        </Container>
+        <Box p={4} pt={0}>
         {/* Section for Description */}
         <FsTypography
           i18nKey={'Description'}
@@ -769,6 +809,7 @@ const UiComponents = () => {
             />
           </Grid>
         </Grid>
+        </Box>
       </Box>
     </>
   );

@@ -6,6 +6,7 @@ import type {
   RefreshTokenResult,
 } from './models';
 
+/** Exchanges refresh token for new access (and optionally refresh) tokens. Used by `ApiClient` interceptor and `AuthProvider` after expiry. */
 export async function refreshToken(
   refreshTokenValue: string
 ): Promise<RefreshTokenResult> {
@@ -16,6 +17,7 @@ export async function refreshToken(
   return getResponseData(response);
 }
 
+/** Invalidates server session; client still clears storage in `logout` even if this fails. */
 export async function logout(refreshTokenValue: string): Promise<void> {
   await apiClient.post('/api/panel/auth/logout', {
     refreshToken: refreshTokenValue,

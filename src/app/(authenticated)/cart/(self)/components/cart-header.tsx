@@ -14,10 +14,13 @@ const StyledHeader = styled('header')(({ theme }) => ({
   position: 'sticky',
   top: 0,
   zIndex: 1100,
-  background: `${theme.palette.primary.main}95`,
-  backdropFilter: 'blur(10px)',
-  boxShadow: `0 2px 20px ${theme.palette.common.black}1A`,
-  borderBottom: `1px solid ${theme.palette.primary.main}30`,
+  backgroundColor:
+    theme.palette.mode === 'dark'
+      ? theme.palette.background.paper
+      : 'rgba(255, 255, 255, 0.9)',
+  backdropFilter: 'blur(12px)',
+  boxShadow: `0 1px 0 ${theme.palette.divider}`,
+  borderBottom: `1px solid ${theme.palette.divider}`,
 }));
 
 export const CartHeader = () => {
@@ -51,11 +54,11 @@ export const CartHeader = () => {
               <IconButton
                 onClick={handleGoHome}
                 sx={{
-                  color: theme.palette.common.white,
-                  backgroundColor: `${theme.palette.common.white}10`,
+                  color: 'primary.main',
+                  backgroundColor: `${theme.palette.primary.main}0f`,
                   '&:hover': {
-                    backgroundColor: `${theme.palette.common.white}20`,
-                    transform: 'scale(1.1)',
+                    backgroundColor: `${theme.palette.primary.main}18`,
+                    transform: 'scale(1.05)',
                   },
                   transition: 'all 0.3s ease',
                 }}
@@ -67,8 +70,11 @@ export const CartHeader = () => {
               variant="h4"
               component="h1"
               sx={{
-                fontWeight: 700,
-                textShadow: `2px 2px 4px ${theme.palette.common.black}4D`,
+                fontWeight: 800,
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
               }}
             >
               بازارسرا
@@ -82,15 +88,15 @@ export const CartHeader = () => {
               <IconButton
                 onClick={handleLogout}
                 sx={{
-                  color: theme.palette.common.white,
-                  backgroundColor: `${theme.palette.common.white}10`,
-                  border: `2px solid ${theme.palette.common.white}30`,
+                  color: 'text.secondary',
+                  backgroundColor: 'action.hover',
+                  border: `1px solid ${theme.palette.divider}`,
                   '&:hover': {
-                    backgroundColor: `${theme.palette.error.main}20`,
+                    backgroundColor: `${theme.palette.error.main}14`,
                     borderColor: theme.palette.error.main,
-                    transform: 'scale(1.1)',
+                    color: 'error.main',
                   },
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.2s ease',
                 }}
               >
                 <LogoutIcon />

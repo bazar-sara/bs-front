@@ -1,7 +1,15 @@
 'use client';
 import { FsButton, FsTypography } from '@fs/core';
 import { FsFormProvider, FsInput } from '@fs/form';
-import { Box, Paper, Card, CardContent, useTheme, Chip } from '@mui/material';
+import {
+  Box,
+  Paper,
+  Card,
+  CardContent,
+  useTheme,
+  Chip,
+  CircularProgress,
+} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import {
   AccountBalanceWallet as WalletIcon,
@@ -18,6 +26,7 @@ import {
   useWallet,
   type Transaction,
 } from '@/app/common/contexts/wallet/wallet-context';
+import { getApiErrorMessage } from '@/app/common/services/auth/functions';
 import { toast } from 'sonner';
 
 const GradientBackground = styled('div')(({ theme }) => ({
@@ -26,15 +35,11 @@ const GradientBackground = styled('div')(({ theme }) => ({
   left: 0,
   width: '100%',
   height: '100%',
-  background: `linear-gradient(-45deg, ${theme.palette.primary.light} 0%, ${theme.palette.secondary.light} 100%)`,
-  backgroundSize: '400% 400%',
-  animation: 'gradient 15s ease infinite',
+  background:
+    theme.palette.mode === 'dark'
+      ? `radial-gradient(ellipse 80% 50% at 50% -20%, ${theme.palette.primary[800] ?? '#3730a3'}55 0%, transparent 55%), ${theme.palette.background.default}`
+      : `radial-gradient(ellipse 80% 50% at 50% -15%, ${theme.palette.primary[100] ?? '#e0e7ff'} 0%, ${theme.palette.background.default} 55%)`,
   zIndex: -1,
-  '@keyframes gradient': {
-    '0%': { backgroundPosition: '0% 50%' },
-    '50%': { backgroundPosition: '100% 50%' },
-    '100%': { backgroundPosition: '0% 50%' },
-  },
 }));
 
 type ChargeFormData = {
@@ -58,6 +63,7 @@ const Wallet = () => {
     }
   }, [isAuthenticated, router]);
 
+  /** Wallet balance is client-side mock (`WalletProvider`); no HTTP API yet — errors still surface cleanly. */
   const handleCharge = async (data: ChargeFormData) => {
     const amount = parseFloat(data.amount);
     if (isNaN(amount) || amount <= 0) {
@@ -71,8 +77,8 @@ const Wallet = () => {
       toast.success('کیف پول با موفقیت شارژ شد');
       methods.reset();
       setShowChargeForm(false);
-    } catch (error) {
-      toast.error('خطا در شارژ کیف پول');
+    } catch (error: unknown) {
+      toast.error(getApiErrorMessage(error, 'خطا در شارژ کیف پول'));
       console.error('Charge error:', error);
     } finally {
       setIsCharging(false);
@@ -127,6 +133,19 @@ const Wallet = () => {
 
   if (!isAuthenticated || !user) {
     return null;
+  }
+
+  if (isLoading && !wallet) {
+    return (
+      <Box
+        minHeight="100vh"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <CircularProgress color="primary" />
+      </Box>
+    );
   }
 
   return (

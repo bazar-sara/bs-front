@@ -1,5 +1,6 @@
 'use client';
 import { FsButton, FsTypography } from '@fs/core';
+import { alpha } from '@mui/material/styles';
 import {
   Box,
   Container,
@@ -26,6 +27,7 @@ import {
   Logout as LogoutIcon,
   ShoppingCart as ShoppingCartIcon,
   AccountBalanceWallet as WalletIcon,
+  Person as PersonIcon,
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -36,6 +38,17 @@ import { ThemeToggle } from '@/app/common/components';
 type HeaderComponentProps = {
   scrollToSection: (sectionId: string) => void;
 };
+
+const navLinkSx = {
+  color: 'text.secondary',
+  textDecoration: 'none',
+  fontWeight: 500,
+  '&:hover': {
+    color: 'primary.main',
+    textDecoration: 'underline',
+  },
+  transition: 'color 0.2s ease',
+} as const;
 
 const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
   const theme = useTheme();
@@ -92,6 +105,11 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
     router.push('/wallet');
   };
 
+  const handleProfile = () => {
+    handleMenuClose();
+    router.push('/profile');
+  };
+
   const handleLogout = async () => {
     handleMenuClose();
     await logout();
@@ -114,7 +132,13 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
               py: 1,
             }}
           >
-            <Box display={{ xs: 'flex', md: undefined }}>
+            <Box
+              sx={{
+                display: { xs: 'flex', md: 'block' },
+                alignItems: 'center',
+                gap: { xs: 1.5, md: 0 },
+              }}
+            >
               {/* Menu Icon on the right for RTL */}
               {isMobile && (
                 <IconButton
@@ -123,14 +147,10 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                   sx={{
                     width: 40,
                     height: 40,
-                    color: theme.palette.common.white,
+                    color: 'text.primary',
                     display: { xs: 'block', md: 'none' },
-                    backgroundColor: `${theme.palette.common.white}10`,
-                    '&:hover': {
-                      backgroundColor: `${theme.palette.common.white}20`,
-                      transform: 'scale(1.1)',
-                    },
-                    transition: 'all 0.3s ease',
+                    bgcolor: 'action.hover',
+                    '&:hover': { bgcolor: 'action.selected' },
                   }}
                 >
                   <MenuIcon />
@@ -142,8 +162,8 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 variant="h4"
                 component="h1"
                 sx={{
-                  fontWeight: 700,
-                  textShadow: `2px 2px 4px ${theme.palette.common.black}4D`,
+                  fontWeight: 800,
+                  color: 'primary.main',
                 }}
               >
                 بازارسرا
@@ -158,69 +178,28 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                   <MuiLink
                     component="button"
                     onClick={() => scrollToSection('home')}
-                    sx={{
-                      color: theme.palette.common.white,
-                      textDecoration: 'none',
-                      fontWeight: 500,
-                      // FIX: Add hover effect to desktop links
-                      opacity: 0.8,
-                      '&:hover': {
-                        opacity: 1,
-                        textDecoration: 'underline',
-                      },
-                      transition: 'opacity 0.2s ease',
-                    }}
+                    sx={navLinkSx}
                   >
                     خانه
                   </MuiLink>
                   <MuiLink
                     component="button"
                     onClick={() => scrollToSection('about')}
-                    sx={{
-                      color: theme.palette.common.white,
-                      textDecoration: 'none',
-                      fontWeight: 500,
-                      opacity: 0.8,
-                      '&:hover': {
-                        opacity: 1,
-                        textDecoration: 'underline',
-                      },
-                      transition: 'opacity 0.2s ease',
-                    }}
+                    sx={navLinkSx}
                   >
                     درباره ما
                   </MuiLink>
                   <MuiLink
                     component="button"
                     onClick={() => scrollToSection('products')}
-                    sx={{
-                      color: theme.palette.common.white,
-                      textDecoration: 'none',
-                      fontWeight: 500,
-                      opacity: 0.8,
-                      '&:hover': {
-                        opacity: 1,
-                        textDecoration: 'underline',
-                      },
-                      transition: 'opacity 0.2s ease',
-                    }}
+                    sx={navLinkSx}
                   >
                     محصولات
                   </MuiLink>
                   <MuiLink
                     component="button"
                     onClick={() => scrollToSection('contact')}
-                    sx={{
-                      color: theme.palette.common.white,
-                      textDecoration: 'none',
-                      fontWeight: 500,
-                      opacity: 0.8,
-                      '&:hover': {
-                        opacity: 1,
-                        textDecoration: 'underline',
-                      },
-                      transition: 'opacity 0.2s ease',
-                    }}
+                    sx={navLinkSx}
                   >
                     تماس با ما
                   </MuiLink>
@@ -231,11 +210,9 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                       sx={{
                         p: 0,
                         ml: 2,
-                        border: `2px solid ${theme.palette.common.white}`,
-                        '&:hover': {
-                          transform: 'scale(1.1)',
-                        },
-                        transition: 'all 0.3s ease',
+                        border: '2px solid',
+                        borderColor: 'divider',
+                        '&:hover': { borderColor: 'primary.main' },
                       }}
                     >
                       <Avatar
@@ -252,15 +229,8 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                   ) : (
                     <FsButton
                       variant="outlined"
+                      color="primary"
                       onClick={handleLoginClick}
-                      sx={{
-                        borderColor: theme.palette.common.white,
-                        color: theme.palette.common.white,
-                        '&:hover': {
-                          borderColor: theme.palette.common.white,
-                          backgroundColor: `${theme.palette.common.white}1A`,
-                        },
-                      }}
                     >
                       ورود/ثبت نام
                     </FsButton>
@@ -281,39 +251,14 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
           '& .MuiDrawer-paper': {
             width: '100vw',
             maxWidth: 320,
-            background:
-              theme.palette.mode === 'dark'
-                ? `linear-gradient(135deg, 
-                  ${theme.palette.primary[900]} 0%, 
-                  ${theme.palette.primary[800]} 50%, 
-                  ${theme.palette.common.black} 100%)`
-                : `linear-gradient(135deg, 
-                  ${theme.palette.common.black} 0%, 
-                  ${theme.palette.primary[800]} 50%, 
-                  ${theme.palette.primary[700]} 100%)`,
-            backdropFilter: 'blur(15px)',
-            // FIX: Change border/shadow for left anchor
-            borderRight: `1px solid ${theme.palette.primary.main}40`,
-            boxShadow: `10px 0 30px ${theme.palette.common.black}30`,
-            borderLeft: 'none', // Remove conflicting left border
-            // FIX: Adjust the radial gradient position
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background:
-                theme.palette.mode === 'dark'
-                  ? `radial-gradient(circle at 20% 20%, ${theme.palette.customColor.main}10 0%, transparent 50%)` // Adjusted to 20%
-                  : `radial-gradient(circle at 20% 20%, ${theme.palette.primary[500]}08 0%, transparent 50%)`, // Adjusted to 20%
-              zIndex: 1,
-            },
+            bgcolor: 'background.paper',
+            color: 'text.primary',
+            borderRight: `1px solid ${theme.palette.divider}`,
+            boxShadow: theme.shadows[8],
           },
           '& .MuiBackdrop-root': {
-            backgroundColor: `${theme.palette.common.black}60`,
-            backdropFilter: 'blur(5px)',
+            bgcolor: alpha(theme.palette.common.black, 0.45),
+            backdropFilter: 'blur(4px)',
           },
         }}
       >
@@ -325,35 +270,22 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
             alignItems: 'center',
             position: 'relative',
             zIndex: 2,
-            borderBottom: `1px solid ${theme.palette.primary.main}30`,
-            background: `linear-gradient(90deg, ${theme.palette.primary.main}20, transparent)`,
+            borderBottom: 1,
+            borderColor: 'divider',
+            bgcolor: 'background.paper',
           }}
         >
-          {/* Close Icon on the right for a left-anchored Drawer in an RTL-friendly design */}
           <IconButton
             onClick={handleMobileMenuToggle}
             sx={{
-              color: theme.palette.common.white,
-              backgroundColor: `${theme.palette.common.white}10`,
-              '&:hover': {
-                backgroundColor: `${theme.palette.common.white}20`,
-                transform: 'scale(1.1)',
-              },
-              transition: 'all 0.3s ease',
+              color: 'text.secondary',
+              bgcolor: 'action.hover',
+              '&:hover': { bgcolor: 'action.selected' },
             }}
           >
             <CloseIcon />
           </IconButton>
-          <FsTypography
-            variant="h5"
-            sx={{
-              fontWeight: 800,
-              textShadow:
-                theme.palette.mode === 'dark'
-                  ? `2px 2px 4px ${theme.palette.common.black}80`
-                  : 'none',
-            }}
-          >
+          <FsTypography variant="h5" sx={{ fontWeight: 800, color: 'primary.main' }}>
             بازارسرا
           </FsTypography>
         </Box>
@@ -369,12 +301,12 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 maxWidth: '90%', // Helps with centering
                 mb: 1,
                 borderRadius: 2,
-                backgroundColor: `${theme.palette.common.white}05`,
-                border: `1px solid ${theme.palette.primary.main}20`,
+                bgcolor: 'action.hover',
+                border: '1px solid',
+                borderColor: 'divider',
                 '&:hover': {
-                  backgroundColor: `${theme.palette.primary.main}20`,
-                  borderColor: theme.palette.primary.main,
-                  transform: 'translateX(0)', // Remove 'translateX(-5px)' for centering
+                  bgcolor: 'action.selected',
+                  borderColor: 'primary.main',
                 },
                 transition: 'all 0.3s ease',
                 display: 'flex',
@@ -389,11 +321,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
               <ListItemText
                 primary="خانه"
                 sx={{
-                  color: theme.palette.common.white,
-                  textShadow:
-                    theme.palette.mode === 'dark'
-                      ? `1px 1px 2px ${theme.palette.common.black}60`
-                      : 'none',
+                  color: 'text.primary',
                   '& .MuiListItemText-primary': {
                     fontWeight: 600,
                     fontSize: '1.1rem',
@@ -413,12 +341,12 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 maxWidth: '90%', // Helps with centering
                 mb: 1,
                 borderRadius: 2,
-                backgroundColor: `${theme.palette.common.white}05`,
-                border: `1px solid ${theme.palette.primary.main}20`,
+                bgcolor: 'action.hover',
+                border: '1px solid',
+                borderColor: 'divider',
                 '&:hover': {
-                  backgroundColor: `${theme.palette.primary.main}20`,
-                  borderColor: theme.palette.primary.main,
-                  transform: 'translateX(0)', // Remove 'translateX(-5px)'
+                  bgcolor: 'action.selected',
+                  borderColor: 'primary.main',
                 },
                 transition: 'all 0.3s ease',
                 display: 'flex',
@@ -433,11 +361,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
               <ListItemText
                 primary="درباره ما"
                 sx={{
-                  color: theme.palette.common.white,
-                  textShadow:
-                    theme.palette.mode === 'dark'
-                      ? `1px 1px 2px ${theme.palette.common.black}60`
-                      : 'none',
+                  color: 'text.primary',
                   '& .MuiListItemText-primary': {
                     fontWeight: 600,
                     fontSize: '1.1rem',
@@ -457,12 +381,12 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 maxWidth: '90%', // Helps with centering
                 mb: 1,
                 borderRadius: 2,
-                backgroundColor: `${theme.palette.common.white}05`,
-                border: `1px solid ${theme.palette.primary.main}20`,
+                bgcolor: 'action.hover',
+                border: '1px solid',
+                borderColor: 'divider',
                 '&:hover': {
-                  backgroundColor: `${theme.palette.primary.main}20`,
-                  borderColor: theme.palette.primary.main,
-                  transform: 'translateX(0)', // Remove 'translateX(-5px)'
+                  bgcolor: 'action.selected',
+                  borderColor: 'primary.main',
                 },
                 transition: 'all 0.3s ease',
                 display: 'flex',
@@ -477,11 +401,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
               <ListItemText
                 primary="محصولات"
                 sx={{
-                  color: theme.palette.common.white,
-                  textShadow:
-                    theme.palette.mode === 'dark'
-                      ? `1px 1px 2px ${theme.palette.common.black}60`
-                      : 'none',
+                  color: 'text.primary',
                   '& .MuiListItemText-primary': {
                     fontWeight: 600,
                     fontSize: '1.1rem',
@@ -501,12 +421,12 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 maxWidth: '90%', // Helps with centering
                 mb: 1,
                 borderRadius: 2,
-                backgroundColor: `${theme.palette.common.white}05`,
-                border: `1px solid ${theme.palette.primary.main}20`,
+                bgcolor: 'action.hover',
+                border: '1px solid',
+                borderColor: 'divider',
                 '&:hover': {
-                  backgroundColor: `${theme.palette.primary.main}20`,
-                  borderColor: theme.palette.primary.main,
-                  transform: 'translateX(0)', // Remove 'translateX(-5px)'
+                  bgcolor: 'action.selected',
+                  borderColor: 'primary.main',
                 },
                 transition: 'all 0.3s ease',
                 display: 'flex',
@@ -521,11 +441,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
               <ListItemText
                 primary="تماس با ما"
                 sx={{
-                  color: theme.palette.common.white,
-                  textShadow:
-                    theme.palette.mode === 'dark'
-                      ? `1px 1px 2px ${theme.palette.common.black}60`
-                      : 'none',
+                  color: 'text.primary',
                   '& .MuiListItemText-primary': {
                     fontWeight: 600,
                     fontSize: '1.1rem',
@@ -544,8 +460,9 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
             p: 3,
             position: 'relative',
             zIndex: 2,
-            borderTop: `1px solid ${theme.palette.primary.main}30`,
-            background: `linear-gradient(90deg, transparent, ${theme.palette.primary.main}10)`,
+            borderTop: 1,
+            borderColor: 'divider',
+            bgcolor: 'background.default',
           }}
         >
           {user ? (
@@ -565,28 +482,24 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                   </FsTypography>
                 )}
               </Box>
-              <Divider
-                sx={{ borderColor: `${theme.palette.common.white}20`, mb: 1 }}
-              />
+              <Divider sx={{ mb: 1 }} />
+              <FsButton
+                variant="outlined"
+                color="primary"
+                fullWidth
+                onClick={handleProfile}
+                sx={{ py: 1.5, fontSize: '1rem', fontWeight: 600, borderRadius: 2, mb: 1 }}
+              >
+                <PersonIcon sx={{ ml: 1, fontSize: 20 }} />
+                <FsTypography variant="body2" i18nKey="Profile" />
+              </FsButton>
               {user.type === 'wholesale' ? (
                 <FsButton
                   variant="outlined"
+                  color="primary"
                   fullWidth
                   onClick={handleMyShop}
-                  sx={{
-                    borderColor: theme.palette.common.white,
-                    color: theme.palette.common.white,
-                    py: 1.5,
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    borderRadius: 2,
-                    mb: 1,
-                    '&:hover': {
-                      borderColor: theme.palette.primary.main,
-                      backgroundColor: `${theme.palette.primary.main}20`,
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
+                  sx={{ py: 1.5, fontSize: '1rem', fontWeight: 600, borderRadius: 2, mb: 1 }}
                 >
                   <StoreIcon sx={{ ml: 1, fontSize: 20 }} />
                   <FsTypography variant="body2" i18nKey="My Shop" />
@@ -595,43 +508,20 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 <>
                   <FsButton
                     variant="outlined"
+                    color="primary"
                     fullWidth
                     onClick={handleShoppingCart}
-                    sx={{
-                      borderColor: theme.palette.common.white,
-                      py: 1.5,
-                      fontSize: '1rem',
-                      fontWeight: 600,
-                      borderRadius: 2,
-                      mb: 1,
-                      '&:hover': {
-                        borderColor: theme.palette.primary.main,
-                        backgroundColor: `${theme.palette.primary.main}20`,
-                      },
-                      transition: 'all 0.3s ease',
-                    }}
+                    sx={{ py: 1.5, fontSize: '1rem', fontWeight: 600, borderRadius: 2, mb: 1 }}
                   >
                     <ShoppingCartIcon sx={{ ml: 1, fontSize: 20 }} />
                     <FsTypography variant="body2" i18nKey="Shopping Cart" />
                   </FsButton>
                   <FsButton
                     variant="outlined"
+                    color="primary"
                     fullWidth
                     onClick={handleWallet}
-                    sx={{
-                      borderColor: theme.palette.common.white,
-                      color: theme.palette.common.white,
-                      py: 1.5,
-                      fontSize: '1rem',
-                      fontWeight: 600,
-                      borderRadius: 2,
-                      mb: 1,
-                      '&:hover': {
-                        borderColor: theme.palette.primary.main,
-                        backgroundColor: `${theme.palette.primary.main}20`,
-                      },
-                      transition: 'all 0.3s ease',
-                    }}
+                    sx={{ py: 1.5, fontSize: '1rem', fontWeight: 600, borderRadius: 2, mb: 1 }}
                   >
                     <WalletIcon sx={{ ml: 1, fontSize: 20 }} />
                     <FsTypography variant="body2" i18nKey="Wallet" />
@@ -640,21 +530,10 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
               )}
               <FsButton
                 variant="outlined"
+                color="error"
                 fullWidth
                 onClick={handleLogout}
-                sx={{
-                  borderColor: theme.palette.common.white,
-                  color: theme.palette.common.white,
-                  py: 1.5,
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  borderRadius: 2,
-                  '&:hover': {
-                    borderColor: theme.palette.error.main,
-                    backgroundColor: `${theme.palette.error.main}20`,
-                  },
-                  transition: 'all 0.3s ease',
-                }}
+                sx={{ py: 1.5, fontSize: '1rem', fontWeight: 600, borderRadius: 2 }}
               >
                 <LogoutIcon sx={{ ml: 1, fontSize: 20 }} />
                 <FsTypography variant="body2" i18nKey="Logout" />
@@ -663,27 +542,10 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
           ) : (
             <FsButton
               variant="outlined"
+              color="primary"
               fullWidth
               onClick={handleLoginClick}
-              sx={{
-                borderColor: theme.palette.common.white,
-                color: theme.palette.common.white,
-                py: 1.5,
-                fontSize: '1.1rem',
-                fontWeight: 600,
-                borderRadius: 2,
-                textShadow:
-                  theme.palette.mode === 'dark'
-                    ? `1px 1px 2px ${theme.palette.common.black}60`
-                    : 'none',
-                '&:hover': {
-                  borderColor: theme.palette.primary.main,
-                  backgroundColor: `${theme.palette.primary.main}20`,
-                  transform: 'translateY(-2px)',
-                  boxShadow: `0 4px 12px ${theme.palette.primary.main}40`,
-                },
-                transition: 'all 0.3s ease',
-              }}
+              sx={{ py: 1.5, fontSize: '1.1rem', fontWeight: 600, borderRadius: 2 }}
             >
               ورود/ثبت نام
             </FsButton>
@@ -722,6 +584,10 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
           </FsTypography>
         </Box>
         <Divider />
+        <MenuItem onClick={handleProfile} sx={{ py: 1.5 }}>
+          <PersonIcon sx={{ ml: 1.5, fontSize: 20 }} />
+          <FsTypography variant="body2" i18nKey="Profile" />
+        </MenuItem>
         {user?.type === 'wholesale' ? (
           <MenuItem onClick={handleMyShop} sx={{ py: 1.5 }}>
             <StoreIcon sx={{ ml: 1.5, fontSize: 20 }} />

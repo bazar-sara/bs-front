@@ -2,5 +2,9 @@
   "GLOBAL": {
     "title": "Hello world!"
   },
+  "Contact full name": "Full name",
+  "Contact email": "Email",
+  "Contact phone": "Phone",
+  "Contact message": "Your message",
   "Shopping Cart": "Shopping Cart"
 }

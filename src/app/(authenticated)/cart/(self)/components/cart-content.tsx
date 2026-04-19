@@ -1,4 +1,7 @@
 'use client';
+/**
+ * Cart line items are mocked in state until a cart API is wired (`(self)/services`).
+ */
 import { FsButton, FsTypography } from '@fs/core';
 import {
   Box,

@@ -7,7 +7,6 @@ import {
   IconButton,
   Stack,
   Link as MuiLink,
-  useTheme,
 } from '@mui/material';
 import {
   LocationOn as LocationIcon,
@@ -24,371 +23,133 @@ type FooterProps = {
   scrollToSection: (sectionId: string) => void;
 };
 
-const Footer = ({ scrollToSection }: FooterProps) => {
-  const theme = useTheme();
+const footerLinkSx = {
+  color: 'text.secondary',
+  textDecoration: 'none',
+  fontSize: '0.95rem',
+  textAlign: 'left' as const,
+  transition: 'color 0.2s ease',
+  '&:hover': { color: 'primary.main' },
+};
 
+const sectionTitleSx = {
+  fontWeight: 700,
+  mb: 3,
+  position: 'relative' as const,
+  color: 'text.primary',
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    bottom: -8,
+    left: 0,
+    width: 30,
+    height: 2,
+    backgroundColor: 'primary.main',
+    borderRadius: 1,
+  },
+};
+
+const socialBtnSx = {
+  color: 'primary.main',
+  bgcolor: 'action.hover',
+  border: '1px solid',
+  borderColor: 'divider',
+  '&:hover': {
+    bgcolor: 'primary.main',
+    color: 'primary.contrastText',
+    borderColor: 'primary.main',
+  },
+  transition: 'background-color 0.2s ease, color 0.2s ease',
+};
+
+const Footer = ({ scrollToSection }: FooterProps) => {
   return (
     <Box
       sx={{
-        background:
-          theme.palette.mode === 'dark'
-            ? `linear-gradient(135deg, 
-              ${theme.palette.primary[900]} 0%, 
-              ${theme.palette.primary[800]} 25%, 
-              ${theme.palette.common.black} 50%, 
-              ${theme.palette.primary[700]} 75%, 
-              ${theme.palette.primary[800]} 100%)`
-            : `linear-gradient(135deg, 
-              ${theme.palette.common.black} 0%, 
-              ${theme.palette.primary[800]} 30%, 
-              ${theme.palette.common.black} 70%, 
-              ${theme.palette.primary[700]} 100%)`,
-        color: theme.palette.common.white,
+        bgcolor: 'background.paper',
+        color: 'text.primary',
+        borderTop: 1,
+        borderColor: 'divider',
         py: 8,
-        position: 'relative',
-        overflow: 'hidden',
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '1px',
-          background: `linear-gradient(90deg, transparent 0%, ${theme.palette.primary.main} 50%, transparent 100%)`,
-        },
-        '&::after': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background:
-            theme.palette.mode === 'dark'
-              ? `radial-gradient(circle at 30% 20%, ${theme.palette.customColor.main}15 0%, transparent 50%),
-               radial-gradient(circle at 70% 80%, ${theme.palette.primary[500]}10 0%, transparent 50%)`
-              : `radial-gradient(circle at 20% 30%, ${theme.palette.primary[500]}08 0%, transparent 50%),
-               radial-gradient(circle at 80% 70%, ${theme.palette.primary[400]}06 0%, transparent 50%)`,
-          zIndex: 1,
-        },
       }}
     >
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+      <Container maxWidth="lg">
         <Grid container spacing={6}>
-          {/* Company Info */}
           <Grid size={{ xs: 12, md: 4 }}>
             <Box sx={{ mb: 4 }}>
               <FsTypography
                 variant="h4"
                 component="h3"
-                sx={{
-                  fontWeight: 800,
-                  mb: 2,
-                  textShadow:
-                    theme.palette.mode === 'dark'
-                      ? `2px 2px 4px ${theme.palette.common.black}80, 0 0 8px ${theme.palette.primary.main}40`
-                      : `2px 2px 4px ${theme.palette.common.black}4D`,
-                }}
+                sx={{ fontWeight: 800, mb: 2, color: 'primary.main' }}
               >
                 بازارسرا
               </FsTypography>
               <FsTypography
                 variant="body1"
-                sx={{
-                  textShadow:
-                    theme.palette.mode === 'dark'
-                      ? `1px 1px 2px ${theme.palette.common.black}80`
-                      : 'none',
-                  lineHeight: 1.8,
-                  mb: 3,
-                }}
+                sx={{ lineHeight: 1.8, mb: 3, color: 'text.secondary' }}
               >
                 هایپرمارکت مدرن و کامل شما با ارائه بهترین محصولات و خدمات
               </FsTypography>
-
-              {/* Social Media */}
               <Box sx={{ mb: 3 }}>
                 <FsTypography
                   variant="subtitle2"
-                  sx={{
-                    fontWeight: 600,
-                    mb: 2,
-                  }}
+                  sx={{ fontWeight: 600, mb: 2, color: 'text.primary' }}
                 >
                   ما را دنبال کنید
                 </FsTypography>
                 <Box sx={{ display: 'flex', gap: 1 }}>
-                  <IconButton
-                    sx={{
-                      color: theme.palette.primary.main,
-                      backgroundColor:
-                        theme.palette.mode === 'dark'
-                          ? `${theme.palette.primary[500]}20`
-                          : `${theme.palette.common.white}30`,
-                      border:
-                        theme.palette.mode === 'light'
-                          ? `1px solid ${theme.palette.primary.main}20`
-                          : 'none',
-                      '&:hover': {
-                        backgroundColor:
-                          theme.palette.mode === 'dark'
-                            ? theme.palette.customColor.main
-                            : theme.palette.primary.main,
-                        color: theme.palette.common.white,
-                        transform: 'translateY(-2px) scale(1.05)',
-                        boxShadow:
-                          theme.palette.mode === 'dark'
-                            ? `0 6px 16px ${theme.palette.customColor.main}50`
-                            : `0 6px 16px ${theme.palette.primary.main}40`,
-                        border:
-                          theme.palette.mode === 'light'
-                            ? `1px solid ${theme.palette.primary.main}`
-                            : 'none',
-                      },
-                      transition: 'all 0.3s ease',
-                    }}
-                  >
-                    <FacebookIcon />
+                  <IconButton size="small" sx={socialBtnSx} aria-label="Facebook">
+                    <FacebookIcon fontSize="small" />
                   </IconButton>
-                  <IconButton
-                    sx={{
-                      color: theme.palette.primary.main,
-                      backgroundColor:
-                        theme.palette.mode === 'dark'
-                          ? `${theme.palette.primary[500]}20`
-                          : `${theme.palette.common.white}30`,
-                      border:
-                        theme.palette.mode === 'light'
-                          ? `1px solid ${theme.palette.primary.main}20`
-                          : 'none',
-                      '&:hover': {
-                        backgroundColor:
-                          theme.palette.mode === 'dark'
-                            ? theme.palette.customColor.main
-                            : theme.palette.primary.main,
-                        color: theme.palette.common.white,
-                        transform: 'translateY(-2px) scale(1.05)',
-                        boxShadow:
-                          theme.palette.mode === 'dark'
-                            ? `0 6px 16px ${theme.palette.customColor.main}50`
-                            : `0 6px 16px ${theme.palette.primary.main}40`,
-                        border:
-                          theme.palette.mode === 'light'
-                            ? `1px solid ${theme.palette.primary.main}`
-                            : 'none',
-                      },
-                      transition: 'all 0.3s ease',
-                    }}
-                  >
-                    <InstagramIcon />
+                  <IconButton size="small" sx={socialBtnSx} aria-label="Instagram">
+                    <InstagramIcon fontSize="small" />
                   </IconButton>
-                  <IconButton
-                    sx={{
-                      color: theme.palette.primary.main,
-                      backgroundColor:
-                        theme.palette.mode === 'dark'
-                          ? `${theme.palette.primary[500]}20`
-                          : `${theme.palette.common.white}30`,
-                      border:
-                        theme.palette.mode === 'light'
-                          ? `1px solid ${theme.palette.primary.main}20`
-                          : 'none',
-                      '&:hover': {
-                        backgroundColor:
-                          theme.palette.mode === 'dark'
-                            ? theme.palette.customColor.main
-                            : theme.palette.primary.main,
-                        color: theme.palette.common.white,
-                        transform: 'translateY(-2px) scale(1.05)',
-                        boxShadow:
-                          theme.palette.mode === 'dark'
-                            ? `0 6px 16px ${theme.palette.customColor.main}50`
-                            : `0 6px 16px ${theme.palette.primary.main}40`,
-                        border:
-                          theme.palette.mode === 'light'
-                            ? `1px solid ${theme.palette.primary.main}`
-                            : 'none',
-                      },
-                      transition: 'all 0.3s ease',
-                    }}
-                  >
-                    <TwitterIcon />
+                  <IconButton size="small" sx={socialBtnSx} aria-label="Twitter">
+                    <TwitterIcon fontSize="small" />
                   </IconButton>
-                  <IconButton
-                    sx={{
-                      color: theme.palette.primary.main,
-                      backgroundColor:
-                        theme.palette.mode === 'dark'
-                          ? `${theme.palette.primary[500]}20`
-                          : `${theme.palette.common.white}30`,
-                      border:
-                        theme.palette.mode === 'light'
-                          ? `1px solid ${theme.palette.primary.main}20`
-                          : 'none',
-                      '&:hover': {
-                        backgroundColor:
-                          theme.palette.mode === 'dark'
-                            ? theme.palette.customColor.main
-                            : theme.palette.primary.main,
-                        color: theme.palette.common.white,
-                        transform: 'translateY(-2px) scale(1.05)',
-                        boxShadow:
-                          theme.palette.mode === 'dark'
-                            ? `0 6px 16px ${theme.palette.customColor.main}50`
-                            : `0 6px 16px ${theme.palette.primary.main}40`,
-                        border:
-                          theme.palette.mode === 'light'
-                            ? `1px solid ${theme.palette.primary.main}`
-                            : 'none',
-                      },
-                      transition: 'all 0.3s ease',
-                    }}
-                  >
-                    <LinkedInIcon />
+                  <IconButton size="small" sx={socialBtnSx} aria-label="LinkedIn">
+                    <LinkedInIcon fontSize="small" />
                   </IconButton>
                 </Box>
               </Box>
             </Box>
           </Grid>
 
-          {/* Quick Links */}
           <Grid size={{ xs: 12, md: 4 }}>
             <Box sx={{ mb: 4 }}>
-              <FsTypography
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontWeight: 700,
-                  mb: 3,
-                  position: 'relative',
-                  textShadow:
-                    theme.palette.mode === 'dark'
-                      ? `1px 1px 3px ${theme.palette.common.black}80`
-                      : 'none',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: -8,
-                    left: 0,
-                    width: 30,
-                    height: 2,
-                    backgroundColor: theme.palette.primary.main,
-                    borderRadius: 1,
-                  },
-                }}
-              >
+              <FsTypography variant="h6" component="h4" sx={sectionTitleSx}>
                 لینک‌های سریع
               </FsTypography>
               <Stack spacing={2} sx={{ alignItems: 'flex-start' }}>
                 <MuiLink
                   component="button"
+                  type="button"
                   onClick={() => scrollToSection('home')}
-                  sx={{
-                    color:
-                      theme.palette.mode === 'dark'
-                        ? theme.palette.common.white
-                        : `${theme.palette.common.white}E6`,
-                    textShadow:
-                      theme.palette.mode === 'dark'
-                        ? `1px 1px 2px ${theme.palette.common.black}60`
-                        : 'none',
-                    textDecoration: 'none',
-                    fontSize: '0.95rem',
-                    transition: 'all 0.3s ease',
-                    textAlign: 'left',
-                    '&:hover': {
-                      color: theme.palette.primary.main,
-                      transform: 'translateX(5px)',
-                      textShadow:
-                        theme.palette.mode === 'dark'
-                          ? `1px 1px 2px ${theme.palette.primary.main}80`
-                          : 'none',
-                    },
-                  }}
+                  sx={footerLinkSx}
                 >
                   خانه
                 </MuiLink>
                 <MuiLink
                   component="button"
+                  type="button"
                   onClick={() => scrollToSection('about')}
-                  sx={{
-                    color:
-                      theme.palette.mode === 'dark'
-                        ? theme.palette.common.white
-                        : `${theme.palette.common.white}E6`,
-                    textShadow:
-                      theme.palette.mode === 'dark'
-                        ? `1px 1px 2px ${theme.palette.common.black}60`
-                        : 'none',
-                    textDecoration: 'none',
-                    fontSize: '0.95rem',
-                    transition: 'all 0.3s ease',
-                    textAlign: 'left',
-                    '&:hover': {
-                      color: theme.palette.primary.main,
-                      transform: 'translateX(5px)',
-                      textShadow:
-                        theme.palette.mode === 'dark'
-                          ? `1px 1px 2px ${theme.palette.primary.main}80`
-                          : 'none',
-                    },
-                  }}
+                  sx={footerLinkSx}
                 >
                   درباره ما
                 </MuiLink>
                 <MuiLink
                   component="button"
+                  type="button"
                   onClick={() => scrollToSection('products')}
-                  sx={{
-                    color:
-                      theme.palette.mode === 'dark'
-                        ? theme.palette.common.white
-                        : `${theme.palette.common.white}E6`,
-                    textShadow:
-                      theme.palette.mode === 'dark'
-                        ? `1px 1px 2px ${theme.palette.common.black}60`
-                        : 'none',
-                    textDecoration: 'none',
-                    fontSize: '0.95rem',
-                    transition: 'all 0.3s ease',
-                    textAlign: 'left',
-                    '&:hover': {
-                      color: theme.palette.primary.main,
-                      transform: 'translateX(5px)',
-                      textShadow:
-                        theme.palette.mode === 'dark'
-                          ? `1px 1px 2px ${theme.palette.primary.main}80`
-                          : 'none',
-                    },
-                  }}
+                  sx={footerLinkSx}
                 >
                   محصولات
                 </MuiLink>
                 <MuiLink
                   component="button"
+                  type="button"
                   onClick={() => scrollToSection('contact')}
-                  sx={{
-                    color:
-                      theme.palette.mode === 'dark'
-                        ? theme.palette.common.white
-                        : `${theme.palette.common.white}E6`,
-                    textShadow:
-                      theme.palette.mode === 'dark'
-                        ? `1px 1px 2px ${theme.palette.common.black}60`
-                        : 'none',
-                    textDecoration: 'none',
-                    fontSize: '0.95rem',
-                    transition: 'all 0.3s ease',
-                    textAlign: 'left',
-                    '&:hover': {
-                      color: theme.palette.primary.main,
-                      transform: 'translateX(5px)',
-                      textShadow:
-                        theme.palette.mode === 'dark'
-                          ? `1px 1px 2px ${theme.palette.primary.main}80`
-                          : 'none',
-                    },
-                  }}
+                  sx={footerLinkSx}
                 >
                   تماس با ما
                 </MuiLink>
@@ -396,96 +157,33 @@ const Footer = ({ scrollToSection }: FooterProps) => {
             </Box>
           </Grid>
 
-          {/* Contact Info */}
           <Grid size={{ xs: 12, md: 4 }}>
             <Box sx={{ mb: 4 }}>
-              <FsTypography
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontWeight: 700,
-                  mb: 3,
-                  position: 'relative',
-                  textShadow:
-                    theme.palette.mode === 'dark'
-                      ? `1px 1px 3px ${theme.palette.common.black}80`
-                      : 'none',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: -8,
-                    left: 0,
-                    width: 30,
-                    height: 2,
-                    backgroundColor: theme.palette.primary.main,
-                    borderRadius: 1,
-                  },
-                }}
-              >
+              <FsTypography variant="h6" component="h4" sx={sectionTitleSx}>
                 اطلاعات تماس
               </FsTypography>
               <Stack spacing={2} sx={{ alignItems: 'flex-start' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <LocationIcon
-                    sx={{ color: theme.palette.primary.main, fontSize: 20 }}
-                  />
-                  <FsTypography
-                    variant="body2"
-                    sx={{
-                      textShadow:
-                        theme.palette.mode === 'dark'
-                          ? `1px 1px 2px ${theme.palette.common.black}60`
-                          : 'none',
-                    }}
-                  >
+                  <LocationIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <FsTypography variant="body2" color="text.secondary">
                     تهران، خیابان ولیعصر، پلاک ۱۲۳
                   </FsTypography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <PhoneIcon
-                    sx={{ color: theme.palette.primary.main, fontSize: 20 }}
-                  />
-                  <FsTypography
-                    variant="body2"
-                    sx={{
-                      textShadow:
-                        theme.palette.mode === 'dark'
-                          ? `1px 1px 2px ${theme.palette.common.black}60`
-                          : 'none',
-                    }}
-                  >
+                  <PhoneIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <FsTypography variant="body2" color="text.secondary">
                     ۰۲۱-۱۲۳۴۵۶۷۸
                   </FsTypography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <EmailIcon
-                    sx={{ color: theme.palette.primary.main, fontSize: 20 }}
-                  />
-                  <FsTypography
-                    variant="body2"
-                    sx={{
-                      textShadow:
-                        theme.palette.mode === 'dark'
-                          ? `1px 1px 2px ${theme.palette.common.black}60`
-                          : 'none',
-                    }}
-                  >
+                  <EmailIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <FsTypography variant="body2" color="text.secondary">
                     info@bazaarsara.com
                   </FsTypography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <TimeIcon
-                    sx={{ color: theme.palette.primary.main, fontSize: 20 }}
-                  />
-                  <FsTypography
-                    variant="body2"
-                    sx={{
-                      textShadow:
-                        theme.palette.mode === 'dark'
-                          ? `1px 1px 2px ${theme.palette.common.black}60`
-                          : 'none',
-                    }}
-                  >
+                  <TimeIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <FsTypography variant="body2" color="text.secondary">
                     ۸ صبح تا ۱۰ شب
                   </FsTypography>
                 </Box>
@@ -494,10 +192,10 @@ const Footer = ({ scrollToSection }: FooterProps) => {
           </Grid>
         </Grid>
 
-        {/* Bottom Section */}
         <Box
           sx={{
-            borderTop: `1px solid ${theme.palette.common.white}20`,
+            borderTop: 1,
+            borderColor: 'divider',
             pt: 4,
             mt: 4,
           }}
@@ -506,13 +204,8 @@ const Footer = ({ scrollToSection }: FooterProps) => {
             <Grid size={{ xs: 12, md: 6 }}>
               <FsTypography
                 variant="body2"
-                sx={{
-                  textShadow:
-                    theme.palette.mode === 'dark'
-                      ? `1px 1px 2px ${theme.palette.common.black}40`
-                      : 'none',
-                  textAlign: { xs: 'center', md: 'left' },
-                }}
+                color="text.secondary"
+                sx={{ textAlign: { xs: 'center', md: 'left' } }}
               >
                 تمام حقوق محفوظ است. بازارسرا © ۱۴۰۳
               </FsTypography>
@@ -523,69 +216,16 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   display: 'flex',
                   gap: 3,
                   justifyContent: { xs: 'center', md: 'flex-end' },
+                  flexWrap: 'wrap',
                 }}
               >
-                <MuiLink
-                  href="#"
-                  sx={{
-                    color:
-                      theme.palette.mode === 'dark'
-                        ? `${theme.palette.common.white}E6`
-                        : `${theme.palette.common.white}99`,
-                    textShadow:
-                      theme.palette.mode === 'dark'
-                        ? `1px 1px 2px ${theme.palette.common.black}40`
-                        : 'none',
-                    textDecoration: 'none',
-                    fontSize: '0.85rem',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      color: theme.palette.primary.main,
-                    },
-                  }}
-                >
+                <MuiLink href="#" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
                   حریم خصوصی
                 </MuiLink>
-                <MuiLink
-                  href="#"
-                  sx={{
-                    color:
-                      theme.palette.mode === 'dark'
-                        ? `${theme.palette.common.white}E6`
-                        : `${theme.palette.common.white}99`,
-                    textShadow:
-                      theme.palette.mode === 'dark'
-                        ? `1px 1px 2px ${theme.palette.common.black}40`
-                        : 'none',
-                    textDecoration: 'none',
-                    fontSize: '0.85rem',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      color: theme.palette.primary.main,
-                    },
-                  }}
-                >
+                <MuiLink href="#" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
                   قوانین و مقررات
                 </MuiLink>
-                <MuiLink
-                  href="#"
-                  sx={{
-                    color:
-                      theme.palette.mode === 'dark'
-                        ? `${theme.palette.common.white}E6`
-                        : `${theme.palette.common.white}99`,
-                    textShadow:
-                      theme.palette.mode === 'dark'
-                        ? `1px 1px 2px ${theme.palette.common.black}40`
-                        : 'none',
-                    textDecoration: 'none',
-                    fontSize: '0.85rem',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      color: theme.palette.primary.main,
-                    },
-                  }}
-                >
+                <MuiLink href="#" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
                   شرایط استفاده
                 </MuiLink>
               </Box>

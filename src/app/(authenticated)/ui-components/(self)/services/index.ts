@@ -1,2 +1,2 @@
-// Route-specific services - add here
+/** Design-system showcase only — no remote API. */
 export {};

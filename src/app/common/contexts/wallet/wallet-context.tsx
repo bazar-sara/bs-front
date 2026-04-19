@@ -1,4 +1,7 @@
 'use client';
+/**
+ * Wallet state is simulated in the browser (localStorage per user) until a backend wallet API exists.
+ */
 import {
   createContext,
   useContext,

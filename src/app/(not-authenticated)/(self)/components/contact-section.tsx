@@ -1,14 +1,7 @@
 'use client';
 import { FsButton, FsTypography } from '@fs/core';
-import { FsFormProvider } from '@fs/form';
-import {
-  Box,
-  Container,
-  Grid,
-  TextField,
-  Stack,
-  useTheme,
-} from '@mui/material';
+import { FsFormProvider, FsInput } from '@fs/form';
+import { Box, Container, Grid, Stack, useTheme } from '@mui/material';
 import {
   LocationOn as LocationIcon,
   Phone as PhoneIcon,
@@ -35,7 +28,6 @@ const ContactSection = () => {
             sx={{
               fontWeight: 700,
               mb: 2,
-              textShadow: `2px 2px 4px ${theme.palette.common.black}4D`,
             }}
           >
             تماس با ما
@@ -71,56 +63,36 @@ const ContactSection = () => {
               </Box>
               <FsFormProvider name="contact" methods={methods}>
                 <Stack spacing={3}>
-                  <TextField
+                  <FsInput
                     name="name"
                     fullWidth
-                    label="نام و نام خانوادگی"
+                    i18nKey="Contact full name"
                     variant="outlined"
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                        backgroundColor: `${theme.palette.background.paper}E6`,
-                      },
-                    }}
+                    clearButton={false}
                   />
-                  <TextField
+                  <FsInput
                     name="email"
                     fullWidth
-                    label="ایمیل"
+                    i18nKey="Contact email"
                     variant="outlined"
                     type="email"
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                        backgroundColor: `${theme.palette.background.paper}E6`,
-                      },
-                    }}
+                    clearButton={false}
                   />
-                  <TextField
+                  <FsInput
                     name="phone"
                     fullWidth
-                    label="شماره تلفن"
+                    i18nKey="Contact phone"
                     variant="outlined"
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                        backgroundColor: `${theme.palette.background.paper}E6`,
-                      },
-                    }}
+                    clearButton={false}
                   />
-                  <TextField
+                  <FsInput
                     name="message"
                     fullWidth
-                    label="پیام شما"
+                    i18nKey="Contact message"
                     variant="outlined"
                     multiline
                     rows={4}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                        backgroundColor: `${theme.palette.background.paper}E6`,
-                      },
-                    }}
+                    clearButton={false}
                   />
                   <FsButton
                     type="submit"

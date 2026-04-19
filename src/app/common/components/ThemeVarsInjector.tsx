@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from '@mui/material/styles';
+import { alpha, useTheme } from '@mui/material/styles';
 import { useEffect } from 'react';
 
 /**
@@ -15,6 +15,11 @@ export function ThemeVarsInjector() {
     const root = document.documentElement;
     const p = theme.palette;
     const mode = theme.palette.mode;
+
+    root.style.setProperty('--fs-text-primary', p.text.primary);
+    root.style.setProperty('--fs-text-secondary', p.text.secondary);
+    root.style.setProperty('--fs-scrollbar-thumb', alpha(p.text.primary, 0.28));
+    root.style.setProperty('--fs-scrollbar-track', alpha(p.text.primary, 0.06));
 
     root.style.setProperty('--fs-primary-main', p.primary.main);
     root.style.setProperty('--fs-primary-light', p.primary.light ?? p.primary['300'] ?? p.primary.main);

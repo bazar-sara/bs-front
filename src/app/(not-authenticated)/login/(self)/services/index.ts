@@ -8,6 +8,7 @@ import {
   type VerifyOtpResult,
 } from './models';
 
+/** `POST /api/panel/auth/request-otp` — sends OTP to phone; returns dev hint + resend cooldown when applicable. */
 export async function requestOtp(
   phoneNumber: string
 ): Promise<RequestOtpResult> {
@@ -18,6 +19,7 @@ export async function requestOtp(
   return getResponseData(response);
 }
 
+/** `POST /api/panel/auth/verify-otp` — validates OTP and returns JWT pair for the chosen wholesale/retail role. */
 export async function verifyOtp(
   phoneNumber: string,
   otp: string,

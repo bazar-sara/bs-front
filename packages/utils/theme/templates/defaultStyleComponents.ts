@@ -87,12 +87,12 @@ export const getDefaultStyleComponents = (theme: Theme): Components => {
             },
         colorSecondary: dark
           ? {
-              background: 'rgba(188, 152, 106, 0.25)',
-              color: '#E8D4BC',
+              background: 'rgba(45, 212, 191, 0.18)',
+              color: theme.palette.secondary.light,
             }
           : {
-              background: '#F0E6D8',
-              color: '#5C3D1F',
+              background: theme.palette.secondary['100'] ?? '#ccfbf1',
+              color: theme.palette.secondary['800'] ?? '#134e4a',
             },
       },
     },

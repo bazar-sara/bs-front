@@ -19,6 +19,10 @@ import {
   decodeJwt,
 } from '@/app/common/services/auth';
 
+/**
+ * Auth state bridges UI to auth APIs (`requestOtp` / `verifyOtp` in login services,
+ * `refreshToken` / `logout` in common auth services) and persists tokens + user snapshot in localStorage.
+ */
 export type UserType = FrontendUserType | null;
 
 export type User = {
@@ -64,6 +68,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.removeItem('refresh_token');
   }, []);
 
+  /** Calls `POST /api/panel/auth/refresh` then rehydrates user from the new access token. */
   const refreshTokens = useCallback(async (refreshTokenValue: string) => {
     const { accessToken, refreshToken: newRefreshToken } =
       await refreshTokenService(refreshTokenValue);
@@ -141,11 +146,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, [clearAuth, refreshTokens]);
 
+  /** Delegates to login service `requestOtp` → `POST /api/panel/auth/request-otp`. */
   const requestOtp = useCallback(async (phoneNumber: string) => {
     const response = await requestOtpApi(phoneNumber);
     return response;
   }, []);
 
+  /** Delegates to login service `verifyOtp` → `POST /api/panel/auth/verify-otp`, then stores JWTs and user. */
   const verifyOtp = useCallback(
     async (phoneNumber: string, otp: string, type: UserType) => {
       if (!type) {
@@ -202,6 +209,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
   }, []);
 
+  /** Calls `POST /api/panel/auth/logout` when a refresh token exists, then always clears client auth. */
   const logout = useCallback(async () => {
     const refreshToken = localStorage.getItem('refresh_token');
     try {

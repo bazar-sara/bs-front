@@ -1,20 +1,48 @@
 /* Theme-based CSS variables (injected by ThemeVarsInjector; fallbacks for home marketing palette) */
 :root {
-  --fs-primary-main: #225A2F;
-  --fs-primary-light: #71B284;
-  --fs-primary-dark: #1B4826;
-  --fs-secondary-main: #BC986A;
-  --fs-secondary-light: #D4BC96;
-  --fs-secondary-dark: #8B6539;
-  --fs-error-main: #D81A2E;
-  --fs-warning-main: #FFA100;
-  --fs-info-main: #1A8DD8;
-  --fs-success-main: #00A542;
-  --fs-background-default: #fff;
-  --fs-background-paper: #fff;
-  --fs-common-white: #fff;
-  --fs-common-black: #000;
-  --fs-custom-main: #BC986A;
+  --fs-primary-main: #4f46e5;
+  --fs-primary-light: #a5b4fc;
+  --fs-primary-dark: #4338ca;
+  --fs-secondary-main: #0d9488;
+  --fs-secondary-light: #2dd4bf;
+  --fs-secondary-dark: #115e59;
+  --fs-error-main: #d81a2e;
+  --fs-warning-main: #ffa100;
+  --fs-info-main: #0284c7;
+  --fs-success-main: #00a542;
+  --fs-background-default: #f4f6fb;
+  --fs-background-paper: #ffffff;
+  --fs-common-white: #ffffff;
+  --fs-common-black: #0f172a;
+  --fs-custom-main: #f97316;
+  --fs-text-primary: #0f172a;
+  --fs-text-secondary: #64748b;
+  --fs-scrollbar-thumb: rgba(15, 23, 42, 0.28);
+  --fs-scrollbar-track: rgba(15, 23, 42, 0.06);
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--fs-scrollbar-thumb) var(--fs-scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--fs-scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--fs-scrollbar-thumb);
+  border-radius: 999px;
+  border: 2px solid var(--fs-background-default);
 }
 
 @keyframes slideIn {

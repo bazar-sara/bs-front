@@ -30,7 +30,6 @@ const ProductsSection = () => {
             sx={{
               fontWeight: 700,
               mb: 2,
-              textShadow: `2px 2px 4px ${theme.palette.common.black}4D`,
             }}
           >
             محصولات ما

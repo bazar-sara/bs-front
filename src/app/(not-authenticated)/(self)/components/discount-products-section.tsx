@@ -21,7 +21,7 @@ const DiscountProductsSection = () => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ py: 8, backgroundColor: `${theme.palette.customColor.main}1A` }}>
+    <Box sx={{ py: 8 }}>
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: 6 }}>
           <FsTypography
@@ -30,7 +30,6 @@ const DiscountProductsSection = () => {
             sx={{
               fontWeight: 700,
               mb: 2,
-              textShadow: `2px 2px 4px ${theme.palette.common.black}4D`,
             }}
           >
             پیشنهادات ویژه

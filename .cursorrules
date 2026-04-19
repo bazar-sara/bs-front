@@ -1,163 +1,147 @@
-You are an expert in TypeScript, React JS, Next JS MUI, and Web UI development with MUI.
+You are an expert in TypeScript, React, Next.js (App Router), MUI, and accessible web UI.
 
 Every time you choose to apply a rule(s), explicitly state the rule(s) in the output. You can abbreviate the rule description to a single word or phrase.
 
 ## Project Context
 
+- **Bazar Sara (`bs-front`)** — Next.js frontend for the marketplace: authentication, public pages, seller tools (my-shop, cart, wallet, profile), and shared UI built on local design-system packages.
+- **Routing** uses the **App Router** with **route groups**: `(authenticated)` vs `(not-authenticated)`, plus a **`(self)`** segment per feature for colocated `components/`, `i18n/`, and `services/`.
+- **Internationalization** uses **next-intl** with per-route `en.json` / `fa.json` under each feature’s `(self)/i18n` and shared config under `src/i18n`.
+
 ## Code Style and Structure
 
-- Write concise, technical TypeScript code with accurate examples
-- Use functional and declarative programming patterns; avoid classes
-- Prefer iteration and modularization over code duplication
-- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError)
-- Ensure components are modular, reusable, and maintainable.
-- Component Modularity: Break down components into smaller, reusable pieces. Keep components focused on a single responsibility and shouldn't be more than 80 lines of code.
-- To install new packages use `yarn add <package-name>`
-- Structure repository files as follows:
+- Write concise, technical TypeScript with accurate examples.
+- Use functional and declarative patterns; avoid classes.
+- Prefer iteration and modularization over duplication.
+- Use descriptive names with auxiliary verbs (e.g., `isLoading`, `hasError`).
+- Keep components modular and single-purpose; **aim for ~80 lines or fewer** per component file; split when it grows.
+- To add dependencies: `yarn add <package-name>`.
+
+### Repository layout (follow and extend consistently)
+
+**Local packages (design system, path aliases — see `tsconfig.json`):**
+
+```
+packages
+├── core      # Atoms / shared UI primitives (e.g. Typography, Tooltip)
+├── form      # FormProvider, FormFields, validators, useExtractErrorInfo
+└── utils     # Theme, helpers (localStorage, scroll, i18n helpers), Providers
+```
+
+**Application (`src`):**
 
 ```
 src
- ┣ app
- ┃ ┣ (self)
- ┃ ┃ ┗ i18n
- ┃ ┃ ┃ ┣ en.json
- ┃ ┃ ┃ ┗ fa.json
- ┃ ┣ dashboard
- ┃ ┃ ┣ (self)
- ┃ ┃ ┃ ┣ components
- ┃ ┃ ┃ ┃ ┗ index.tsx
- ┃ ┃ ┃ ┗ i18n
- ┃ ┃ ┃ ┃ ┣ en.json
- ┃ ┃ ┃ ┃ ┗ fa.json
- ┃ ┃ ┣ layout.tsx
- ┃ ┃ ┗ page.tsx
- ┃ ┣ login
- ┃ ┃ ┣ (self)
- ┃ ┃ ┃ ┣ components
- ┃ ┃ ┃ ┃ ┗ index.tsx
- ┃ ┃ ┃ ┗ i18n
- ┃ ┃ ┃ ┃ ┣ en.json
- ┃ ┃ ┃ ┃ ┗ fa.json
- ┃ ┃ ┣ layout.tsx
- ┃ ┃ ┗ page.tsx
- ┃ ┣ public
- ┃ ┃ ┣ (self)
- ┃ ┃ ┃ ┣ components
- ┃ ┃ ┃ ┃ ┗ index.tsx
- ┃ ┃ ┃ ┗ i18n
- ┃ ┃ ┃ ┃ ┣ en.json
- ┃ ┃ ┃ ┃ ┗ fa.json
- ┃ ┃ ┣ layout.tsx
- ┃ ┃ ┗ page.tsx
- ┃ ┣ sign-up
- ┃ ┃ ┣ (self)
- ┃ ┃ ┃ ┣ components
- ┃ ┃ ┃ ┃ ┗ index.tsx
- ┃ ┃ ┃ ┗ i18n
- ┃ ┃ ┃ ┃ ┣ en.json
- ┃ ┃ ┃ ┃ ┗ fa.json
- ┃ ┃ ┣ layout.tsx
- ┃ ┃ ┗ page.tsx
- ┃ ┣ ui-components
- ┃ ┃ ┣ (self)
- ┃ ┃ ┃ ┣ components
- ┃ ┃ ┃ ┃ ┗ index.tsx
- ┃ ┃ ┃ ┗ i18n
- ┃ ┃ ┃ ┃ ┣ en.json
- ┃ ┃ ┃ ┃ ┗ fa.json
- ┃ ┃ ┣ layout.tsx
- ┃ ┃ ┗ page.tsx
- ┃ ┣ favicon.ico
- ┃ ┣ globals.css
- ┃ ┣ layout.tsx
- ┃ ┣ page.module.css
- ┃ ┗ page.tsx
- ┣ assets
- ┃ ┣ fonts
- ┃ ┃ ┗ iranSans
- ┃ ┃ ┃ ┣ webfont
- ┃ ┃ ┃ ┃ ┣ staticfonts
- ┃ ┃ ┃ ┃ ┃ ┣ IRANSansX-Bold.woff
- ┃ ┃ ┃ ┃ ┃ ┗ IRANSansX-Regular.woff
- ┃ ┃ ┃ ┃ ┣ IRANSansXV.woff
- ┃ ┃ ┃ ┃ ┗ IRANSansXV.woff2
- ┃ ┃ ┃ ┗ IRANSansXVF.ttf
- ┃ ┗ images
- ┃ ┃ ┗ files
- ┃ ┃ ┃ ┣ excel.svg
- ┃ ┃ ┃ ┣ gif.svg
- ┃ ┃ ┃ ┣ html.svg
- ┃ ┃ ┃ ┣ jpeg.svg
- ┃ ┃ ┃ ┣ jpg.svg
- ┃ ┃ ┃ ┣ json.svg
- ┃ ┃ ┃ ┣ mov.svg
- ┃ ┃ ┃ ┣ mp3.svg
- ┃ ┃ ┃ ┣ pdf.svg
- ┃ ┃ ┃ ┣ png.svg
- ┃ ┃ ┃ ┣ rar.svg
- ┃ ┃ ┃ ┣ svg.svg
- ┃ ┃ ┃ ┣ txt.svg
- ┃ ┃ ┃ ┣ uploadFileLoading.svg
- ┃ ┃ ┃ ┣ word.svg
- ┃ ┃ ┃ ┣ xls.svg
- ┃ ┃ ┃ ┗ zip.svg
- ┗ i18n
- ┃ ┗ request.ts
- 
+├── app
+│   ├── (authenticated)      # Logged-in routes: cart, my-shop, profile, wallet, ui-components, …
+│   ├── (not-authenticated)  # login, sign-up, public landing, …
+│   ├── common               # Cross-cutting: components, contexts, services (e.g. auth)
+│   ├── layout.tsx, page.tsx, globals.css, …
+│   └── …                    # Feature folders: layout.tsx, page.tsx, (self)/components, (self)/i18n, (self)/services
+├── assets                   # fonts (e.g. iranSans), images
+├── i18n                     # e.g. request.ts (next-intl)
+└── lib                      # App-level utilities (e.g. api client)
 ```
+
+- **Feature folders** mirror the pattern: `page.tsx` + optional `layout.tsx` + `(self)/components`, `(self)/i18n`, `(self)/services` as needed.
+- **Public static files** live in the project `public/` directory (Next.js convention).
 
 ## Tech Stack
 
-- React JS
-- Next JS
-- TypeScript
-- MUI v7
-- React Query
-- Mui icons-material
-- Mui x-charts
-- Mui x-data-grid
-- Mui x-date-pickers
-- Mui x-tree-view
-- Mui x-charts
-- Mui x-data-grid
-- Mui x-date-pickers
-- Mui x-tree-view
+- **Next.js** 15 (App Router), **React** 19
+- **TypeScript** (strict)
+- **MUI** v7 (`@mui/material`, `@mui/icons-material`, `@mui/material-nextjs` for Next integration)
+- **MUI X**: charts, data-grid, date-pickers (versions aligned with `package.json`)
+- **Forms**: `react-hook-form`
+- **i18n**: `next-intl`, `i18next` / browser detector where used
+- **HTTP**: `axios`
+- **Styling**: Emotion (`@emotion/react`, `@emotion/styled`), RTL via `stylis` / `stylis-plugin-rtl` where configured
+- **Dates**: Jalali support (`moment-jalaali`, `date-fns-jalali`) where applicable
+- **Toasts / UX**: `sonner` (devDependency — use if wired in app)
+
+## Next.js App Router Conventions
+
+- **Default to Server Components**; add `'use client'` only when you need hooks, browser APIs, event handlers, or client-only libraries.
+- **Navigation**: `next/navigation` — `useRouter`, `usePathname`, `useSearchParams` (mind SSR vs client boundaries).
+- **Layouts**: shared UI and providers in `layout.tsx`; keep root layout lean; nest feature layouts when it reduces duplication.
+- **Colocation**: prefer feature-local `components/`, `services/`, and `i18n/` under `(self)/` next to the route that owns them.
+- **Metadata**: export `metadata` / `generateMetadata` from server `layout.tsx` or `page.tsx` where SEO matters.
+- **API routes**: `route.ts` under `app/api/` only when the app needs HTTP handlers; otherwise call backend services from server actions or client services per existing patterns.
 
 ## Naming Conventions
 
-- Favor named exports for components and utilities
-- Use kebabCase for all files names and directories (e.g., visa-form.tsx)
+- Favor **named exports** for components and utilities (unless a file is a Next.js `page.tsx` / `layout.tsx` default export).
+- Use **kebab-case** for file and directory names (e.g., `visa-form.tsx`, `profile-form.tsx`).
 
 ## TypeScript Usage
 
-- Use TypeScript for all code; prefer types over interfaces
-- Avoid enums; use const objects with 'as const' assertion
-- Use functional components with TypeScript interfaces
-- Define strict types for message passing between different parts of the extension
-- Use absolute imports for all files @/...
-- Avoid try/catch blocks unless there's good reason to translate or handle error in that abstraction
-- Use explicit return types for all functions
+- TypeScript everywhere; **prefer `type` over `interface`** for object shapes and unions.
+- Avoid `enum`; use `const` objects with `as const` for fixed sets of values.
+- Use **functional components** with explicit **props types** (e.g., `type FooProps = { … }`).
+- Define strict types for API payloads, service responses, and cross-module contracts.
+- **Imports**: use path aliases — `@/` for `src/`, and `@fs/core`, `@fs/form`, `@fs/utils` for packages (see `tsconfig.json`).
+- Avoid `try/catch` unless this layer should translate or handle the error meaningfully.
+- Use **explicit return types** on exported functions and public helpers.
 
 ## Syntax and Formatting
 
-- Use "arrow functions with const" for functions
-- Avoid unnecessary curly braces in conditionals
-- Use declarative JSX
-- Implement proper TypeScript discriminated unions for message types
+- Use **arrow functions** assigned with `const` for components and functions.
+- Avoid unnecessary braces in simple conditionals when readability stays clear.
+- Prefer declarative JSX.
+- Use **discriminated unions** for variant props and message-like data.
 
 ## UI and Styling
 
-- Use MUI for styling and components
-- First use FS ui components such as FsCheckbox, FsInput from `@fs/form` and `@fs/core` and `@fs/utils`
-- Then use built-in MUI ui components such as Button, Input from `@mui/material`
-- Ensure high accessibility (a11y) standards using ARIA roles and native accessibility props.
-- Avoid unnecessary re-renders by memoizing components and using useMemo and useCallback hooks appropriately.
-- Make sure to use defined colors and fonts in the theme (MUI theme).
+- Use **MUI** for layout and components; respect **theme** tokens (palette, typography, spacing) and **RTL** when the locale is RTL.
+- Prefer **semantic palette roles** (`text.primary`, `text.secondary`, `background.default`, `background.paper`, `divider`, `action.hover`, `primary.main`) so styles work in **both light and dark** without `theme.palette.mode === 'dark'` branches; only branch on mode when unavoidable (e.g. a third-party limitation).
+- **Order of use**: prefer **FS** components from `@fs/core`, `@fs/form`, `@fs/utils` (e.g., `FsInput`, `FsTypography`, theme helpers), then raw **MUI** (`@mui/material`, etc.).
+- Meet **accessibility**: semantic HTML, labels, keyboard use, ARIA where MUI does not already provide it.
+- Avoid unnecessary re-renders: `memo`, `useMemo`, `useCallback` when profiling or when dependencies are stable and expensive.
 
-Here is a simple example of how a component should be written using :
+## Data and Side Effects
+
+- Follow existing **service modules** under feature `(self)/services` and `src/app/common/services` (axios-based patterns, typed models).
+- Do not introduce a new global state or data library unless the project already uses it; **TanStack Query is not a current dependency** — if you add it, align with `package.json` and team conventions first.
+
+## Error Handling
+
+- Log errors in a way suitable for debugging (dev) without leaking sensitive data in production.
+- Surface **user-facing** errors via toasts, inline validation, or error boundaries consistent with the app.
+
+<!-- ## Testing
+
+- Write unit tests for utilities and non-trivial components.
+- Name tests like the source: `component-name.test.tsx`.
+- Skip tests for trivial presentational-only components unless they encode logic.
+
+-->
+
+## Git Usage
+
+**Commit prefixes:**
+
+- `fix:` — bug fixes
+- `feat:` — features
+- `perf:` — performance
+- `docs:` — documentation
+- `style:` — formatting (non-logic)
+- `refactor:` — internal restructuring
+- `test:` — tests
+- `chore:` — tooling, deps, maintenance
+
+**Rules:** lowercase subject line, **≤ 100 characters**, reference issue IDs when applicable.
+
+## Documentation
+
+- Keep **README** sections: **Setup**, **Usage** (scripts), **Stack**, **Folder structure** (important areas under `src/` and `packages/`).
+
+---
+
+## Example: client page component (MUI + FS + Next navigation)
 
 ```tsx
 'use client';
+
 import { FsButton, FsTypography } from '@fs/core';
 import { FsFormProvider, FsInput } from '@fs/form';
 import { Box, Grid, Paper } from '@mui/material';
@@ -227,6 +211,7 @@ const Login = () => {
   const [mounted, setMounted] = useState(false);
   const methods = useForm();
   const router = useRouter();
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -347,41 +332,3 @@ const Login = () => {
 
 export default Login;
 ```
-
-## Error Handling
-
-- Log errors appropriately for debugging
-- Provide user-friendly error messages
-
-<!-- ## Testing
-
-- Write unit tests for utilities and complex components
-- The test file should be named like the component file but with the .test.tsx extension (e.g., component-name.test.tsx)
-- Do not write unit tests for simple components that only show data -->
-
-## Git Usage
-
-Commit Message Prefixes:
-
-- "fix:" for bug fixes
-- "feat:" for new features
-- "perf:" for performance improvements
-- "docs:" for documentation changes
-- "style:" for formatting changes
-- "refactor:" for code refactoring
-- "test:" for adding missing tests
-- "chore:" for maintenance tasks
-
-Rules:
-
-- Use lowercase for commit messages
-- Keep the summary line concise with a maximum of 100 characters
-- Reference issue numbers when applicable
-
-## Documentation
-
-- Maintain clear README with the following sections:
-  - Setup ( how to install and run the project )
-  - Usage ( listing all the commands and how to use them )
-  - Stack ( the tech stack used in the project )
-  - Folder Structure ( the folder structure of the project only the important ones inside src )
