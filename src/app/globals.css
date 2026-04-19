@@ -1,3 +1,50 @@
+/* Theme-based CSS variables (injected by ThemeVarsInjector; fallbacks for home marketing palette) */
+:root {
+  --fs-primary-main: #4f46e5;
+  --fs-primary-light: #a5b4fc;
+  --fs-primary-dark: #4338ca;
+  --fs-secondary-main: #0d9488;
+  --fs-secondary-light: #2dd4bf;
+  --fs-secondary-dark: #115e59;
+  --fs-error-main: #d81a2e;
+  --fs-warning-main: #ffa100;
+  --fs-info-main: #0284c7;
+  --fs-success-main: #00a542;
+  --fs-background-default: #f4f6fb;
+  --fs-background-paper: #ffffff;
+  --fs-common-white: #ffffff;
+  --fs-common-black: #0f172a;
+  --fs-custom-main: #f97316;
+  --fs-text-primary: #0f172a;
+  --fs-text-secondary: #64748b;
+  --fs-scrollbar-thumb: rgba(15, 23, 42, 0.28);
+  --fs-scrollbar-track: rgba(15, 23, 42, 0.06);
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--fs-scrollbar-thumb) var(--fs-scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--fs-scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--fs-scrollbar-thumb);
+  border-radius: 999px;
+  border: 2px solid var(--fs-background-default);
+}
+
 @keyframes slideIn {
   from {
     transform: translateY(-100%);
@@ -13,6 +60,57 @@
   }
   to {
     transform: translateY(-100%);
+  }
+}
+
+@keyframes heroGradient {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes heroOrb1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, 20px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 30px) scale(0.95);
+  }
+}
+
+@keyframes heroOrb2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-25px, -25px) scale(1.15);
+  }
+}
+
+@keyframes heroSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes heroSpinReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
   }
 }
 
@@ -148,24 +246,24 @@
 @keyframes borderGlow {
   0% {
     box-shadow:
-      0 0 0.1875rem #3498db,
-      0 0 0.1875rem #3498db,
-      0 0 0.375rem #3498db,
-      0 0 2.5rem #3498db;
+      0 0 0.1875rem var(--fs-primary-main),
+      0 0 0.1875rem var(--fs-primary-main),
+      0 0 0.375rem var(--fs-primary-main),
+      0 0 2.5rem var(--fs-primary-main);
   }
   50% {
     box-shadow:
-      0 0 0.375rem #3498db,
-      0 0 0.375rem #3498db,
-      0 0 0.75rem #3498db,
-      0 0 5rem #3498db;
+      0 0 0.375rem var(--fs-primary-light),
+      0 0 0.375rem var(--fs-primary-light),
+      0 0 0.75rem var(--fs-primary-light),
+      0 0 5rem var(--fs-primary-light);
   }
   100% {
     box-shadow:
-      0 0 0.1875rem #3498db,
-      0 0 0.1875rem #3498db,
-      0 0 0.375rem #3498db,
-      0 0 2.5rem #3498db;
+      0 0 0.1875rem var(--fs-primary-main),
+      0 0 0.1875rem var(--fs-primary-main),
+      0 0 0.375rem var(--fs-primary-main),
+      0 0 2.5rem var(--fs-primary-main);
   }
 }
 
@@ -192,13 +290,13 @@
 
 @keyframes gradientBorder {
   0% {
-    border-image-source: linear-gradient(45deg, #e1f14e, #0800e7);
+    border-image-source: linear-gradient(45deg, var(--fs-primary-main), var(--fs-secondary-main));
   }
   50% {
-    border-image-source: linear-gradient(135deg, #e1f14e, #0800e7);
+    border-image-source: linear-gradient(135deg, var(--fs-primary-main), var(--fs-secondary-main));
   }
   100% {
-    border-image-source: linear-gradient(45deg, #e1f14e, #0800e7);
+    border-image-source: linear-gradient(45deg, var(--fs-primary-main), var(--fs-secondary-main));
   }
 }
 
@@ -257,7 +355,7 @@
 }
 
 .border-glow {
-  border: 0.125rem solid #3498db;
+  border: 0.125rem solid var(--fs-primary-main);
   padding: 1.25rem;
   border-radius: 0.625rem;
   animation: borderGlow 2s infinite;
@@ -303,16 +401,16 @@
 }
 
 .flip-card-front {
-  background-color: #2980b9;
-  color: white;
+  background-color: var(--fs-primary-main);
+  color: var(--fs-common-white);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .flip-card-back {
-  background-color: #e74c3c;
-  color: white;
+  background-color: var(--fs-secondary-main);
+  color: var(--fs-common-white);
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
@@ -340,7 +438,7 @@
 
 .progress-bar {
   width: 100%;
-  background-color: #e0e0e0;
+  background-color: var(--fs-background-paper);
   border-radius: 0.625rem;
   overflow: hidden;
 }
@@ -348,7 +446,7 @@
 .progress-bar .progress {
   width: 0;
   height: 1.25rem;
-  background-color: #76c7c0;
+  background: linear-gradient(90deg, var(--fs-primary-main), var(--fs-secondary-main));
   border-radius: 0.625rem;
   animation: progress 2s ease-in-out forwards;
 }
@@ -364,7 +462,7 @@
   border: 0.0625rem solid transparent;
   border-radius: 0.625rem;
   background-image:
-    linear-gradient(white, white), linear-gradient(to right, #ff6ec4, #7873f5);
+    linear-gradient(var(--fs-common-white), var(--fs-common-white)), linear-gradient(to right, var(--fs-primary-main), var(--fs-secondary-main));
   background-origin: border-box;
   background-clip: content-box, border-box;
   animation: pulseBorder 2s infinite;
@@ -375,9 +473,9 @@
   display: inline-block;
   padding: 0.625rem 1.25rem;
   font-size: 1.5rem;
-  color: #000;
+  color: var(--fs-common-black);
   text-decoration: none;
-  background-color: #fff;
+  background-color: var(--fs-background-paper);
   border: 0.125rem solid transparent;
 }
 
@@ -387,7 +485,7 @@
   position: absolute;
   width: 0;
   height: 0.125rem;
-  background-color: lightblue;
+  background-color: var(--fs-primary-main);
   transition: all 0.5s;
 }
 
@@ -423,7 +521,7 @@
 .spinner-border {
   width: 6.25rem;
   height: 6.25rem;
-  border: 0.125rem solid #3498db;
+  border: 0.125rem solid var(--fs-primary-main);
   border-radius: 50%;
   animation: spinBorder 3s linear infinite;
 }
@@ -432,7 +530,7 @@
   width: 6.25rem;
   height: 6.25rem;
   border: 0.125rem solid;
-  border-image: linear-gradient(45deg, #e1f14e, #0800e7) 1;
+  border-image: linear-gradient(45deg, var(--fs-primary-main), var(--fs-secondary-main)) 1;
   border-radius: 0.625rem;
   animation: gradientBorder 2s ease infinite;
 }

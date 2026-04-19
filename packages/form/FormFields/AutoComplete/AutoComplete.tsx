@@ -12,6 +12,7 @@ import {
 import { useExtractErrorInfo } from '../../useExtractErrorInfo';
 import ErrorMessage from '../../ErrorMessage';
 import ClearButton from '../../ClearButton';
+import { fsOutlinedInputRootSx } from '../Input/Input';
 import { useTranslations } from 'next-intl';
 
 type TOptions = { value: string; label: string };
@@ -82,6 +83,7 @@ function FsAutoComplete<TMultiple extends boolean | undefined>({
                 {...params}
                 name={`input-${name}`}
                 label={t(i18nKey)}
+                sx={fsOutlinedInputRootSx}
               />
             )}
           />

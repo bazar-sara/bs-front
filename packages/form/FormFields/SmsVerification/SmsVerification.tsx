@@ -1,4 +1,5 @@
 import { Box, TextField } from '@mui/material';
+import { fsOutlinedInputRootSx } from '../Input/Input';
 import { useMemo, useRef } from 'react';
 import {
   Controller,
@@ -64,6 +65,7 @@ const FsSmsVerification = ({
               render={({ field }) => (
                 <TextField
                   {...field}
+                  sx={fsOutlinedInputRootSx}
                   inputRef={(el) => (refs.current[index] = el)}
                   type="tel"
                   inputProps={{

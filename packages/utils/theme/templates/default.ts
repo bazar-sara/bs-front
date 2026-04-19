@@ -1,72 +1,80 @@
 import { createTheme } from '@mui/material';
-import { defaultStyleComponents } from './defaultStyleComponents';
 import { defaultDarkColor, defaultLightColor } from './defaultColors';
 
+/** Default marketplace theme: indigo primary, teal secondary, neutral surfaces (no legacy brand green/brown). */
 export const defaultLightTheme = createTheme({
-  components: { ...defaultStyleComponents },
   spacing: (abs: number) => `${0.35 * abs}rem`,
+  shape: { borderRadius: 12 },
   palette: {
     mode: 'light',
     primary: {
-      main: '#00A594',
-      '50': '#E9EFEE',
-      '100': '#EBFFFD',
-      '200': '#C0FFF8',
-      '300': '#95FFF4',
-      '400': '#69FFEF',
-      '500': '#1AD8C4',
-      '600': '#00A594',
-      '700': '#007C6F',
-      '800': '#00534B',
-      '900': '#00A594',
+      main: '#4f46e5',
+      '50': '#eef2ff',
+      '100': '#e0e7ff',
+      '200': '#c7d2fe',
+      '300': '#a5b4fc',
+      '400': '#818cf8',
+      '500': '#6366f1',
+      '600': '#4f46e5',
+      '700': '#4338ca',
+      '800': '#3730a3',
+      '900': '#312e81',
+    },
+    background: {
+      default: '#f4f6fb',
+      paper: '#ffffff',
     },
     ...defaultLightColor,
     customColor: {
-      main: '#ff5722',
-      100: 'red',
+      main: '#f97316',
+      '100': '#ffedd5',
       gradient:
-        'linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0%, rgba(215, 229, 236, 0.7) 100%)',
+        'linear-gradient(90deg, rgba(79, 70, 229, 0.08) 0%, rgba(14, 165, 233, 0.1) 100%)',
     },
     customColor2: {
-      main: '#795548',
+      main: '#334155',
     },
     customColorTable: {
-      oddRow: '#0064A51A',
+      oddRow: '#6366f11A',
     },
   },
 });
 
 export const defaultDarkTheme = createTheme({
-  components: { ...defaultStyleComponents },
   spacing: (abs: number) => `${0.35 * abs}rem`,
+  shape: { borderRadius: 12 },
   palette: {
     mode: 'dark',
     primary: {
-      main: '#1AD8C4',
-      '50': '#262626',
-      '100': '#00A594',
-      '200': '#00534B',
-      '300': '#007C6F',
-      '400': '#1AD8C4',
-      '500': '#69FFEF',
-      '600': '#95FFF4',
-      '700': '#00A594',
-      '800': '#C0FFF8',
-      '900': '#00A5941A',
+      main: '#818cf8',
+      '50': '#1e1b4b',
+      '100': '#312e81',
+      '200': '#3730a3',
+      '300': '#4338ca',
+      '400': '#4f46e5',
+      '500': '#6366f1',
+      '600': '#818cf8',
+      '700': '#a5b4fc',
+      '800': '#c7d2fe',
+      '900': '#e0e7ff',
     },
     ...defaultDarkColor,
+    background: {
+      default: '#0f172a',
+      paper: '#1e293b',
+    },
     customColor: {
-      main: '#ff8a50',
-      100: '#ff3d00',
+      main: '#fb923c',
+      '100': '#7c2d12',
       gradient:
-        'linear-gradient(90deg, rgba(25, 25, 25, 0.5) 0%, rgba(35, 45, 55, 0.7) 100%)',
+        'linear-gradient(90deg, rgba(129, 140, 248, 0.12) 0%, rgba(45, 212, 191, 0.08) 100%)',
     },
     customColor2: {
-      main: '#d7ccc8',
+      main: '#cbd5e1',
     },
     customColorTable: {
-      main: '#1A8DD8',
-      oddRow: '#313b41',
+      main: '#38bdf8',
+      oddRow: '#334155',
     },
   },
 });

@@ -1,9 +1,7 @@
 import { createTheme } from '@mui/material';
-import { defaultStyleComponents } from './defaultStyleComponents';
 import { defaultDarkColor, defaultLightColor } from './defaultColors';
 
 export const brownLightTheme = createTheme({
-  components: { ...defaultStyleComponents },
   spacing: (abs: number) => `${0.35 * abs}rem`,
   palette: {
     mode: 'light',
@@ -38,7 +36,6 @@ export const brownLightTheme = createTheme({
 });
 
 export const brownDarkTheme = createTheme({
-  components: { ...defaultStyleComponents },
   spacing: (abs: number) => `${0.35 * abs}rem`,
   palette: {
     mode: 'dark',

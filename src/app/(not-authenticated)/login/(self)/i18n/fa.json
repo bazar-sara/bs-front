@@ -1,0 +1,21 @@
+{
+  "Welcome Back": "خوش برگشتید",
+  "Select your account type": "نوع حساب کاربری خود را انتخاب کنید",
+  "Retail Buyer": "خریدار خرده‌فروش",
+  "Retail buyer description": "خرید محصولات به صورت خرده‌فروشی برای مصرف شخصی",
+  "Producer & Wholesaler": "تولیدکننده و عمده‌فروش",
+  "Wholesale seller description": "فروش محصولات به صورت عمده به سایر فروشندگان",
+  "Phone Number": "شماره موبایل",
+  "Send OTP": "ارسال کد تأیید",
+  "Sending OTP...": "در حال ارسال...",
+  "Resend OTP": "ارسال مجدد کد",
+  "OTP is required": "کد تأیید الزامی است",
+  "Sign In": "ورود",
+  "Signing In...": "در حال ورود...",
+  "Don't have an account?": "حساب کاربری ندارید؟",
+  "Create account": "ایجاد حساب کاربری",
+  "Resend OTP in": "ارسال مجدد کد تا",
+  "seconds": "ثانیه",
+  "Enter your phone number": "شماره موبایل خود را وارد کنید",
+  "Enter verification code": "کد تأیید را وارد کنید"
+}
