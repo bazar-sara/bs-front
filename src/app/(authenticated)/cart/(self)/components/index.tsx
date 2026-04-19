@@ -2,6 +2,7 @@
 import { useAuth } from '@/app/common/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { MainSiteChrome } from '@/app/(not-authenticated)/(self)/components/main-site-chrome';
 import { CartContent } from './cart-content';
 
 const Cart = () => {
@@ -18,7 +19,11 @@ const Cart = () => {
     return null;
   }
 
-  return <CartContent />;
+  return (
+    <MainSiteChrome>
+      <CartContent />
+    </MainSiteChrome>
+  );
 };
 
 export default Cart;

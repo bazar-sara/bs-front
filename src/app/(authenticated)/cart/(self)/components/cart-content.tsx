@@ -6,7 +6,6 @@ import { FsButton, FsTypography } from '@fs/core';
 import {
   Box,
   Container,
-  Paper,
   Card,
   CardContent,
   CardMedia,
@@ -22,7 +21,7 @@ import {
   Remove as RemoveIcon,
 } from '@mui/icons-material';
 import { useState } from 'react';
-import { CartHeader } from './cart-header';
+import { GlassCard } from '@/app/(not-authenticated)/(self)/components/styled-components';
 
 type CartItem = {
   id: number;
@@ -99,444 +98,386 @@ export const CartContent = () => {
   const totalDiscount = calculateOriginalTotal() - calculateTotalPrice();
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        backgroundColor:
-          theme.palette.mode === 'dark'
-            ? theme.palette.background.default
-            : 'grey.50',
-        pb: 4,
-      }}
-    >
-      <CartHeader />
-      <Container maxWidth="lg" sx={{ py: 4 }}>
-        {/* Header Section */}
-        <Box
+    <Container maxWidth="lg" sx={{ mt: 3 }}>
+      {cartItems.length === 0 ? (
+        <GlassCard
+          elevation={0}
           sx={{
-            mb: 4,
+            p: { xs: 4, sm: 6 },
             textAlign: 'center',
-            background: `linear-gradient(135deg, ${theme.palette.primary.main}08, ${theme.palette.secondary.main}08)`,
-            borderRadius: 4,
-            p: 4,
-            border: `1px solid ${theme.palette.divider}`,
+            borderRadius: 3,
           }}
         >
           <FsTypography
-            variant="h3"
-            component="h1"
-            sx={{
-              mb: 1.5,
-              fontWeight: 800,
-              background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-            i18nKey="Shopping Cart"
+            variant="h5"
+            sx={{ mb: 1.5, fontWeight: 900 }}
+            i18nKey="Your shopping cart is empty"
           />
           <FsTypography
-            variant="body1"
-            sx={{ fontSize: '1.1rem', maxWidth: 600, mx: 'auto' }}
-            i18nKey="Review your selected products"
+            variant="body2"
+            color="text.secondary"
+            sx={{ mb: 3 }}
+            i18nKey="Go to Products"
           />
-        </Box>
-
-        {cartItems.length === 0 ? (
-          <Paper
-            elevation={0}
+          <FsButton
+            variant="contained"
+            onClick={() => (window.location.href = '/')}
             sx={{
-              p: 6,
-              textAlign: 'center',
-              borderRadius: 4,
-              border: `1px solid ${theme.palette.divider}`,
-              boxShadow: `0 4px 24px ${theme.palette.common.black}08`,
-              backgroundColor: theme.palette.background.paper,
+              px: 4,
+              py: 1.25,
+              borderRadius: 2,
+              fontWeight: 700,
+              background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+              '&:hover': {
+                background: `linear-gradient(135deg, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
+              },
             }}
-          >
-            <FsTypography
-              variant="h5"
-              sx={{ mb: 2 }}
-              i18nKey="Your shopping cart is empty"
-            />
-            <FsTypography
-              variant="body1"
-              sx={{ mb: 3 }}
-              i18nKey="Go to Products"
-            />
-            <FsButton
-              variant="contained"
-              onClick={() => (window.location.href = '/')}
+            i18nKey="Go to Products"
+          />
+        </GlassCard>
+      ) : (
+        <Grid container spacing={3}>
+          <Grid size={{ xs: 12, md: 8 }}>
+            <GlassCard
+              elevation={0}
               sx={{
-                px: 4,
-                py: 1.5,
-                borderRadius: 2,
-                fontWeight: 600,
-                background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                '&:hover': {
-                  background: `linear-gradient(135deg, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
-                },
+                borderRadius: 3,
+                overflow: 'hidden',
               }}
-              i18nKey="Go to Products"
-            />
-          </Paper>
-        ) : (
-          <Grid container spacing={3}>
-            <Grid size={{ xs: 12, md: 8 }}>
-              <Paper
-                elevation={0}
+            >
+              <Box
                 sx={{
-                  borderRadius: 4,
-                  overflow: 'hidden',
-                  backgroundColor: theme.palette.background.paper,
-                  border: `1px solid ${theme.palette.divider}`,
-                  boxShadow: `0 4px 24px ${theme.palette.common.black}08`,
+                  px: { xs: 2, sm: 3 },
+                  py: 2,
+                  borderBottom: 1,
+                  borderColor: 'divider',
+                  bgcolor: 'background.default',
                 }}
               >
-                <Box
-                  sx={{
-                    p: 3,
-                    borderBottom: 1,
-                    borderColor: 'divider',
-                    backgroundColor:
-                      theme.palette.mode === 'dark' ? 'grey.900' : 'grey.50',
-                  }}
-                >
-                  <FsTypography variant="h6" sx={{ fontWeight: 700 }}>
-                    <FsTypography component="span" i18nKey="Products" /> (
-                    {cartItems.length})
-                  </FsTypography>
-                </Box>
-                <Box sx={{ p: { xs: 2, sm: 3 } }}>
-                  {cartItems.map((item, index) => (
-                    <Box key={item.id}>
-                      {index > 0 && <Divider sx={{ my: 3 }} />}
-                      <Card
+                <FsTypography variant="h6" sx={{ fontWeight: 900 }}>
+                  <FsTypography component="span" i18nKey="Products" /> (
+                  {cartItems.length})
+                </FsTypography>
+              </Box>
+              <Box sx={{ p: { xs: 1.5, sm: 2 } }}>
+                {cartItems.map((item, index) => (
+                  <Box key={item.id}>
+                    {index > 0 && <Divider sx={{ my: 2 }} />}
+                    <Card
+                      sx={{
+                        display: 'flex',
+                        flexDirection: { xs: 'column', sm: 'row' },
+                        boxShadow: 'none',
+                        backgroundColor: 'transparent',
+                        borderRadius: 2.5,
+                        border: `1px solid ${theme.palette.divider}`,
+                        overflow: 'hidden',
+                        transition:
+                          'box-shadow 0.2s ease, border-color 0.2s ease',
+                        '&:hover': {
+                          borderColor: theme.palette.primary.main,
+                          boxShadow: `0 6px 18px ${theme.palette.common.black}10`,
+                        },
+                      }}
+                    >
+                      <CardMedia
+                        component="img"
                         sx={{
-                          display: 'flex',
-                          flexDirection: { xs: 'column', sm: 'row' },
-                          boxShadow: 'none',
-                          backgroundColor: 'transparent',
-                          borderRadius: 3,
-                          border: `1px solid ${theme.palette.divider}`,
-                          overflow: 'hidden',
-                          transition: 'all 0.3s ease',
-                          '&:hover': {
-                            borderColor: theme.palette.primary.main,
-                            boxShadow: `0 2px 8px ${theme.palette.primary.main}15`,
+                          width: { xs: '100%', sm: 150 },
+                          height: { xs: 180, sm: 150 },
+                          objectFit: 'cover',
+                          borderRadius: {
+                            xs: '8px 8px 0 0',
+                            sm: '8px 0 0 8px',
                           },
                         }}
+                        image={item.image}
+                        alt={item.name}
+                      />
+                      <CardContent
+                        sx={{
+                          flex: 1,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          p: { xs: 2, sm: 3 },
+                        }}
                       >
-                        <CardMedia
-                          component="img"
+                        <Box
                           sx={{
-                            width: { xs: '100%', sm: 150 },
-                            height: { xs: 200, sm: 150 },
-                            objectFit: 'cover',
-                            borderRadius: {
-                              xs: '8px 8px 0 0',
-                              sm: '8px 0 0 8px',
-                            },
-                          }}
-                          image={item.image}
-                          alt={item.name}
-                        />
-                        <CardContent
-                          sx={{
-                            flex: 1,
                             display: 'flex',
-                            flexDirection: 'column',
-                            p: { xs: 2, sm: 3 },
+                            justifyContent: 'space-between',
+                            alignItems: 'flex-start',
+                            mb: 2,
                           }}
                         >
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'flex-start',
-                              mb: 2,
-                            }}
-                          >
-                            <Box sx={{ flex: 1 }}>
-                              <FsTypography
-                                variant="h6"
-                                component="h3"
-                                sx={{ mb: 1.5, fontWeight: 700 }}
-                              >
-                                {item.name}
-                              </FsTypography>
-                              <Box
-                                sx={{
-                                  display: 'flex',
-                                  gap: 2,
-                                  alignItems: 'center',
-                                  flexWrap: 'wrap',
-                                }}
-                              >
-                                {item.hasDiscount && item.discount ? (
-                                  <>
-                                    <FsTypography
-                                      variant="body2"
-                                      sx={{
-                                        textDecoration: 'line-through',
-                                      }}
-                                    >
-                                      {item.price.toLocaleString('fa-IR')} تومان
-                                    </FsTypography>
-                                    <FsTypography
-                                      variant="h6"
-                                      color="error"
-                                      sx={{ fontWeight: 700 }}
-                                    >
-                                      {(
-                                        item.price -
-                                        (item.price * item.discount) / 100
-                                      ).toLocaleString('fa-IR')}{' '}
-                                      تومان
-                                    </FsTypography>
-                                    <Chip
-                                      label={`${item.discount}% تخفیف`}
-                                      color="error"
-                                      size="small"
-                                      sx={{ fontWeight: 600 }}
-                                    />
-                                  </>
-                                ) : (
-                                  <FsTypography
-                                    variant="h6"
-                                    sx={{ fontWeight: 700 }}
-                                  >
-                                    {item.price.toLocaleString('fa-IR')} تومان
-                                  </FsTypography>
-                                )}
-                              </Box>
-                            </Box>
-                            <IconButton
-                              onClick={() => handleRemoveItem(item.id)}
-                              sx={{
-                                color: 'error.main',
-                                border: `1px solid ${theme.palette.error.main}30`,
-                                '&:hover': {
-                                  backgroundColor: 'error.light',
-                                  color: 'error.contrastText',
-                                  transform: 'scale(1.1)',
-                                },
-                                transition: 'all 0.3s ease',
-                              }}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </Box>
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 2,
-                              mt: 'auto',
-                              flexWrap: 'wrap',
-                            }}
-                          >
+                          <Box sx={{ flex: 1 }}>
                             <FsTypography
-                              variant="body2"
-                              sx={{ fontWeight: 600 }}
+                              variant="h6"
+                              component="h3"
+                              sx={{ mb: 1.5, fontWeight: 700 }}
                             >
-                              تعداد:
+                              {item.name}
                             </FsTypography>
                             <Box
                               sx={{
                                 display: 'flex',
+                                gap: 2,
                                 alignItems: 'center',
-                                border: `1px solid ${theme.palette.divider}`,
-                                borderRadius: 2,
-                                overflow: 'hidden',
+                                flexWrap: 'wrap',
                               }}
                             >
-                              <IconButton
-                                size="small"
-                                onClick={() =>
-                                  handleQuantityChange(
-                                    item.id,
-                                    item.quantity - 1
-                                  )
-                                }
-                                sx={{
-                                  borderRadius: 0,
-                                  '&:hover': {
-                                    backgroundColor: theme.palette.action.hover,
-                                  },
-                                }}
-                              >
-                                <RemoveIcon fontSize="small" />
-                              </IconButton>
-                              <FsTypography
-                                variant="body1"
-                                sx={{
-                                  px: 2,
-                                  minWidth: 40,
-                                  textAlign: 'center',
-                                  fontWeight: 700,
-                                }}
-                              >
-                                {item.quantity}
-                              </FsTypography>
-                              <IconButton
-                                size="small"
-                                onClick={() =>
-                                  handleQuantityChange(
-                                    item.id,
-                                    item.quantity + 1
-                                  )
-                                }
-                                sx={{
-                                  borderRadius: 0,
-                                  '&:hover': {
-                                    backgroundColor: theme.palette.action.hover,
-                                  },
-                                }}
-                              >
-                                <AddIcon fontSize="small" />
-                              </IconButton>
-                            </Box>
-                            <Box sx={{ mr: 'auto' }}>
-                              <FsTypography
-                                variant="h6"
-                                sx={{
-                                  fontWeight: 700,
-                                }}
-                              >
-                                {calculateItemPrice(item).toLocaleString(
-                                  'fa-IR'
-                                )}{' '}
-                                تومان
-                              </FsTypography>
+                              {item.hasDiscount && item.discount ? (
+                                <>
+                                  <FsTypography
+                                    variant="body2"
+                                    sx={{
+                                      textDecoration: 'line-through',
+                                    }}
+                                  >
+                                    {item.price.toLocaleString('fa-IR')} تومان
+                                  </FsTypography>
+                                  <FsTypography
+                                    variant="h6"
+                                    color="error"
+                                    sx={{ fontWeight: 700 }}
+                                  >
+                                    {(
+                                      item.price -
+                                      (item.price * item.discount) / 100
+                                    ).toLocaleString('fa-IR')}{' '}
+                                    تومان
+                                  </FsTypography>
+                                  <Chip
+                                    label={`${item.discount}% تخفیف`}
+                                    color="error"
+                                    size="small"
+                                    sx={{ fontWeight: 600 }}
+                                  />
+                                </>
+                              ) : (
+                                <FsTypography
+                                  variant="h6"
+                                  sx={{ fontWeight: 700 }}
+                                >
+                                  {item.price.toLocaleString('fa-IR')} تومان
+                                </FsTypography>
+                              )}
                             </Box>
                           </Box>
-                        </CardContent>
-                      </Card>
-                    </Box>
-                  ))}
-                </Box>
-              </Paper>
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
-              <Paper
-                elevation={0}
-                sx={{
-                  p: { xs: 2, sm: 3 },
-                  borderRadius: 4,
-                  position: 'sticky',
-                  top: 100,
-                  backgroundColor: theme.palette.background.paper,
-                  border: `1px solid ${theme.palette.divider}`,
-                  boxShadow: `0 4px 24px ${theme.palette.common.black}08`,
-                }}
-              >
-                <FsTypography
-                  variant="h6"
-                  sx={{ mb: 3, fontWeight: 700 }}
-                  i18nKey="Order Summary"
-                />
-                <Box sx={{ mb: 2 }}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      mb: 2,
-                      pb: 2,
-                      borderBottom: `1px solid ${theme.palette.divider}`,
-                    }}
-                  >
-                    <FsTypography variant="body1" i18nKey="Items" />
-                    <FsTypography variant="body1" sx={{ fontWeight: 600 }}>
-                      {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-                    </FsTypography>
+                          <IconButton
+                            onClick={() => handleRemoveItem(item.id)}
+                            sx={{
+                              color: 'error.main',
+                              border: `1px solid ${theme.palette.error.main}30`,
+                              '&:hover': {
+                                backgroundColor: 'error.light',
+                                color: 'error.contrastText',
+                                transform: 'scale(1.1)',
+                              },
+                              transition: 'all 0.3s ease',
+                            }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Box>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 2,
+                            mt: 'auto',
+                            flexWrap: 'wrap',
+                          }}
+                        >
+                          <FsTypography
+                            variant="body2"
+                            sx={{ fontWeight: 600 }}
+                          >
+                            تعداد:
+                          </FsTypography>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              border: `1px solid ${theme.palette.divider}`,
+                              borderRadius: 2,
+                              overflow: 'hidden',
+                            }}
+                          >
+                            <IconButton
+                              size="small"
+                              onClick={() =>
+                                handleQuantityChange(item.id, item.quantity - 1)
+                              }
+                              sx={{
+                                borderRadius: 0,
+                                '&:hover': {
+                                  backgroundColor: theme.palette.action.hover,
+                                },
+                              }}
+                            >
+                              <RemoveIcon fontSize="small" />
+                            </IconButton>
+                            <FsTypography
+                              variant="body1"
+                              sx={{
+                                px: 2,
+                                minWidth: 40,
+                                textAlign: 'center',
+                                fontWeight: 700,
+                              }}
+                            >
+                              {item.quantity}
+                            </FsTypography>
+                            <IconButton
+                              size="small"
+                              onClick={() =>
+                                handleQuantityChange(item.id, item.quantity + 1)
+                              }
+                              sx={{
+                                borderRadius: 0,
+                                '&:hover': {
+                                  backgroundColor: theme.palette.action.hover,
+                                },
+                              }}
+                            >
+                              <AddIcon fontSize="small" />
+                            </IconButton>
+                          </Box>
+                          <Box sx={{ mr: 'auto' }}>
+                            <FsTypography
+                              variant="h6"
+                              sx={{
+                                fontWeight: 700,
+                              }}
+                            >
+                              {calculateItemPrice(item).toLocaleString('fa-IR')}{' '}
+                              تومان
+                            </FsTypography>
+                          </Box>
+                        </Box>
+                      </CardContent>
+                    </Card>
                   </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      mb: 2,
-                      pb: 2,
-                      borderBottom: `1px solid ${theme.palette.divider}`,
-                    }}
-                  >
-                    <FsTypography variant="body1" i18nKey="Subtotal" />
-                    <FsTypography variant="body1" sx={{ fontWeight: 600 }}>
-                      {calculateOriginalTotal().toLocaleString('fa-IR')} تومان
-                    </FsTypography>
-                  </Box>
-                  {totalDiscount > 0 && (
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        mb: 2,
-                        pb: 2,
-                        borderBottom: `1px solid ${theme.palette.divider}`,
-                      }}
-                    >
-                      <FsTypography
-                        variant="body1"
-                        color="error"
-                        i18nKey="Discount"
-                      />
-                      <FsTypography
-                        variant="body1"
-                        color="error"
-                        sx={{ fontWeight: 600 }}
-                      >
-                        -{totalDiscount.toLocaleString('fa-IR')} تومان
-                      </FsTypography>
-                    </Box>
-                  )}
-                </Box>
-                <Divider sx={{ my: 3 }} />
+                ))}
+              </Box>
+            </GlassCard>
+          </Grid>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <GlassCard
+              elevation={0}
+              sx={{
+                p: { xs: 2, sm: 3 },
+                borderRadius: 3,
+                position: { md: 'sticky' },
+                top: { md: 96 },
+              }}
+            >
+              <FsTypography
+                variant="h6"
+                sx={{ mb: 2.5, fontWeight: 900 }}
+                i18nKey="Order Summary"
+              />
+              <Box sx={{ mb: 2 }}>
                 <Box
                   sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    mb: 3,
+                    mb: 2,
+                    pb: 2,
+                    borderBottom: `1px solid ${theme.palette.divider}`,
                   }}
                 >
-                  <FsTypography
-                    variant="h6"
-                    sx={{ fontWeight: 700 }}
-                    i18nKey="Total Amount"
-                  />
-                  <FsTypography
-                    variant="h5"
-                    sx={{
-                      fontWeight: 700,
-                      background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                      backgroundClip: 'text',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                    }}
-                  >
-                    {calculateTotalPrice().toLocaleString('fa-IR')} تومان
+                  <FsTypography variant="body1" i18nKey="Items" />
+                  <FsTypography variant="body1" sx={{ fontWeight: 600 }}>
+                    {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
                   </FsTypography>
                 </Box>
-                <FsButton
-                  variant="contained"
-                  fullWidth
-                  size="large"
+                <Box
                   sx={{
-                    py: 1.5,
-                    fontSize: '1.1rem',
-                    fontWeight: 600,
-                    borderRadius: 2,
-                    background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                    '&:hover': {
-                      background: `linear-gradient(135deg, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
-                    },
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    mb: 2,
+                    pb: 2,
+                    borderBottom: `1px solid ${theme.palette.divider}`,
                   }}
-                  i18nKey="Checkout and Place Order"
+                >
+                  <FsTypography variant="body1" i18nKey="Subtotal" />
+                  <FsTypography variant="body1" sx={{ fontWeight: 600 }}>
+                    {calculateOriginalTotal().toLocaleString('fa-IR')} تومان
+                  </FsTypography>
+                </Box>
+                {totalDiscount > 0 && (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      mb: 2,
+                      pb: 2,
+                      borderBottom: `1px solid ${theme.palette.divider}`,
+                    }}
+                  >
+                    <FsTypography
+                      variant="body1"
+                      color="error"
+                      i18nKey="Discount"
+                    />
+                    <FsTypography
+                      variant="body1"
+                      color="error"
+                      sx={{ fontWeight: 600 }}
+                    >
+                      -{totalDiscount.toLocaleString('fa-IR')} تومان
+                    </FsTypography>
+                  </Box>
+                )}
+              </Box>
+              <Divider sx={{ my: 3 }} />
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  mb: 3,
+                }}
+              >
+                <FsTypography
+                  variant="h6"
+                  sx={{ fontWeight: 700 }}
+                  i18nKey="Total Amount"
                 />
-              </Paper>
-            </Grid>
+                <FsTypography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 700,
+                    background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  {calculateTotalPrice().toLocaleString('fa-IR')} تومان
+                </FsTypography>
+              </Box>
+              <FsButton
+                variant="contained"
+                fullWidth
+                size="large"
+                sx={{
+                  py: 1.5,
+                  fontSize: '1.1rem',
+                  fontWeight: 800,
+                  borderRadius: 2,
+                  background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                  '&:hover': {
+                    background: `linear-gradient(135deg, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
+                  },
+                }}
+                i18nKey="Checkout and Place Order"
+              />
+            </GlassCard>
           </Grid>
-        )}
-      </Container>
-    </Box>
+        </Grid>
+      )}
+    </Container>
   );
 };

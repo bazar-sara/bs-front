@@ -105,10 +105,17 @@ const ContactSection = () => {
                       py: 1.5,
                       borderRadius: 2,
                       fontSize: '1rem',
+                      transition: theme.transitions.create(
+                        ['background-color', 'box-shadow', 'transform'],
+                        {
+                          duration: theme.transitions.duration.shorter,
+                          easing: theme.transitions.easing.easeInOut,
+                        }
+                      ),
                       '&:hover': {
-                        backgroundColor: theme.palette.primary[600],
-                        transform: 'translateY(-2px)',
-                        boxShadow: `0 4px 20px ${theme.palette.primary.main}40`,
+                        backgroundColor: theme.palette.primary.dark,
+                        transform: 'translateY(-1px)',
+                        boxShadow: `0 6px 20px ${theme.palette.primary.main}55`,
                       },
                     }}
                   >

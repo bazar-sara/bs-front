@@ -1,31 +1,29 @@
 'use client';
-import { TurquoiseGradient } from './styled-components';
-import HeaderComponent from './header';
+import { useEffect } from 'react';
+import { MainSiteChrome } from './main-site-chrome';
 import HeroSection from './hero-section';
 import DiscountProductsSection from './discount-products-section';
 import AboutSection from './about-section';
 import ProductsSection from './products-section';
 import ContactSection from './contact-section';
-import Footer from './footer';
 
 const Landing = () => {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  useEffect(() => {
+    const id = window.location.hash?.replace(/^#/, '');
+    if (!id) return;
+    requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  }, []);
 
   return (
-    <TurquoiseGradient>
-      <HeaderComponent scrollToSection={scrollToSection} />
+    <MainSiteChrome edgeToEdge>
       <HeroSection />
       <DiscountProductsSection />
       <AboutSection />
       <ProductsSection />
       <ContactSection />
-      <Footer scrollToSection={scrollToSection} />
-    </TurquoiseGradient>
+    </MainSiteChrome>
   );
 };
 

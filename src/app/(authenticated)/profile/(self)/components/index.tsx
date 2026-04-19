@@ -1,16 +1,17 @@
 'use client';
 import { FsButton, FsTypography } from '@fs/core';
-import { Box, CircularProgress, Container, Paper, useTheme } from '@mui/material';
-import { Person as PersonIcon } from '@mui/icons-material';
+import { Box, CircularProgress, Container, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useAuth } from '@/app/common/hooks/use-auth';
 import { getApiErrorMessage } from '@/app/common/services/auth/functions';
+import { MainSiteChrome } from '@/app/(not-authenticated)/(self)/components/main-site-chrome';
 import { getProfile, type ProfileUser } from '../services';
 import { ProfileForm } from './profile-form';
 import { PasswordForm } from './password-form';
 import { AddressList } from './address-list';
+import { GlassCard } from '@/app/(not-authenticated)/(self)/components/styled-components';
 
 const Profile = () => {
   const theme = useTheme();
@@ -49,90 +50,16 @@ const Profile = () => {
   }
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        position: 'relative',
-        overflow: 'hidden',
-        background:
-          theme.palette.mode === 'dark'
-            ? `linear-gradient(180deg, ${theme.palette.background.default} 0%, ${theme.palette.background.paper} 100%)`
-            : `linear-gradient(165deg, ${theme.palette.primary['50'] ?? '#eef2ff'} 0%, ${theme.palette.background.default} 45%, ${theme.palette.background.default} 100%)`,
-        pt: { xs: 10, md: 12 },
-        pb: { xs: 4, md: 6 },
-      }}
-    >
-      <Container maxWidth="md">
-        <Paper
-          elevation={0}
-          sx={{
-            p: { xs: 2.5, sm: 3, md: 4 },
-            mb: 3,
-            borderRadius: 3,
-            border: `1px solid ${theme.palette.divider}`,
-            background: theme.palette.background.paper,
-            boxShadow:
-              theme.palette.mode === 'dark'
-                ? 'none'
-                : '0 4px 24px rgba(15, 23, 42, 0.06)',
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2,
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              textAlign: 'center',
-            }}
-          >
-            <Box
-              sx={{
-                width: 72,
-                height: 72,
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: `linear-gradient(135deg, ${theme.palette.primary.main}18, ${theme.palette.secondary.main}12)`,
-                border: `2px solid ${theme.palette.divider}`,
-                overflow: 'hidden',
-              }}
-            >
-              {profile?.avatar ? (
-                <Box
-                  component="img"
-                  src={profile.avatar}
-                  alt=""
-                  sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              ) : (
-                <PersonIcon sx={{ fontSize: 36, color: 'primary.main' }} />
-              )}
-            </Box>
-            <Box>
-              <FsTypography
-                variant="h4"
-                component="h1"
-                sx={{ fontWeight: 800, letterSpacing: '-0.02em' }}
-                i18nKey="Profile"
-              />
-              <FsTypography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                {user.phoneNumber || user.name}
-              </FsTypography>
-            </Box>
-          </Box>
-        </Paper>
-
+    <MainSiteChrome>
+      <Container maxWidth="md" sx={{ mt: 3 }}>
         {isLoading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
             <CircularProgress color="primary" aria-label="Loading profile" />
           </Box>
         ) : loadError || !profile ? (
-          <Paper
+          <GlassCard
             sx={{
-              p: 4,
+              p: { xs: 3, sm: 4 },
               textAlign: 'center',
               borderRadius: 3,
               border: `1px dashed ${theme.palette.divider}`,
@@ -154,7 +81,7 @@ const Profile = () => {
             >
               تلاش مجدد
             </FsButton>
-          </Paper>
+          </GlassCard>
         ) : (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <ProfileForm profile={profile} onSuccess={setProfile} />
@@ -166,7 +93,7 @@ const Profile = () => {
           </Box>
         )}
       </Container>
-    </Box>
+    </MainSiteChrome>
   );
 };
 

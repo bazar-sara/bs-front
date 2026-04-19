@@ -8,7 +8,9 @@ import {
   useTheme,
   Drawer,
   List,
-  ListItem,
+  Collapse,
+  ListItemButton,
+  ListItemIcon,
   ListItemText,
   Link as MuiLink,
   Avatar,
@@ -28,6 +30,8 @@ import {
   ShoppingCart as ShoppingCartIcon,
   AccountBalanceWallet as WalletIcon,
   Person as PersonIcon,
+  ExpandLess as ExpandLessIcon,
+  ExpandMore as ExpandMoreIcon,
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -50,6 +54,28 @@ const navLinkSx = {
   transition: 'color 0.2s ease',
 } as const;
 
+const mobileDrawerItemSx = {
+  mx: 1,
+  mb: 0.5,
+  borderRadius: 1.5,
+  py: 0.75,
+  px: 1.25,
+  minHeight: 44,
+  bgcolor: 'action.hover',
+  border: '1px solid',
+  borderColor: 'divider',
+  '&:hover': {
+    bgcolor: 'action.selected',
+    borderColor: 'primary.main',
+  },
+  transition: 'background-color 0.2s ease, border-color 0.2s ease',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  gap: 1.25,
+  textAlign: 'right',
+} as const;
+
 const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
   const theme = useTheme();
   const router = useRouter();
@@ -57,6 +83,7 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [mobileAccountOpen, setMobileAccountOpen] = useState(false);
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -80,6 +107,10 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
   const handleScrollToSection = (sectionId: string) => {
     scrollToSection(sectionId);
     setMobileMenuOpen(false);
+  };
+
+  const handleMobileAccountToggle = () => {
+    setMobileAccountOpen((v) => !v);
   };
 
   const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -164,7 +195,9 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
                 sx={{
                   fontWeight: 800,
                   color: 'primary.main',
+                  cursor: 'pointer',
                 }}
+                onClick={() => router.push('/')}
               >
                 بازارسرا
               </FsTypography>
@@ -247,24 +280,32 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
         open={mobileMenuOpen}
         onClose={handleMobileMenuToggle}
         role="presentation"
+        SlideProps={{ timeout: 280 }}
         sx={{
           '& .MuiDrawer-paper': {
-            width: '100vw',
-            maxWidth: 320,
+            width: 'min(100vw, 300px)',
+            maxWidth: 300,
             bgcolor: 'background.paper',
             color: 'text.primary',
             borderRight: `1px solid ${theme.palette.divider}`,
             boxShadow: theme.shadows[8],
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            overflowX: 'hidden',
           },
           '& .MuiBackdrop-root': {
             bgcolor: alpha(theme.palette.common.black, 0.45),
             backdropFilter: 'blur(4px)',
+            transition: 'opacity 0.28s ease',
           },
         }}
       >
         <Box
           sx={{
-            p: 3,
+            flexShrink: 0,
+            px: 1.5,
+            py: 1,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -285,271 +326,333 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
           >
             <CloseIcon />
           </IconButton>
-          <FsTypography variant="h5" sx={{ fontWeight: 800, color: 'primary.main' }}>
+          <FsTypography
+            variant="h5"
+            sx={{ fontWeight: 800, color: 'primary.main' }}
+          >
             بازارسرا
           </FsTypography>
         </Box>
         <Box
-          sx={{ position: 'relative', zIndex: 2, flex: 1, overflow: 'hidden' }}
+          sx={{
+            position: 'relative',
+            zIndex: 2,
+            flex: 1,
+            minHeight: 0,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            px: 0.5,
+            py: 1,
+          }}
         >
-          <List sx={{ py: 2, px: 1 }}>
-            <ListItem
-              component="button"
+          <List dense disablePadding sx={{ overflowX: 'hidden' }}>
+            <ListItemButton
               onClick={() => handleScrollToSection('home')}
-              sx={{
-                mx: 'auto', // FIX 3: Center the ListItem horizontally by setting auto margins
-                maxWidth: '90%', // Helps with centering
-                mb: 1,
-                borderRadius: 2,
-                bgcolor: 'action.hover',
-                border: '1px solid',
-                borderColor: 'divider',
-                '&:hover': {
-                  bgcolor: 'action.selected',
-                  borderColor: 'primary.main',
-                },
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end', // Aligned content to the right (RTL standard)
-                gap: 2,
-                py: 2,
-                px: 2,
-                textAlign: 'right',
-              }}
+              sx={mobileDrawerItemSx}
             >
               <ListItemText
                 primary="خانه"
                 sx={{
                   color: 'text.primary',
                   '& .MuiListItemText-primary': {
-                    fontWeight: 600,
-                    fontSize: '1.1rem',
+                    fontWeight: 650,
+                    fontSize: '0.95rem',
+                    lineHeight: 1.3,
                     textAlign: 'right',
                   },
                 }}
               />
-              <HomeIcon
-                sx={{ color: theme.palette.primary.main, fontSize: 24 }}
-              />
-            </ListItem>
-            <ListItem
-              component="button"
+              <ListItemIcon sx={{ minWidth: 32, color: 'primary.main' }}>
+                <HomeIcon sx={{ fontSize: 20 }} />
+              </ListItemIcon>
+            </ListItemButton>
+
+            <ListItemButton
               onClick={() => handleScrollToSection('about')}
-              sx={{
-                mx: 'auto', // FIX 3: Center the ListItem horizontally
-                maxWidth: '90%', // Helps with centering
-                mb: 1,
-                borderRadius: 2,
-                bgcolor: 'action.hover',
-                border: '1px solid',
-                borderColor: 'divider',
-                '&:hover': {
-                  bgcolor: 'action.selected',
-                  borderColor: 'primary.main',
-                },
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end', // Aligned content to the right
-                gap: 2,
-                py: 2,
-                px: 2,
-                textAlign: 'right',
-              }}
+              sx={mobileDrawerItemSx}
             >
               <ListItemText
                 primary="درباره ما"
                 sx={{
                   color: 'text.primary',
                   '& .MuiListItemText-primary': {
-                    fontWeight: 600,
-                    fontSize: '1.1rem',
+                    fontWeight: 650,
+                    fontSize: '0.95rem',
+                    lineHeight: 1.3,
                     textAlign: 'right',
                   },
                 }}
               />
-              <InfoIcon
-                sx={{ color: theme.palette.primary.main, fontSize: 24 }}
-              />
-            </ListItem>
-            <ListItem
-              component="button"
+              <ListItemIcon sx={{ minWidth: 32, color: 'primary.main' }}>
+                <InfoIcon sx={{ fontSize: 20 }} />
+              </ListItemIcon>
+            </ListItemButton>
+
+            <ListItemButton
               onClick={() => handleScrollToSection('products')}
-              sx={{
-                mx: 'auto', // FIX 3: Center the ListItem horizontally
-                maxWidth: '90%', // Helps with centering
-                mb: 1,
-                borderRadius: 2,
-                bgcolor: 'action.hover',
-                border: '1px solid',
-                borderColor: 'divider',
-                '&:hover': {
-                  bgcolor: 'action.selected',
-                  borderColor: 'primary.main',
-                },
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end', // Aligned content to the right
-                gap: 2,
-                py: 2,
-                px: 2,
-                textAlign: 'right',
-              }}
+              sx={mobileDrawerItemSx}
             >
               <ListItemText
                 primary="محصولات"
                 sx={{
                   color: 'text.primary',
                   '& .MuiListItemText-primary': {
-                    fontWeight: 600,
-                    fontSize: '1.1rem',
+                    fontWeight: 650,
+                    fontSize: '0.95rem',
+                    lineHeight: 1.3,
                     textAlign: 'right',
                   },
                 }}
               />
-              <ShoppingBagIcon
-                sx={{ color: theme.palette.primary.main, fontSize: 24 }}
-              />
-            </ListItem>
-            <ListItem
-              component="button"
+              <ListItemIcon sx={{ minWidth: 32, color: 'primary.main' }}>
+                <ShoppingBagIcon sx={{ fontSize: 20 }} />
+              </ListItemIcon>
+            </ListItemButton>
+
+            <ListItemButton
               onClick={() => handleScrollToSection('contact')}
-              sx={{
-                mx: 'auto', // FIX 3: Center the ListItem horizontally
-                maxWidth: '90%', // Helps with centering
-                mb: 1,
-                borderRadius: 2,
-                bgcolor: 'action.hover',
-                border: '1px solid',
-                borderColor: 'divider',
-                '&:hover': {
-                  bgcolor: 'action.selected',
-                  borderColor: 'primary.main',
-                },
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end', // Aligned content to the right
-                gap: 2,
-                py: 2,
-                px: 2,
-                textAlign: 'right',
-              }}
+              sx={mobileDrawerItemSx}
             >
               <ListItemText
                 primary="تماس با ما"
                 sx={{
                   color: 'text.primary',
                   '& .MuiListItemText-primary': {
-                    fontWeight: 600,
-                    fontSize: '1.1rem',
+                    fontWeight: 650,
+                    fontSize: '0.95rem',
+                    lineHeight: 1.3,
                     textAlign: 'right',
                   },
                 }}
               />
-              <ContactIcon
-                sx={{ color: theme.palette.primary.main, fontSize: 24 }}
-              />
-            </ListItem>
-          </List>
-        </Box>
-        <Box
-          sx={{
-            p: 3,
-            position: 'relative',
-            zIndex: 2,
-            borderTop: 1,
-            borderColor: 'divider',
-            bgcolor: 'background.default',
-          }}
-        >
-          {user ? (
-            <Box>
-              <Box sx={{ px: 2, py: 1.5, mb: 1 }}>
-                <FsTypography variant="body2" sx={{ fontWeight: 600 }}>
-                  {user.name}
-                </FsTypography>
-                {user.email && (
-                  <FsTypography variant="caption" sx={{ opacity: 0.8 }}>
-                    {user.email}
-                  </FsTypography>
-                )}
-                {!user.email && user.phoneNumber && (
-                  <FsTypography variant="caption" sx={{ opacity: 0.8 }}>
-                    {user.phoneNumber}
-                  </FsTypography>
-                )}
-              </Box>
-              <Divider sx={{ mb: 1 }} />
-              <FsButton
-                variant="outlined"
-                color="primary"
-                fullWidth
-                onClick={handleProfile}
-                sx={{ py: 1.5, fontSize: '1rem', fontWeight: 600, borderRadius: 2, mb: 1 }}
-              >
-                <PersonIcon sx={{ ml: 1, fontSize: 20 }} />
-                <FsTypography variant="body2" i18nKey="Profile" />
-              </FsButton>
-              {user.type === 'wholesale' ? (
+              <ListItemIcon sx={{ minWidth: 32, color: 'primary.main' }}>
+                <ContactIcon sx={{ fontSize: 20 }} />
+              </ListItemIcon>
+            </ListItemButton>
+
+            <Divider sx={{ my: 1 }} />
+
+            {user ? (
+              <>
+                <ListItemButton
+                  onClick={handleMobileAccountToggle}
+                  sx={mobileDrawerItemSx}
+                >
+                  <ListItemText
+                    primary={user.name}
+                    secondary={user.email || user.phoneNumber || ''}
+                    sx={{
+                      color: 'text.primary',
+                      '& .MuiListItemText-primary': {
+                        fontWeight: 700,
+                        fontSize: '0.95rem',
+                        textAlign: 'right',
+                      },
+                      '& .MuiListItemText-secondary': {
+                        textAlign: 'right',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      },
+                    }}
+                  />
+                  <ListItemIcon sx={{ minWidth: 32, color: 'primary.main' }}>
+                    <PersonIcon sx={{ fontSize: 20 }} />
+                  </ListItemIcon>
+                  {mobileAccountOpen ? (
+                    <ExpandLessIcon
+                      sx={{ fontSize: 20, color: 'text.secondary' }}
+                    />
+                  ) : (
+                    <ExpandMoreIcon
+                      sx={{ fontSize: 20, color: 'text.secondary' }}
+                    />
+                  )}
+                </ListItemButton>
+
+                <Collapse in={mobileAccountOpen} timeout="auto" unmountOnExit>
+                  <Box sx={{ px: 1, pb: 0.5, overflowX: 'hidden' }}>
+                    <List dense disablePadding>
+                      <ListItemButton
+                        onClick={handleProfile}
+                        sx={{
+                          ...mobileDrawerItemSx,
+                          mx: 0.5,
+                          bgcolor: 'transparent',
+                          borderColor: 'transparent',
+                          '&:hover': {
+                            bgcolor: 'action.hover',
+                            borderColor: 'transparent',
+                          },
+                        }}
+                      >
+                        <ListItemText
+                          primary="پروفایل"
+                          sx={{
+                            '& .MuiListItemText-primary': {
+                              fontWeight: 600,
+                              fontSize: '0.9rem',
+                              textAlign: 'right',
+                            },
+                          }}
+                        />
+                        <ListItemIcon
+                          sx={{ minWidth: 32, color: 'text.secondary' }}
+                        >
+                          <PersonIcon sx={{ fontSize: 18 }} />
+                        </ListItemIcon>
+                      </ListItemButton>
+
+                      {user.type === 'wholesale' ? (
+                        <ListItemButton
+                          onClick={handleMyShop}
+                          sx={{
+                            ...mobileDrawerItemSx,
+                            mx: 0.5,
+                            bgcolor: 'transparent',
+                            borderColor: 'transparent',
+                            '&:hover': {
+                              bgcolor: 'action.hover',
+                              borderColor: 'transparent',
+                            },
+                          }}
+                        >
+                          <ListItemText
+                            primary="فروشگاه من"
+                            sx={{
+                              '& .MuiListItemText-primary': {
+                                fontWeight: 600,
+                                fontSize: '0.9rem',
+                                textAlign: 'right',
+                              },
+                            }}
+                          />
+                          <ListItemIcon
+                            sx={{ minWidth: 32, color: 'text.secondary' }}
+                          >
+                            <StoreIcon sx={{ fontSize: 18 }} />
+                          </ListItemIcon>
+                        </ListItemButton>
+                      ) : (
+                        <>
+                          <ListItemButton
+                            onClick={handleShoppingCart}
+                            sx={{
+                              ...mobileDrawerItemSx,
+                              mx: 0.5,
+                              bgcolor: 'transparent',
+                              borderColor: 'transparent',
+                              '&:hover': {
+                                bgcolor: 'action.hover',
+                                borderColor: 'transparent',
+                              },
+                            }}
+                            disabled
+                          >
+                            <ListItemText
+                              primary="سبد خرید"
+                              sx={{
+                                '& .MuiListItemText-primary': {
+                                  fontWeight: 600,
+                                  fontSize: '0.9rem',
+                                  textAlign: 'right',
+                                },
+                              }}
+                            />
+                            <ListItemIcon
+                              sx={{ minWidth: 32, color: 'text.secondary' }}
+                            >
+                              <ShoppingCartIcon sx={{ fontSize: 18 }} />
+                            </ListItemIcon>
+                          </ListItemButton>
+                          <ListItemButton
+                            onClick={handleWallet}
+                            disabled
+                            sx={{
+                              ...mobileDrawerItemSx,
+                              mx: 0.5,
+                              bgcolor: 'transparent',
+                              borderColor: 'transparent',
+                              '&:hover': {
+                                bgcolor: 'action.hover',
+                                borderColor: 'transparent',
+                              },
+                              opacity: 0.6,
+                            }}
+                          >
+                            <ListItemText
+                              primary="کیف پول"
+                              sx={{
+                                '& .MuiListItemText-primary': {
+                                  fontWeight: 600,
+                                  fontSize: '0.9rem',
+                                  textAlign: 'right',
+                                },
+                              }}
+                            />
+                            <ListItemIcon
+                              sx={{ minWidth: 32, color: 'text.secondary' }}
+                            >
+                              <WalletIcon sx={{ fontSize: 18 }} />
+                            </ListItemIcon>
+                          </ListItemButton>
+                        </>
+                      )}
+
+                      <Divider sx={{ my: 0.75 }} />
+
+                      <ListItemButton
+                        onClick={handleLogout}
+                        sx={{
+                          ...mobileDrawerItemSx,
+                          mx: 0.5,
+                          bgcolor: 'transparent',
+                          borderColor: 'transparent',
+                          '&:hover': {
+                            bgcolor: alpha(theme.palette.error.main, 0.08),
+                          },
+                        }}
+                      >
+                        <ListItemText
+                          primary="خروج"
+                          sx={{
+                            '& .MuiListItemText-primary': {
+                              fontWeight: 700,
+                              fontSize: '0.9rem',
+                              textAlign: 'right',
+                              color: 'error.main',
+                            },
+                          }}
+                        />
+                        <ListItemIcon
+                          sx={{ minWidth: 32, color: 'error.main' }}
+                        >
+                          <LogoutIcon sx={{ fontSize: 18 }} />
+                        </ListItemIcon>
+                      </ListItemButton>
+                    </List>
+                  </Box>
+                </Collapse>
+              </>
+            ) : (
+              <Box sx={{ px: 1 }}>
                 <FsButton
                   variant="outlined"
                   color="primary"
                   fullWidth
-                  onClick={handleMyShop}
-                  sx={{ py: 1.5, fontSize: '1rem', fontWeight: 600, borderRadius: 2, mb: 1 }}
+                  onClick={handleLoginClick}
+                  sx={{
+                    py: 1,
+                    fontSize: '0.95rem',
+                    fontWeight: 700,
+                    borderRadius: 1.5,
+                  }}
                 >
-                  <StoreIcon sx={{ ml: 1, fontSize: 20 }} />
-                  <FsTypography variant="body2" i18nKey="My Shop" />
+                  ورود/ثبت نام
                 </FsButton>
-              ) : (
-                <>
-                  <FsButton
-                    variant="outlined"
-                    color="primary"
-                    fullWidth
-                    onClick={handleShoppingCart}
-                    sx={{ py: 1.5, fontSize: '1rem', fontWeight: 600, borderRadius: 2, mb: 1 }}
-                  >
-                    <ShoppingCartIcon sx={{ ml: 1, fontSize: 20 }} />
-                    <FsTypography variant="body2" i18nKey="Shopping Cart" />
-                  </FsButton>
-                  <FsButton
-                    variant="outlined"
-                    color="primary"
-                    fullWidth
-                    onClick={handleWallet}
-                    sx={{ py: 1.5, fontSize: '1rem', fontWeight: 600, borderRadius: 2, mb: 1 }}
-                  >
-                    <WalletIcon sx={{ ml: 1, fontSize: 20 }} />
-                    <FsTypography variant="body2" i18nKey="Wallet" />
-                  </FsButton>
-                </>
-              )}
-              <FsButton
-                variant="outlined"
-                color="error"
-                fullWidth
-                onClick={handleLogout}
-                sx={{ py: 1.5, fontSize: '1rem', fontWeight: 600, borderRadius: 2 }}
-              >
-                <LogoutIcon sx={{ ml: 1, fontSize: 20 }} />
-                <FsTypography variant="body2" i18nKey="Logout" />
-              </FsButton>
-            </Box>
-          ) : (
-            <FsButton
-              variant="outlined"
-              color="primary"
-              fullWidth
-              onClick={handleLoginClick}
-              sx={{ py: 1.5, fontSize: '1.1rem', fontWeight: 600, borderRadius: 2 }}
-            >
-              ورود/ثبت نام
-            </FsButton>
-          )}
+              </Box>
+            )}
+          </List>
         </Box>
       </Drawer>
 
@@ -589,17 +692,17 @@ const HeaderComponent = ({ scrollToSection }: HeaderComponentProps) => {
           <FsTypography variant="body2" i18nKey="Profile" />
         </MenuItem>
         {user?.type === 'wholesale' ? (
-          <MenuItem onClick={handleMyShop} sx={{ py: 1.5 }}>
+          <MenuItem onClick={handleMyShop} sx={{ py: 1.5 }} disabled>
             <StoreIcon sx={{ ml: 1.5, fontSize: 20 }} />
             <FsTypography variant="body2" i18nKey="My Shop" />
           </MenuItem>
         ) : (
           <Box>
-            <MenuItem onClick={handleShoppingCart} sx={{ py: 1.5 }}>
+            <MenuItem onClick={handleShoppingCart} sx={{ py: 1.5 }} disabled>
               <ShoppingCartIcon sx={{ ml: 1.5, fontSize: 20 }} />
               <FsTypography variant="body2" i18nKey="Shopping Cart" />
             </MenuItem>
-            <MenuItem onClick={handleWallet} sx={{ py: 1.5 }}>
+            <MenuItem onClick={handleWallet} sx={{ py: 1.5 }} disabled>
               <WalletIcon sx={{ ml: 1.5, fontSize: 20 }} />
               <FsTypography variant="body2" i18nKey="Wallet" />
             </MenuItem>
