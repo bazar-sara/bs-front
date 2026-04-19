@@ -1,6 +1,7 @@
 {
   "name": "my-next-app",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "versionDate": "2026-04-19",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

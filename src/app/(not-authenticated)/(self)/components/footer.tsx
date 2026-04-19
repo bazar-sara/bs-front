@@ -1,5 +1,6 @@
 'use client';
 import { FsTypography } from '@fs/core';
+import { FarsiDate } from '@fs/utils';
 import {
   Box,
   Container,
@@ -8,6 +9,7 @@ import {
   Stack,
   Link as MuiLink,
 } from '@mui/material';
+import { useLocale } from 'next-intl';
 import {
   LocationOn as LocationIcon,
   Phone as PhoneIcon,
@@ -62,7 +64,43 @@ const socialBtnSx = {
   transition: 'background-color 0.2s ease, color 0.2s ease',
 };
 
+const appVersion = process.env.NEXT_PUBLIC_APP_VERSION ?? '';
+const rawVersionDate = process.env.NEXT_PUBLIC_VERSION_DATE ?? '';
+
+/** Parse `YYYY-MM-DD` as a local calendar date (avoids UTC off-by-one). */
+function parseIsoDateOnly(iso: string): Date | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso.trim());
+  if (!m) return null;
+  const y = Number(m[1]);
+  const mo = Number(m[2]);
+  const d = Number(m[3]);
+  const date = new Date(y, mo - 1, d);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function formatVersionDateForLocale(iso: string, locale: string): string {
+  const date = parseIsoDateOnly(iso);
+  if (!date) return iso;
+  if (locale.startsWith('fa')) {
+    const jalali = FarsiDate(date);
+    return jalali === '-----------' ? iso : jalali;
+  }
+  return date.toLocaleDateString('en', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
 const Footer = ({ scrollToSection }: FooterProps) => {
+  const locale = useLocale();
+  const versionDateLabel = locale.startsWith('fa')
+    ? 'تاریخ نسخه'
+    : 'Version date';
+  const displayVersionDate = rawVersionDate
+    ? formatVersionDateForLocale(rawVersionDate, locale)
+    : '';
+
   return (
     <Box
       sx={{
@@ -98,16 +136,32 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   ما را دنبال کنید
                 </FsTypography>
                 <Box sx={{ display: 'flex', gap: 1 }}>
-                  <IconButton size="small" sx={socialBtnSx} aria-label="Facebook">
+                  <IconButton
+                    size="small"
+                    sx={socialBtnSx}
+                    aria-label="Facebook"
+                  >
                     <FacebookIcon fontSize="small" />
                   </IconButton>
-                  <IconButton size="small" sx={socialBtnSx} aria-label="Instagram">
+                  <IconButton
+                    size="small"
+                    sx={socialBtnSx}
+                    aria-label="Instagram"
+                  >
                     <InstagramIcon fontSize="small" />
                   </IconButton>
-                  <IconButton size="small" sx={socialBtnSx} aria-label="Twitter">
+                  <IconButton
+                    size="small"
+                    sx={socialBtnSx}
+                    aria-label="Twitter"
+                  >
                     <TwitterIcon fontSize="small" />
                   </IconButton>
-                  <IconButton size="small" sx={socialBtnSx} aria-label="LinkedIn">
+                  <IconButton
+                    size="small"
+                    sx={socialBtnSx}
+                    aria-label="LinkedIn"
+                  >
                     <LinkedInIcon fontSize="small" />
                   </IconButton>
                 </Box>
@@ -202,13 +256,33 @@ const Footer = ({ scrollToSection }: FooterProps) => {
         >
           <Grid container spacing={4} alignItems="center">
             <Grid size={{ xs: 12, md: 6 }}>
-              <FsTypography
-                variant="body2"
-                color="text.secondary"
+              <Stack
+                spacing={0.5}
                 sx={{ textAlign: { xs: 'center', md: 'left' } }}
               >
-                تمام حقوق محفوظ است. بازارسرا © ۱۴۰۳
-              </FsTypography>
+                <FsTypography variant="body2" color="text.secondary">
+                  تمام حقوق محفوظ است. بازارسرا ©
+                </FsTypography>
+                {(appVersion || rawVersionDate) && (
+                  <FsTypography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ opacity: 0.85 }}
+                  >
+                    {appVersion && (
+                      <>
+                        نسخه {appVersion}
+                        {rawVersionDate ? ' · ' : ''}
+                      </>
+                    )}
+                    {rawVersionDate && (
+                      <>
+                        {versionDateLabel} {displayVersionDate}
+                      </>
+                    )}
+                  </FsTypography>
+                )}
+              </Stack>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
               <Box
@@ -219,13 +293,25 @@ const Footer = ({ scrollToSection }: FooterProps) => {
                   flexWrap: 'wrap',
                 }}
               >
-                <MuiLink href="#" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
+                <MuiLink
+                  href="#"
+                  color="text.secondary"
+                  sx={{ fontSize: '0.85rem' }}
+                >
                   حریم خصوصی
                 </MuiLink>
-                <MuiLink href="#" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
+                <MuiLink
+                  href="#"
+                  color="text.secondary"
+                  sx={{ fontSize: '0.85rem' }}
+                >
                   قوانین و مقررات
                 </MuiLink>
-                <MuiLink href="#" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
+                <MuiLink
+                  href="#"
+                  color="text.secondary"
+                  sx={{ fontSize: '0.85rem' }}
+                >
                   شرایط استفاده
                 </MuiLink>
               </Box>
