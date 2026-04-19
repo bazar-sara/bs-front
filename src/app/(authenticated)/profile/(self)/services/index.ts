@@ -9,6 +9,15 @@ import type {
   UpdateAddressPayload,
 } from './models';
 
+export type {
+  ProfileUser,
+  ProfileAddress,
+  UpdateProfilePayload,
+  UpdatePasswordPayload,
+  CreateAddressPayload,
+  UpdateAddressPayload,
+} from './models';
+
 /** Panel profile REST base (`/api/panel/profile`). */
 const PROFILE_BASE = '/api/panel/profile';
 

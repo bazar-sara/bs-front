@@ -1,3 +1,5 @@
+'use client';
+
 import { FsButton, FsTypography } from '@fs/core';
 import { Box, Container, Paper } from '@mui/material';
 import Link from 'next/link';

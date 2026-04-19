@@ -1,5 +1,8 @@
 {
   "PUBLIC": {
     "TITLE": "سلام دنیا!"
-  }
+  },
+  "Welcome to Our Public Site": "به بخش عمومی خوش آمدید",
+  "Explore our content without any login requirements.": "بدون نیاز به ورود، محتوا را مرور کنید.",
+  "Login": "ورود"
 }
